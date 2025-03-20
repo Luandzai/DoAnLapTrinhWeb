@@ -1,0 +1,286 @@
+/* ========================= Reset cơ bản ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  background-color: #f0f0f0;
+  font-size: 1.6rem; /* 16px */
+}
+
+/* ========================= Main Layout ========================= */
+.main-content {
+  max-width: 120rem; /* 1700px */
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: rgb(229, 237, 239);
+}
+
+/* ========================= Header ========================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #3290a6;
+  color: white;
+  border-radius: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.logo img {
+  width: 3rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo img:hover {
+  cursor: pointer;
+}
+
+/* Thanh tìm kiếm */
+input[type="text"] {
+  padding: 0.8rem;
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 0.5rem;
+  width: 35rem;
+}
+
+/* Menu điều hướng */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  color: black;
+}
+
+/* Đăng nhập */
+.login img {
+  width: 4rem;
+  height: auto;
+}
+
+.login img:hover {
+  cursor: pointer;
+}
+
+/* ========================= Banner ========================= */
+.banner {
+  width: 100%;
+  height: 30rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.slider {
+  display: flex;
+  width: 100%;
+  gap: 0.3rem;
+}
+
+.slide {
+  width: 33%;
+  flex-shrink: 0;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.slide img:hover {
+  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* FLASH SALE */
+.flash-sale-container {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  color: white;
+  text-align: center;
+  padding: 5rem 2rem;
+  border-radius: 0.5rem;
+  margin: 3rem 0rem;
+}
+
+.flash-sale-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.flash-sale-header h2 {
+  font-size: 4rem;
+  font-weight: bold;
+  color: rgb(240, 215, 215);
+  margin-bottom: 3rem;
+}
+
+.timer {
+  font-size: 5rem;
+  font-weight: bold;
+  background: #ffffff;
+  color: #ff4b2b;
+  padding: 1.5rem 3rem;
+  border-radius: 0.5rem;
+}
+
+.view-all {
+  font-size: 1.6rem;
+  color: white;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.view-all:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Danh sách sản phẩm */
+.book-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.book-item {
+  width: 18%;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+.book-item:hover {
+  box-shadow: 0 0 2rem rgba(33, 37, 41, 0.3);
+  text-shadow: 0 0 0.5rem rgba(59, 57, 57, 0.2);
+  transform: translateY(-5px); /* Hiệu ứng nổi nhẹ */
+}
+
+.book-item img {
+  width: 100%;
+  height: 40rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.book-name {
+  font-size: 14px;
+  margin: 10px 5px;
+  color: #333;
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+.Gia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.GiaHienTai {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff4d4d;
+}
+
+.discount {
+  background-color: #ff4d4d;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.GiaCu {
+  font-size: 12px;
+  color: #888;
+  text-decoration: line-through;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.DaBan {
+  background-color: #ff4d4d;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* ========================= Danh sách sách ========================= */
+
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #d32f2f;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 10px 0;
+  border-bottom: 3px solid #d32f2f;
+  display: inline-block;
+  margin-left: 4.5rem;
+}
+
+/* ========================= Footer ========================= */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #007bff;
+  color: white;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+}
