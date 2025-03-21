@@ -425,6 +425,34 @@ h2 {
   display: inline-block;
   margin-left: 4.5rem;
 }
+/* ===============button xem tất cả=============== */
+.view-all-container{
+  display: flex;
+  justify-content: center;
+  padding: 3rem;;
+  margin-top: 2rem;
+}
+.view-all-btn {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  border-radius: 1.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.view-all-btn:hover {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  transform: scale(1.08);
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
 
 /* ========================= Footer ========================= */
 footer {
