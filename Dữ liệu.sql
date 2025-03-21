@@ -14,6 +14,34 @@ VALUES
 ('Sách Lập Trình', NULL),
 ('Sách Giáo Khoa', NULL);
 
+INSERT INTO Categories (CategoryName, ParentCategoryID)  
+VALUES   
+    -- Danh mục con của Khoa Học  
+    ('Vật Lý', 1),  
+    ('Hóa Học', 1),  
+    ('Sinh Học', 1),  
+    -- Danh mục con của Văn Học  
+    ('Tiểu Thuyết', 2),  
+    ('Truyện Ngắn', 2),  
+    ('Tiểu Thuyết Ngôn Tình', 2),  
+    ('Tiểu Thuyết Đam Mỹ', 2),  
+    ('Truyện Nam Sinh', 2),  
+    ('Manga', 2),  
+    ('Manhua', 2),  
+    ('Light Novel', 2),  
+    -- Danh mục con của Kinh Tế  
+    ('Quản Trị Kinh Doanh', 3),  
+    ('Tài Chính - Đầu Tư', 3),  
+    -- Danh mục con của Lập Trình  
+    ('Lập Trình Web', 4),  
+    ('Lập Trình Python', 4),  
+    ('Lập Trình Java', 4),  
+    ('Lập Trình C++', 4),  
+    -- Danh mục con của Giáo Khoa  
+    ('Sách Toán', 5),  
+    ('Sách Ngữ Văn', 5),  
+    ('Sách Tiếng Anh', 5);  
+
 -- Bảng Authors
 INSERT INTO Authors (AuthorName, Bio)
 VALUES 
