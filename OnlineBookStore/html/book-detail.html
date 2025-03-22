@@ -3,73 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi Tiết Sách</title>
+    <title>Chi Tiết Sách - Nhà sách Online</title>
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/book-detail.css" />
   </head>
   <body>
-    <!-- Header (Giữ nguyên từ các trang khác) -->
+    <!-- Header -->
     <header>
       <div class="main-content">
-        <!-- Body Header -->
         <div class="body">
-          <!-- Logo -->
           <div class="logo">
-            <a href="../html/index.html"
-              ><img src="../img/logo.svg" alt="Nha sach online"
-            /></a>
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nha sach online" />
+            </a>
             <span>Nhà sách Online</span>
           </div>
-          <!-- Search bar -->
-          <input type="text" placeholder="Tìm kiếm sách..." />
-          <!-- Nav bar -->
+          <input type="text" placeholder="Tìm kiếm sách..." /><input
+            type="text"
+            id="search-input"
+            placeholder="Tìm kiếm sách..."
+          />
           <nav class="nav-bar">
             <div class="nav-container">
               <div class="nav-item dropdown">
                 <div class="nav-dropdown-btn">Danh mục ▼</div>
-                <div class="nav-dropdown-content">
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Kinh tế</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Khoa học</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tâm lý</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Giáo trình</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết Ngôn tình</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết Đam mỹ</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Truyện Nam sinh</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manga</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manhua</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Light Novel</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manhwa</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Web Novel</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Fanfiction</a>
-                  </div>
+                <div class="nav-dropdown-content" id="category-list">
+                  <!-- Danh mục render động -->
                 </div>
               </div>
               <div class="nav-item">
@@ -77,14 +36,13 @@
               </div>
             </div>
           </nav>
-          <!-- Login -->
           <div class="login">
             <div class="sort-dropdown-login">
               <button class="dropdown-btn-login">
                 <img src="../img/Login.svg" alt="Dang nhap" />
               </button>
               <div class="dropdown-content-login">
-                <a href="./Login.html" data-sort="oldest">Đăng Nhập</a>
+                <a href="./Login.html">Đăng Nhập</a>
               </div>
             </div>
           </div>
@@ -97,22 +55,16 @@
       <div class="main-content book-detail-page">
         <!-- Chi tiết sách -->
         <div class="book-detail">
-          <!-- Ảnh sách -->
           <div class="book-image">
-            <img src="../img/truyen1.jpg" alt="Tên Sách" />
+            <img id="book-cover" src="" alt="Book Cover" />
           </div>
-          <!-- Thông tin sách -->
           <div class="book-info">
-            <h1 class="book-title">
-              Tên Sách:dit officiis, nesciunt voluptate, beatae similique totam
-              in, magni voluptatem consequatur quia nisi architecto facere!
-              Lorem ipsum dolor sit amet.
-            </h1>
-            <p class="author">Tác giả: <span>Nguyễn Văn A</span></p>
-            <p class="price">Giá: <span>100.000đ</span></p>
-            <p class="old-price">Giá: <span>150.000đ</span></p>
-            <p class="discount">Giảm giá: <span>30%</span></p>
-            <p class="stock">Tồn kho: <span>15</span> cuốn</p>
+            <h1 class="book-title" id="book-title"></h1>
+            <p class="author" id="book-author"></p>
+            <p class="price" id="book-price"></p>
+            <p class="old-price" id="book-old-price"></p>
+            <p class="discount" id="book-discount"></p>
+            <p class="stock" id="book-stock"></p>
             <button class="add-to-cart">Thêm vào giỏ hàng</button>
           </div>
         </div>
@@ -120,172 +72,11 @@
         <!-- Mô tả sách -->
         <div class="book-description">
           <h2>Mô tả sách</h2>
-
-          <!-- Checkbox ẩn để kiểm soát hiển thị -->
           <input type="checkbox" id="toggle-desc" class="toggle-desc" />
-
-          <div class="desc-content">
-            <p>
-              Đây là phần mô tả sách chi tiết, giới thiệu về nội dung, tác giả,
-              và các thông tin liên quan. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Provident iste fuga eum quam doloremque laborum
-              corporis, temporibus totam quos quia debitis nesciunt libero,
-              porro officiis! Necessitatibus vel numquam molestias laudantium.
-            </p>
-            <p class="more-text">
-              <!-- Phần này sẽ bị ẩn ban đầu -->
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-              deleniti incidunt temporibus assumenda, repellat dolorem
-              recusandae iure ducimus ipsa aliquam explicabo magnam suscipit
-              sequi doloremque veniam porro, quam perspiciatis illo? Nobis eum
-              voluptatum cumque nisi, obcaecati autem, inventore numquam et
-              tempora ipsa dicta expedita odio nulla consequuntur commodi
-              aliquid necessitatibus, assumenda libero accusantium ea quo natus
-              non culpa. Optio, natus! Perspiciatis dolorem aliquid porro
-              repellendus officiis sapiente! Beatae facere incidunt saepe maxime
-              ducimus consequuntur, quos numquam quisquam. Est maiores, fugit
-              labore ipsum facilis impedit adipisci eius iusto qui. Consectetur,
-              labore? Quas reiciendis aut necessitatibus, neque consequuntur
-              accusantium, voluptatum deleniti iusto impedit illum, nisi a
-              quisquam voluptates. Temporibus minima consequuntur, deleniti
-              voluptate, quis laborum, debitis voluptas quia delectus sint ut
-              fugiat! Magnam quibusdam quis, officiis molestias impedit illum,
-              corrupti laborum numquam exercitationem quas laboriosam voluptate
-              suscipit tempora libero debitis voluptatibus consequuntur
-              blanditiis in quasi natus vel! Perferendis recusandae doloremque
-              eius ipsa? Cumque sit neque voluptatibus dicta dolor earum veniam
-              totam optio ipsum magni! Dolor vero nesciunt tempore dolorum
-              quibusdam nostrum iusto ullam enim, at dolore nisi nemo ratione
-              quisquam, ex veritatis? Magnam dolorem totam ab error fugit vitae
-              nostrum dicta reprehenderit? Recusandae, suscipit corporis?
-              Mollitia, consectetur ratione eligendi iusto laboriosam officia
-              odit explicabo suscipit expedita ipsum consequuntur corrupti esse
-              porro quidem. Odio, aliquam eum asperiores similique laborum nulla
-              aspernatur vitae atque velit ex laudantium vero quaerat.
-              Laudantium fugiat ipsum delectus inventore. Non dignissimos
-              doloribus quam quod. Officia neque cum provident unde? Voluptas
-              libero aperiam cupiditate non neque reprehenderit quia minus
-              voluptates vitae, ad inventore aliquid aut eos, dolorem accusamus,
-              corrupti est deleniti ullam. A modi cum saepe neque atque,
-              adipisci facere. Quisquam alias facere, est quibusdam reiciendis
-              sequi similique voluptatem, quaerat error rem culpa doloremque,
-              hic nesciunt fuga mollitia excepturi. Sit illum, possimus ut
-              quibusdam expedita autem porro non numquam quisquam. Nobis impedit
-              labore repudiandae reiciendis ea voluptatum, aut ab dolore nihil!
-              Consequuntur mollitia iure autem aspernatur. Voluptatem facere,
-              fuga totam delectus dolor porro, aperiam enim ipsam magnam
-              mollitia ratione et! Eaque ipsum cupiditate itaque at, iure
-              pariatur ullam minima maiores adipisci voluptatum cum id.
-              Assumenda atque accusantium, aperiam at doloribus cupiditate. Amet
-              inventore asperiores atque iste itaque soluta repudiandae omnis!
-              Quis alias deleniti illo at, corporis sapiente quasi eius repellat
-              aspernatur magnam quia vero sequi consectetur minima officiis
-              fugit recusandae. Suscipit molestiae dolores quam, error repellat
-              explicabo est enim ipsa! Itaque quia aliquid iste odio ullam, eius
-              hic culpa facilis dicta similique, ab dignissimos. Deserunt nulla,
-              ex pariatur corrupti in placeat, unde ut molestias, ab repellendus
-              laudantium non eveniet sunt. Modi cupiditate veritatis nihil
-              voluptates, temporibus illum vel incidunt quam eos saepe iure at
-              voluptatibus eius beatae iste consequuntur assumenda in unde
-              provident aut aliquam quae vitae. Minus, nostrum perspiciatis.
-              Quas in, blanditiis voluptatibus laboriosam iusto recusandae vel
-              est provident cumque aperiam obcaecati unde quod facilis harum
-              quasi exercitationem numquam praesentium illo consequatur. Non
-              voluptatibus unde facilis iste similique facere? Illo rem facilis
-              amet possimus temporibus commodi consequatur nulla quaerat ipsa,
-              delectus ex similique eius pariatur modi at? Ratione veniam
-              expedita, fugit maiores quia voluptas commodi iure exercitationem
-              voluptate labore. Quasi, veritatis dignissimos sapiente
-              cupiditate, in inventore ad quibusdam quidem accusamus libero,
-              voluptas deserunt ut esse labore nam. Sit ut repellat repellendus
-              nisi minima autem necessitatibus provident nesciunt accusamus
-              eveniet. Tempore accusamus laudantium odio quae saepe nesciunt!
-              Provident totam eos sapiente deleniti sequi, delectus alias
-              aperiam id sunt praesentium a excepturi quisquam quidem non
-              corporis ipsa quam, ullam magni? Veniam? Molestiae ducimus rem
-              atque fuga deserunt porro vero labore fugit nam possimus, eveniet
-              aut excepturi. Eum, voluptatum odio hic dolor placeat est iure
-              accusantium sapiente laborum molestias perspiciatis eius numquam.
-              Dignissimos praesentium explicabo fugiat, expedita id, distinctio
-              alias earum illum facere dolorem nobis sed deleniti laboriosam
-              sunt quos blanditiis? Qui numquam illum modi libero dignissimos
-              repellat, perferendis quibusdam quod? Voluptate. Itaque nulla sed
-              eos aspernatur inventore ratione ipsam nemo eaque adipisci.
-              Tenetur libero saepe ipsum quas voluptatibus illo perferendis
-              nostrum, unde tempore minus suscipit, quae expedita aliquam fuga.
-              Omnis, nemo! Animi soluta neque fuga maxime, nisi numquam quo, sit
-              facere explicabo nulla error est? Ipsum, corrupti vitae dolor
-              totam nostrum consequuntur ducimus ea autem beatae tenetur qui!
-              Deserunt, quidem tempora! Laboriosam facere inventore vitae
-              architecto modi corporis quo vel excepturi cupiditate. Provident
-              ducimus facere ipsum, nobis inventore commodi sapiente possimus
-              blanditiis aliquam hic ab eligendi vitae reiciendis porro facilis
-              nam! Omnis minima nisi ex corporis necessitatibus deleniti culpa
-              praesentium quo ut numquam, labore atque aut obcaecati provident
-              ratione beatae dicta maiores, natus, porro nihil? Et
-              necessitatibus placeat aliquid totam ducimus! Odio voluptate alias
-              dolores, error modi rerum quas nesciunt placeat. Reiciendis ea
-              debitis harum consequatur consequuntur esse sunt porro facilis,
-              excepturi sapiente, eum odio voluptatem. Praesentium iusto ipsum
-              quia adipisci. Aut hic inventore aliquid magni voluptate atque ut
-              dignissimos iure itaque? Possimus eaque magni tenetur recusandae
-              assumenda cum, incidunt laborum enim quis porro distinctio numquam
-              accusamus totam nisi. Amet, placeat! Quis atque earum quasi error
-              nemo aspernatur tempora deleniti a perferendis, totam quibusdam
-              nihil fugiat perspiciatis repellendus at modi hic. Tempora
-              sapiente quas modi cumque delectus alias. Ipsum, temporibus
-              maxime! Maxime voluptatibus mollitia eveniet rem necessitatibus
-              aliquid omnis laborum at quidem aspernatur cumque unde ipsa
-              aperiam recusandae harum facere similique esse dolorem illo
-              eligendi ipsam fuga numquam, vel ipsum. Veritatis. Optio voluptate
-              a qui sequi, ut nihil soluta id reiciendis, nisi at cumque quia
-              aperiam, animi vero obcaecati. Vitae ex dolore itaque rem earum
-              labore quis in laboriosam quia eum? Inventore, voluptatibus quasi!
-              Quos, sunt consequuntur. Voluptatibus consectetur distinctio
-              exercitationem quos cumque, deleniti totam, minima aut sint
-              incidunt ad ipsam voluptas maxime qui officia minus beatae
-              corporis praesentium doloremque ut? Repellendus est a esse
-              delectus, quisquam repudiandae? Mollitia, vitae alias architecto
-              et odit commodi eligendi. Obcaecati cupiditate dolores optio atque
-              blanditiis corporis illum provident sunt pariatur explicabo.
-              Minus, excepturi dolores? Explicabo labore suscipit unde molestias
-              reprehenderit vel facere quae fugit ratione sed optio vero
-              quisquam, adipisci nobis repudiandae ipsa accusamus consequatur
-              nesciunt aliquam. Atque quis consequatur officia placeat fugit
-              sit. Quo quae est esse excepturi error? Eveniet, ratione ea est
-              ipsam vero quidem nihil omnis sit nulla unde officia ipsum veniam
-              expedita optio odit reprehenderit libero cumque ipsa quo
-              consequuntur! Ut enim optio voluptas blanditiis reiciendis
-              assumenda quae reprehenderit repellat error maxime itaque neque,
-              qui obcaecati. Temporibus ipsam facilis numquam nulla, maxime,
-              voluptate in commodi deserunt repellendus amet, obcaecati ex?
-              Officia amet reprehenderit molestias voluptas dicta nam unde sit
-              aperiam! Ullam maxime libero, excepturi, architecto suscipit est
-              eveniet ducimus reprehenderit esse minus error earum laudantium
-              eligendi. Itaque omnis animi maiores! Explicabo, quidem corrupti
-              suscipit accusantium atque recusandae ipsum quasi consequatur nam
-              illum, libero velit necessitatibus? Minus, voluptas consectetur.
-              Vel impedit explicabo, harum atque sapiente repellendus unde
-              tenetur quia adipisci incidunt! Labore aliquam repellat vero saepe
-              sequi sapiente libero consectetur dicta. Animi error magnam
-              aperiam commodi, porro atque veritatis nostrum sunt autem sint
-              odio ex corrupti quaerat voluptatum beatae ut eius. Sequi nostrum
-              quam nisi, blanditiis temporibus minus voluptatem laboriosam quae
-              odio commodi pariatur asperiores magni excepturi magnam molestiae
-              iure aperiam? Vero aliquam assumenda nulla odio quae optio, ea
-              blanditiis nobis? Itaque soluta qui consequatur accusantium
-              possimus, excepturi neque non quia culpa placeat iste mollitia
-              porro quam odit dolore quibusdam debitis id veritatis atque
-              explicabo. Commodi, porro. Nulla eos omnis voluptates. Facere cum,
-              dignissimos ea distinctio perspiciatis quo ipsam impedit deleniti
-              nisi laboriosam veritatis deserunt vel molestias sequi quaerat
-              corporis odit? Deleniti, eos expedita maxime pariatur cumque ab!
-              Neque, blanditiis quis.
-              <!-- Nội dung dài hơn... -->
-            </p>
+          <div class="desc-content" id="book-desc-content">
+            <p id="book-desc-short"></p>
+            <p class="more-text" id="book-desc-full"></p>
           </div>
-
-          <!-- Nhãn đóng/mở -->
           <label for="toggle-desc" class="toggle-btn show-more">Xem thêm</label>
           <label for="toggle-desc" class="toggle-btn show-less">Thu gọn</label>
         </div>
@@ -295,22 +86,8 @@
           <div class="book-reviews-header">
             <h2>Đánh giá từ khách hàng</h2>
           </div>
-          <div class="review-list">
-            <div class="review">
-              <p><strong>Nguyễn Văn A</strong></p>
-              <p>⭐⭐⭐</p>
-              <p>Rất hay! Đáng mua!</p>
-            </div>
-            <div class="review">
-              <p><strong>Nguyễn Văn B</strong></p>
-              <p>⭐⭐⭐⭐⭐</p>
-              <p>Rất hay! Đáng mua!</p>
-            </div>
-            <div class="review">
-              <p><strong>Trần Thị C</strong></p>
-              <p>⭐⭐⭐⭐</p>
-              <p>Sách rất hữu ích!</p>
-            </div>
+          <div class="review-list" id="review-list">
+            <!-- Đánh giá render động -->
           </div>
 
           <!-- Form nhập đánh giá -->
@@ -319,172 +96,49 @@
             <input
               type="text"
               class="review-name"
+              id="review-name"
               placeholder="Nhập tên của bạn"
             />
-
-            <!-- Chọn số sao -->
-            <div class="review-stars">
+            <div class="review-stars" id="review-stars">
               <input type="radio" id="star5" name="rating" value="5" /><label
                 for="star5"
-                >&#9733;</label
+                >★</label
               >
               <input type="radio" id="star4" name="rating" value="4" /><label
                 for="star4"
-                >&#9733;</label
+                >★</label
               >
               <input type="radio" id="star3" name="rating" value="3" /><label
                 for="star3"
-                >&#9733;</label
+                >★</label
               >
               <input type="radio" id="star2" name="rating" value="2" /><label
                 for="star2"
-                >&#9733;</label
+                >★</label
               >
               <input type="radio" id="star1" name="rating" value="1" /><label
                 for="star1"
-                >&#9733;</label
+                >★</label
               >
             </div>
-
             <textarea
               class="review-text"
+              id="review-text"
               placeholder="Nhập nội dung đánh giá..."
             ></textarea>
-            <button class="submit-review">Gửi đánh giá</button>
+            <button class="submit-review" id="submit-review">
+              Gửi đánh giá
+            </button>
           </div>
         </div>
 
         <!-- Gợi ý sách liên quan -->
         <div class="related-books">
-          <div class="book-list-header"><h2>Sách cùng danh mục</h2></div>
-          <div class="book-list">
-            <!-- Sách 1 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen16.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 2 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen18.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 3 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen5.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 4 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen6.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">
-                Loremipsum,dolorsitametconsecteturadipisicingelit.Esse
-                similiquedictaoptioiuredistinctiorepudiandae,beatae
-                rationevoluptatenesciuntperferendis?Remminusdelenitiesse
-                harumrepellendusiurehicporrosint.Enimofficiisfugitamet
-                iste!Eiusquissedisteconsecteturminimavoluptateharumat
-                facilissintnondolorem,architectoaccusamuslaboreexcepturi
-                quicupiditateeligendiiustolaborum.Nostrum,doloremaliquam! Quod
-                tempore doloremque magni modi nobis. Obcaecati ducimus assumenda
-                hic vitae? Perspiciatis tempore velit necessitatibus ducimus
-                officiis fugiat incidunt, ipsa consequuntur odio quia quae
-                cumque ut sed iusto omnis. Consequatur? Modi illo dicta quidem
-                commodi expedita labore eum porro impedit dignissimos? Dolorum
-                ipsa quas tenetur at nesciunt aut alias, nobis ipsam quis
-                quaerat. Facere tenetur, quaerat natus a sit quibusdam. Sapiente
-                odio quasi aut voluptatibus perspiciatis enim nesciunt
-                perferendis sint quod placeat, tempore illum, nemo temporibus
-                consequatur. Expedita natus placeat, saepe repudiandae aperiam
-                voluptatem ut omnis ipsa architecto dicta aliquid! Rem quos quo
-                qui placeat ex ut pariatur quis eveniet eius possimus facilis
-                officia voluptatibus ipsam facere laborum veniam eligendi totam
-                laboriosam, animi vel vero! Commodi tempore amet dolor
-                inventore? Dignissimos voluptatem harum obcaecati, impedit
-                eligendi ipsa eius molestiae perspiciatis illo esse, vel magnam.
-                Vero laborum aut optio soluta. Nam nobis dignissimos
-                perspiciatis illo enim libero provident distinctio ad odio.
-                Alias animi fugit, nulla eos, sed, tenetur repudiandae eligendi
-                iusto soluta ea nisi dolorum magnam voluptatem exercitationem
-                rem eveniet vitae hic in iste. Accusantium ad debitis ipsa
-                deleniti unde illo. Itaque corporis ut, minus laborum quo ipsum
-                laudantium vel officiis id ab soluta alias, dolores atque neque
-                excepturi, deleniti porro assumenda. Expedita consequuntur
-                reiciendis consequatur obcaecati iure voluptatum eligendi
-                laborum? Laborum aperiam nobis nam autem temporibus impedit
-                ipsam, quae voluptatibus. Eveniet animi non ullam, sint, numquam
-                optio officia necessitatibus maxime ex quo corrupti? Nemo, in
-                officiis aspernatur iure quis vel? Vero, ad sit, pariatur
-                obcaecati expedita suscipit vitae laudantium cumque deserunt
-                maiores eligendi nobis sed blanditiis quidem laboriosam. Culpa,
-                quis quibusdam. Provident nemo nostrum necessitatibus, quaerat
-                veniam non quae culpa. Necessitatibus maxime autem ducimus
-                pariatur. Fuga exercitationem quaerat iure doloremque qui nisi
-                commodi delectus. Distinctio placeat laborum sed veniam. Ullam,
-                rerum. Minima cumque sint aliquid eligendi dolor tempore
-                distinctio autem? Modi et, cum optio eius ducimus fugit
-                expedita. Pariatur commodi, nam rem accusantium in officiis. Rem
-                aspernatur dolorem veniam, corporis autem quas id porro deleniti
-                ipsum, atque harum fuga architecto. Animi suscipit excepturi ea
-                pariatur exercitationem. Nostrum assumenda maiores ex qui,
-                ducimus ipsam omnis dignissimos excepturi iusto quae amet
-                debitis repudiandae minus explicabo laudantium quis sequi
-                repellat iure, fugit facere? Quasi praesentium laudantium
-                mollitia nisi culpa! Repellat tenetur eum sapiente soluta neque
-                dicta asperiores accusantium pariatur excepturi exercitationem
-                blanditiis minima, ipsa, reiciendis, impedit dignissimos quos
-                repudiandae culpa? Similique, eaque assumenda! Ducimus
-                consequuntur totam dolor deserunt repellendus autem dolore
-                consectetur earum unde corporis voluptates nisi maiores velit
-                molestias distinctio eaque laboriosam doloribus rem, numquam,
-                incidunt nostrum iure a sunt. Quia, fuga. Natus quibusdam
-                impedit similique itaque, laboriosam sit quia aliquam odit iste
-                sapiente qui amet architecto eos nisi inventore perspiciatis ad
-                quo, voluptates adipisci ratione ullam maxime cumque neque. Ad,
-                provident. Ullam nihil impedit, fugit, placeat dolorem debitis
-                ad voluptatem doloremque repellendus, eius nobis similique
-                ipsam? Nemo necessitatibus deserunt explicabo est assumenda?
-                Libero ducimus magni nostrum, ab sapiente recusandae soluta
-                alias. Vero, deleniti! Assumenda eius iusto quia provident
-                molestias possimus eaque dignissimos aut nostrum labore veniam
-                minima quae earum eos ducimus unde necessitatibus laborum,
-                reiciendis ad reprehenderit rerum repudiandae fuga magni!
-                Pariatur neque ab commodi necessitatibus similique quod odit
-                dolor fuga error atque laboriosam sequi sit, non, enim minima
-                quae. Voluptates illo quae debitis iure, officiis nisi in sunt
-                laboriosam vero!Take Note! - Kiến Thức Trọng Tâm Lớp 10
-              </h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
+          <div class="book-list-header">
+            <h2>Sách cùng danh mục</h2>
+          </div>
+          <div class="book-list" id="related-books">
+            <!-- Sách liên quan render động -->
           </div>
         </div>
       </div>
@@ -493,10 +147,10 @@
     <!-- Footer -->
     <footer>
       <div class="main-content">
-        <p class="copyright">
-          &copy; 2025 Nhà sách Online. All rights reserved.
-        </p>
+        <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
       </div>
     </footer>
+
+    <script src="../js/book-detail.js"></script>
   </body>
 </html>

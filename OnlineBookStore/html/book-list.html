@@ -3,21 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Danh sách Sách</title>
+    <title>Danh sách Sách - Nhà sách Online</title>
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/book-list.css" />
   </head>
   <body>
-    <!-- Header (Giữ nguyên từ trang chủ) -->
+    <!-- Header -->
     <header>
       <div class="main-content">
-        <!-- Body Header -->
         <div class="body">
           <!-- Logo -->
           <div class="logo">
-            <a href="../html/index.html"
-              ><img src="../img/logo.svg" alt="Nha sach online"
-            /></a>
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nha sach online" />
+            </a>
             <span>Nhà sách Online</span>
           </div>
           <!-- Search bar -->
@@ -27,49 +26,8 @@
             <div class="nav-container">
               <div class="nav-item dropdown">
                 <div class="nav-dropdown-btn">Danh mục ▼</div>
-                <div class="nav-dropdown-content">
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Kinh tế</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Khoa học</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tâm lý</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Giáo trình</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết Ngôn tình</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết Đam mỹ</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Truyện Nam sinh</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manga</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manhua</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Light Novel</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manhwa</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Web Novel</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Fanfiction</a>
-                  </div>
+                <div class="nav-dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
                 </div>
               </div>
               <div class="nav-item">
@@ -98,92 +56,9 @@
         <!-- Sidebar -->
         <aside class="sidebar">
           <h2>Danh mục sách</h2>
-          <form class="category-filter">
-            <ul>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="tieuthuyet" />
-                  Tiểu thuyết</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="kinhte" /> Kinh
-                  tế</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="khoahoc" />
-                  Khoa học</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="tamly" /> Tâm
-                  lý</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="giaotrinh" />
-                  Giáo trình</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="ngontinh" />
-                  Tiểu thuyết Ngôn tình</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="dammy" /> Tiểu
-                  thuyết Đam mỹ</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="namsinh" />
-                  Truyện Nam sinh</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="manga" />
-                  Manga</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="manhua" />
-                  Manhua</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="lightnovel" />
-                  Light Novel</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="manhwa" />
-                  Manhwa</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="webnovel" />
-                  Web Novel</label
-                >
-              </li>
-              <li>
-                <label
-                  ><input type="checkbox" name="category" value="fanfiction" />
-                  Fanfiction</label
-                >
-              </li>
+          <form class="category-filter" id="category-filter">
+            <ul id="category-checkbox-list">
+              <!-- Checkbox danh mục sẽ được render tự động bằng JS -->
             </ul>
             <button type="submit" class="filter-btn">Tìm kiếm</button>
           </form>
@@ -192,7 +67,7 @@
         <!-- Book List -->
         <div class="book-list-container">
           <div class="book-list-header">
-            <h2>Danh sách Sách</h2>
+            <h2 id="book-list-title">Danh sách Sách</h2>
             <div class="sort-dropdown">
               <button class="dropdown-btn">Xếp theo ▼</button>
               <div class="dropdown-content">
@@ -201,184 +76,25 @@
               </div>
             </div>
           </div>
-          <div class="book-list">
-            <!-- Sách 1 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen13.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 2 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen20.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 3 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen15.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 4 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen16.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 5 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen17.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 6 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen18.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 7 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen19.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 8 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen21.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 9 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen22.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 10 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen23.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 11 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen24.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
-            <!-- Sách 12 -->
-            <div class="book-item">
-              <a href="../html/book-detail.html"
-                ><img src="../img/truyen25.jpg" alt="Book Cover"
-              /></a>
-              <h3 class="book-name">Take Note! - Kiến Thức Trọng Tâm Lớp 10</h3>
-              <div class="Gia">
-                <span class="GiaHienTai">10.000 đ</span>
-                <span class="discount">-81%</span>
-              </div>
-              <span class="GiaCu">55.000 đ</span>
-              <div class="DaBan">Đã bán 5</div>
-            </div>
+          <div class="book-list" id="book-list">
+            <!-- Sách sẽ được render tự động bằng JS -->
           </div>
 
           <!-- Pagination -->
-          <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">&raquo;</a>
+          <div class="pagination" id="pagination">
+            <!-- Phân trang sẽ được render tự động bằng JS -->
           </div>
         </div>
       </div>
     </main>
 
-    <!-- Footer (Giữ nguyên từ trang chủ) -->
+    <!-- Footer -->
     <footer>
       <div class="main-content">
-        <p class="copyright">
-          &copy; 2025 Nhà sách Online. All rights reserved.
-        </p>
+        <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
       </div>
     </footer>
+
+    <script src="../js/book-list.js"></script>
   </body>
 </html>

@@ -1,10 +1,27 @@
-// Hàm lấy danh mục
+// API endpoints
+const API_BASE_URL = "http://localhost:5000/api";
+
+// Hàm định dạng giá tiền
+function formatPrice(price) {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(price);
+}
+
+// Hàm tính phần trăm giảm giá
+function calculateDiscount(originalPrice, discountPrice) {
+  return Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
+}
+
+// Hàm lấy danh mục và render
 async function fetchCategories() {
   try {
-    const response = await fetch("../data/categories.json");
+    const response = await fetch(`${API_BASE_URL}/categories`);
     const categories = await response.json();
     const categoryList = document.getElementById("category-list");
 
+    // Render danh mục với class nav-dropdown-item
     categoryList.innerHTML = categories
       .map(
         (category) => `
@@ -26,7 +43,7 @@ async function fetchCategories() {
 // Hàm fetch và hiển thị sách
 async function fetchBooks() {
   try {
-    const response = await fetch("../data/books.json");
+    const response = await fetch(`${API_BASE_URL}/books`);
     const books = await response.json();
     const flashSaleContainer = document.querySelector("#flash-sale .book-list");
     const featuredBooksContainer = document.querySelector(
@@ -83,26 +100,16 @@ async function fetchBooks() {
     });
   } catch (error) {
     console.error("Error fetching books:", error);
+    document.querySelectorAll(".book-list").forEach((container) => {
+      container.innerHTML = "<p>Lỗi tải sách</p>";
+    });
   }
-}
-
-// Hàm định dạng giá tiền
-function formatPrice(price) {
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-}
-
-// Hàm tính phần trăm giảm giá
-function calculateDiscount(originalPrice, discountPrice) {
-  return Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
 }
 
 // Hàm countdown timer
 function startTimer() {
   const timerElement = document.querySelector(".timer .time");
-  let timeLeft = 54 * 60 + 11; // 54 phút 11 giây
+  let timeLeft = 54 * 60 + 11;
   setInterval(() => {
     const hours = Math.floor(timeLeft / 3600);
     const minutes = Math.floor((timeLeft % 3600) / 60);

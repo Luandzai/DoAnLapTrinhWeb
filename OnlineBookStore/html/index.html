@@ -15,61 +15,20 @@
         <div class="body">
           <!-- Logo -->
           <div class="logo">
-            <a href="../html/index.html"
-              ><img src="../img/logo.svg" alt="Nha sach online"
-            /></a>
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nha sach online" />
+            </a>
             <span>Nhà sách Online</span>
           </div>
           <!-- Search bar -->
-          <input type="text" placeholder="Tìm kiếm sách..." />
+          <input type="text" id="search-input" placeholder="Tìm kiếm sách..." />
           <!-- Nav bar -->
           <nav class="nav-bar">
             <div class="nav-container">
               <div class="nav-item dropdown">
                 <div class="nav-dropdown-btn">Danh mục ▼</div>
-                <div class="nav-dropdown-content">
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Kinh tế</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Khoa học</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tâm lý</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Giáo trình</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết Ngôn tình</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Tiểu thuyết Đam mỹ</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Truyện Nam sinh</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manga</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manhua</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Light Novel</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Manhwa</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Web Novel</a>
-                  </div>
-                  <div class="nav-dropdown-item">
-                    <a href="../html/book-list.html">Fanfiction</a>
-                  </div>
+                <div class="nav-dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
                 </div>
               </div>
               <div class="nav-item">
@@ -123,7 +82,7 @@
               <span>Kết thúc trong</span>
               <span class="time">00 : 54 : 11</span>
             </div>
-            <a href="#" class="view-all">Xem tất cả &rarr;</a>
+            <a href="#" class="view-all">Xem tất cả →</a>
           </div>
           <div class="book-list"></div>
           <!-- Để trống, JS sẽ render -->
@@ -155,9 +114,7 @@
     <footer>
       <div class="main-content">
         <!-- Copy right -->
-        <p class="copyright">
-          &copy; 2025 Nhà sách Online. All rights reserved.
-        </p>
+        <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
       </div>
     </footer>
     <script src="../js/script.js"></script>

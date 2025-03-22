@@ -1,0 +1,7 @@
+[
+  { "categoryID": 1, "categoryName": "Tiểu thuyết" },
+  { "categoryID": 2, "categoryName": "Kinh tế" },
+  { "categoryID": 3, "categoryName": "Khoa học" },
+  { "categoryID": 4, "categoryName": "Tâm lý" },
+  { "categoryID": 5, "categoryName": "Manga" }
+]

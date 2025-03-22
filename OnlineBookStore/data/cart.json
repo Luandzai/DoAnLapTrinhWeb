@@ -1,0 +1,29 @@
+{
+  "categories": [
+    { "categoryID": 1, "categoryName": "Tiểu thuyết" },
+    { "categoryID": 2, "categoryName": "Kinh tế" },
+    { "categoryID": 3, "categoryName": "Khoa học" },
+    { "categoryID": 4, "categoryName": "Tâm lý" },
+    { "categoryID": 5, "categoryName": "Giáo trình" },
+    { "categoryID": 6, "categoryName": "Tiểu thuyết Ngôn tình" },
+    { "categoryID": 7, "categoryName": "Manga" }
+  ],
+  "cart": [
+    {
+      "id": "237247",
+      "title": "Trump Ở Nhà Trắng",
+      "coverImage": "https://cdn0.fahasa.com/media/catalog/product//8/9/8935280902671.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 1
+    },
+    {
+      "id": "237248",
+      "title": "Lorem ipsum dolor sit amet",
+      "coverImage": "../img/truyen15.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 2
+    }
+  ]
+}
