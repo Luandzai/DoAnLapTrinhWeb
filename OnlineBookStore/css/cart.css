@@ -1,0 +1,478 @@
+/* ========================= Reset cơ bản ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  background-color: #eff1e3;
+  font-size: 1.6rem; /* 16px */
+}
+
+/* ========================= Main Layout ========================= */
+.main-content {
+  max-width: 110rem; /* 1100px */
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+/* ========================= Header ========================= */
+header {
+  padding: 1.5rem 2rem;
+  background-color: #3290a6;
+  color: white;
+  border-radius: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.logo img {
+  width: 3rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo img:hover {
+  cursor: pointer;
+}
+
+/* Thanh tìm kiếm */
+input[type="text"] {
+  padding: 0.8rem;
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 0.5rem;
+  width: 35rem;
+}
+
+/* Menu điều hướng */
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-bar a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  color: black;
+}
+/* ========================= Dropdown Menu ========================= */
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link,
+.nav-dropdown-btn {
+  color: #fff;
+  font-size: 1.6rem;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  height: 4rem;
+}
+
+/* Hiệu ứng hover */
+.nav-link:hover,
+.nav-dropdown-btn:hover {
+  opacity: 0.8;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.nav-dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: -100%;
+  background-color: white;
+  min-width: 20rem;
+  max-height: 30rem;
+  overflow-y: auto;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  z-index: 100;
+  padding: 1rem 0;
+
+  /* Ẩn dropdown mặc định */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* Hiển thị dropdown khi hover */
+.dropdown:hover .nav-dropdown-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dropdown Items */
+.nav-dropdown-item a {
+  color: #333;
+  font-size: 1.6rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-dropdown-item a:hover {
+  background: #34495e;
+  color: white;
+  padding-left: 2rem;
+}
+
+/* ========================= Login Dropdown ========================= */
+.login {
+  position: relative;
+}
+
+.sort-dropdown-login {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn-login {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dropdown-btn-login img {
+  width: 4rem;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown-btn-login:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-btn-login:hover img {
+  transform: scale(1.1);
+}
+
+.dropdown-content-login {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -160%;
+  background-color: #fff;
+  min-width: 13rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.dropdown-content-login a {
+  display: block;
+  padding: 1rem 1.5rem;
+  font-size: 1.6rem;
+  color: #333;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-content-login a:hover {
+  background-color: #3290a6;
+  color: white;
+}
+
+/* Hiển thị dropdown khi hover */
+.sort-dropdown-login:hover .dropdown-content-login {
+  display: block;
+}
+
+/* ======= ===================Giỏ hàng================= ======= */
+.cart-container {
+  display: flex;
+  gap: 2rem;
+  margin-top: 5rem;
+}
+
+/* ========== SIDEBAR GIỎ HÀNG ========== */
+.sidebar {
+  flex: 2;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
+
+.cart-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+/* Common styles for cart items */
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  padding: 2rem 0;
+  position: relative;
+}
+
+/* Checkbox */
+.cart-checkbox {
+  width: 5%;
+}
+
+.cart-checkbox input[type="checkbox"] {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+/* Product image */
+.cart-image {
+  width: 20%;
+  padding-right: 2rem;
+}
+
+.cart-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 12rem;
+}
+
+/* Product info */
+.cart-info {
+  width: 60%;
+  padding-right: 2rem;
+}
+
+.cart-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+.cart-title a {
+  text-decoration: none;
+  color: #000;
+}
+
+.cart-prices {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cart-price-current {
+  font-weight: bold;
+  color: #e74c3c;
+  margin-right: 1rem;
+}
+
+.cart-price-old {
+  color: #999;
+  text-decoration: line-through;
+}
+.cart-quantity {
+  display: flex;
+  align-items: center;
+}
+.cart-quantity .btn-qty {
+  width: 3rem;
+  height: 3rem;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  border-radius: 0;
+}
+.cart-quantity .btn-qty:hover {
+  background-color: #ddd;
+}
+.cart-quantity .qty-input {
+  width: 4rem;
+  height: 3rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  margin: 0 0.5rem;
+  border-radius: 0;
+}
+
+/* Remove button */
+.cart-remove {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  color: #999;
+}
+
+.cart-remove i {
+  width: 2rem;
+  height: 2rem;
+  background-color: #eee;
+  border-radius: 50%;
+  color: red;
+  text-align: center;
+  line-height: 2rem;
+}
+.cart-remove:hover {
+  color: #333;
+}
+
+/* ========== TỔNG TIỀN & THANH TOÁN ========== */
+.cart-summary {
+  flex: 1;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
+
+.promo-section {
+  background: #f8f8f8;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.promo-code {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.apply-code {
+  background: #27ae60;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.apply-code:hover {
+  background: #219150;
+}
+
+.cart-total {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 1.5rem 0rem;
+}
+
+.total-price span {
+  color: #e44d26;
+  font-size: 1.8rem;
+}
+
+.checkout-btn {
+  background: #e44d26;
+  color: white;
+  padding: 1rem;
+  font-size: 1.6rem;
+  border: none;
+  width: 100%;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.checkout-btn:hover {
+  background: #c0392b;
+}
+
+.note {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 1rem;
+  color: #777;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .cart-container {
+    flex-direction: column;
+  }
+}
+
+/* ========================= Footer ========================= */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border-radius: 0.5rem;
+}
