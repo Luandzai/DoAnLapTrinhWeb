@@ -1,0 +1,719 @@
+/* ========================= Reset cơ bản ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  background-color: #eff1e3;
+  font-size: 1.6rem; /* 16px */
+}
+
+/* ========================= Main Layout ========================= */
+.main-content {
+  max-width: 110rem; /* 1100px */
+  margin: 0 auto;
+  padding: 2rem;
+} /* ========================= Reset cơ bản ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  background-color: #eff1e3;
+  font-size: 1.6rem; /* 16px */
+}
+
+/* ========================= Main Layout ========================= */
+.main-content {
+  max-width: 110rem; /* 1100px */
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+/* ========================= Header ========================= */
+header {
+  padding: 1.5rem 2rem;
+  background-color: #3290a6;
+  color: white;
+  border-radius: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.logo img {
+  width: 3rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo img:hover {
+  cursor: pointer;
+}
+
+/* Thanh tìm kiếm */
+input[type="text"] {
+  padding: 0.8rem;
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 0.5rem;
+  width: 35rem;
+}
+
+/* Menu điều hướng */
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-bar a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  color: black;
+}
+
+/* ========================= Dropdown Menu ========================= */
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link,
+.nav-dropdown-btn {
+  color: #fff;
+  font-size: 1.6rem;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  height: 4rem;
+}
+
+/* Hiệu ứng hover */
+.nav-link:hover,
+.nav-dropdown-btn:hover {
+  opacity: 0.8;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.nav-dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: -100%;
+  background-color: white;
+  min-width: 20rem;
+  max-height: 30rem;
+  overflow-y: auto;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  z-index: 100;
+  padding: 1rem 0;
+
+  /* Ẩn dropdown mặc định */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* Hiển thị dropdown khi hover */
+.dropdown:hover .nav-dropdown-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dropdown Items */
+.nav-dropdown-item a {
+  color: #333;
+  font-size: 1.6rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-dropdown-item a:hover {
+  background: #34495e;
+  color: white;
+  padding-left: 2rem;
+}
+
+/* ========================= Login Dropdown ========================= */
+.login {
+  position: relative;
+}
+
+.sort-dropdown-login {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn-login {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dropdown-btn-login img {
+  width: 4rem;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown-btn-login:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-btn-login:hover img {
+  transform: scale(1.1);
+}
+
+.dropdown-content-login {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -160%;
+  background-color: #fff;
+  min-width: 13rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.dropdown-content-login a {
+  display: block;
+  padding: 1rem 1.5rem;
+  font-size: 1.6rem;
+  color: #333;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-content-login a:hover {
+  background-color: #3290a6;
+  color: white;
+}
+
+/* Hiển thị dropdown khi hover */
+.sort-dropdown-login:hover .dropdown-content-login {
+  display: block;
+}
+
+/* ========================= Chi tiết sách ========================= */
+.book-detail {
+  display: flex;
+  gap: 3rem;
+  background: white;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.book-image {
+  flex: 1;
+}
+
+.book-image img {
+  width: 100%;
+  max-width: 40rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  border: 1px solid #f1f1f1;
+  padding: 5rem;
+  border-radius: 2rem;
+}
+
+.book-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  text-transform: uppercase;
+  line-height: 1.67;
+  max-height: 10.02rem; /* 2 dòng */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Thêm dấu "..." */
+  word-break: break-all;
+}
+
+.author {
+  font-size: 1.8rem;
+  color: #555;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff4b2b;
+}
+
+.old-price {
+  font-size: 1.6rem;
+  text-decoration: line-through;
+  color: #888;
+}
+
+.discount {
+  font-size: 1.6rem;
+  color: #fff;
+  background: #ff4b2b;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.stock {
+  font-size: 1.6rem;
+  color: #27ae60;
+}
+
+.add-to-cart {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  color: white;
+  padding: 1.5rem 2.5rem;
+  border: none;
+  font-size: 1.8rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  font-weight: bold;
+}
+
+.add-to-cart:hover {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  transform: scale(1.08);
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+/* ========================= Mô tả sách ========================= */
+.book-description,
+.book-reviews,
+.related-books {
+  background: white;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  line-height: 1.4;
+}
+
+.book-description h2,
+.book-reviews h2,
+.related-books h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #f5131e;
+  font-weight: bold;
+}
+/* ========================= Mô tả sách ========================= */
+.book-description {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.desc-content {
+  overflow: hidden;
+  max-height: 10rem; /* Giới hạn độ cao ban đầu */
+  transition: max-height 0.5s ease-in-out;
+}
+
+/* Ẩn checkbox */
+.toggle-desc {
+  display: none;
+}
+
+/* Ẩn cả hai nút ban đầu để kiểm soát hiển thị đúng */
+.show-more,
+.show-less {
+  display: none;
+}
+
+/* Chỉ hiển thị nút "Xem thêm" ban đầu */
+.toggle-desc:not(:checked) ~ .show-more {
+  display: inline-block;
+}
+
+/* Khi checkbox được chọn, mở rộng nội dung */
+.toggle-desc:checked ~ .desc-content {
+  max-height: 100%;
+}
+
+/* Khi checkbox được chọn, ẩn "Xem thêm" và hiện "Thu gọn" */
+.toggle-desc:checked ~ .show-more {
+  display: none;
+}
+
+.toggle-desc:checked ~ .show-less {
+  display: inline-block;
+}
+
+/* Style cho nút */
+.toggle-btn {
+  cursor: pointer;
+  color: #ff4b2b;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.toggle-btn:hover {
+  color: #d32f2f;
+}
+
+/* ========================= Đánh giá ========================= */
+.book-reviews {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.book-reviews .book-reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.book-reviews-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.review {
+  background: #f7f7f7;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.67;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.review:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.review strong {
+  font-size: 1.6rem;
+  color: #34495e;
+}
+
+.review p {
+  font-size: 1.4rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.review p:nth-child(2) {
+  font-size: 1.8rem;
+  color: #ffcc00;
+}
+
+.review-list {
+  max-height: 30rem;
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 1rem;
+}
+
+.review-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.review-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.review-list::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* ========================= Form đánh giá ========================= */
+.review-form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.review-form h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+/* Ô nhập tên */
+.review-name {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+/* Chọn số sao */
+.review-stars {
+  display: flex;
+  flex-direction: row-reverse; /*Hiển thị sao từ phải sang trái*/
+  gap: 0.5rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  justify-content: flex-end;
+}
+
+.review-stars input {
+  display: none;
+}
+
+/* Mặc định sao có màu xám */
+.review-stars label {
+  color: #ccc;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* Hover làm sao phóng to nhẹ */
+.review-stars label:hover {
+  transform: scale(1.2);
+  color: #ffcc00;
+}
+
+/* Khi chọn sao, đổi màu từ sao được chọn trở về sau */
+.review-stars input:checked ~ label {
+  color: #ffcc00;
+}
+
+/* Ô nhập nội dung */
+.review-text {
+  width: 100%;
+  height: 8rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  resize: none;
+  margin-bottom: 1rem;
+}
+
+/* Nút gửi đánh giá */
+.submit-review {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.submit-review:hover {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  transform: scale(1.05);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+/* ========================= Sách liên quan ========================= */
+.related-books {
+  background: white;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.book-list-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.book-list-header h2 {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Danh sách sản phẩm */
+.related-books .book-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.book-item {
+  width: 23%;
+  height: 50rem;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.book-item:hover {
+  box-shadow: 0 0 2rem rgba(33, 37, 41, 0.3);
+  text-shadow: 0 0 0.5rem rgba(59, 57, 57, 0.2);
+  transform: translateY(-5px); /* Hiệu ứng nổi nhẹ */
+}
+
+.book-item img {
+  width: 100%;
+  height: 35rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.book-name {
+  font-size: 1.6rem;
+  margin: 1rem 0.5rem;
+  color: #333;
+  line-height: 1.4;
+  font-weight: bold;
+  max-height: 4.48rem; /* 2 dòng */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Thêm dấu "..." */
+  color: #2c3e50;
+  word-break: break-all;
+}
+
+.Gia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.GiaHienTai {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff4d4d;
+}
+
+.related-books .discount {
+  background-color: #ff4d4d;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.GiaCu {
+  font-size: 12px;
+  color: #888;
+  text-decoration: line-through;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.DaBan {
+  background-color: #ff4d4d;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* ========================= Footer ========================= */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #007bff;
+  color: white;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+}

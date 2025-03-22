@@ -234,146 +234,88 @@ nav a:hover {
 .sort-dropdown-login:hover .dropdown-content-login {
   display: block;
 }
-/* ========================= Sidebar ========================= */
-.sidebar {
-  width: 20%;
-  background-color: #90ddd7;
-  padding: 5.5rem 2rem; /* Trước đây là 20px, giờ là 2rem */
-  border-radius: 0.8rem; /* 8px = 0.8rem */
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1); /* 2px = 0.2rem, 5px = 0.5rem */
-  height: fit-content;
-  margin-top: 3.5rem;
-}
-
-.sidebar h2 {
-  color: #2c3e50;
-  font-size: 2.4rem; /* 24px = 2.4rem */
-  margin-bottom: 2rem; /* 20px = 2rem */
-  border-bottom: 0.2rem solid #3498db; /* 2px = 0.2rem */
-  padding-bottom: 1rem; /* 10px = 1rem */
-}
-
-.category-filter ul {
-  list-style: none;
-  padding: 0;
-}
-
-.category-filter li {
-  margin: 1.2rem 0; /* 12px = 1.2rem */
-}
-
-.category-filter label {
-  display: flex;
-  align-items: center;
-  color: #34495e;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.category-filter label:hover {
-  color: #3498db;
-}
-
-.category-filter input[type="checkbox"] {
-  margin-right: 1rem; /* 10px = 1rem */
-  accent-color: #3498db;
-  width: 1.6rem; /* 16px = 1.6rem */
-  height: 1.6rem; /* 16px = 1.6rem */
-  cursor: pointer;
-}
-
-.filter-btn {
+/* ========================= Banner ========================= */
+.banner {
   width: 100%;
-  padding: 1rem; /* 10px = 1rem */
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 0.5rem; /* 5px = 0.5rem */
-  cursor: pointer;
-  margin-top: 1.5rem; /* 15px = 1.5rem */
-  font-size: 1.6rem; /* 16px = 1.6rem */
-  transition: background-color 0.3s ease;
-}
-
-.filter-btn:hover {
-  background-color: #2980b9;
-}
-
-/* ========================= Book List Layout ========================= */
-.Danhmuc-page {
-  display: flex;
-  gap: 3rem;
-  margin-top: 2rem;
-}
-
-.book-list-container {
-  flex: 1;
-}
-
-/* ========================= Book List Header ========================= */
-.book-list-header {
+  height: 25rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
 }
 
-/* ========================= Sort Dropdown ========================= */
-.sort-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-btn {
-  background: white;
-  color: #ff4b2b;
-  font-size: 1.6rem;
-  padding: 0.8rem 1.5rem;
-  border: 0.1rem solid #ff4b2b;
-  border-radius: 0.5rem;
-  cursor: pointer;
+.slider {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease-in-out;
-  margin-top: 2rem;
+  width: 100%;
+  gap: 0.3rem;
 }
 
-.dropdown-btn:hover {
-  background-color: #ff4b2b;
-  color: white;
+.slide {
+  flex: 1;
+  flex-shrink: 0;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: -12%;
-  background-color: white;
-  min-width: 13rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+.slide img {
+  width: 100%;
+  height: 100%;
   border-radius: 0.5rem;
-  z-index: 10;
-  overflow: hidden;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.dropdown-content a {
-  color: #333;
-  font-size: 1.6rem;
-  padding: 1rem 1.5rem;
-  text-decoration: none;
-  display: block;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+.slide img:hover {
+  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
-
-.dropdown-content a:hover {
-  background-color: #ff4b2b;
+/* ========================= FLASH SALE ========================= */
+/* FLASH SALE */
+.flash-sale-container {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
   color: white;
+  text-align: center;
+  padding: 5rem 2rem;
+  border-radius: 0.5rem;
+  margin: 3rem 0rem;
 }
 
-/* Hiển thị dropdown khi hover */
-.sort-dropdown:hover .dropdown-content {
-  display: block;
+.flash-sale-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.flash-sale-header h2 {
+  font-size: 4rem;
+  font-weight: bold;
+  color: rgb(240, 215, 215);
+  margin-bottom: 3rem;
+}
+
+.timer {
+  font-size: 5rem;
+  font-weight: bold;
+  background: #ffffff;
+  color: #ff4b2b;
+  padding: 1.5rem 3rem;
+  border-radius: 0.5rem;
+}
+
+.view-all {
+  font-size: 1.6rem;
+  color: white;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.view-all:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 /* ========================= Danh sách sách ========================= */
@@ -428,6 +370,7 @@ nav a:hover {
   overflow: hidden;
   text-overflow: ellipsis; /* Thêm dấu "..." */
   color: #2c3e50;
+  word-break: break-all;
 }
 
 .Gia {
@@ -468,27 +411,47 @@ nav a:hover {
   border-radius: 0 0 8px 8px;
 }
 
-/* ========================= Pagination ========================= */
-.pagination {
+/* ========================= Tiêu đề nổi bật ========================= */
+
+h2 {
   text-align: center;
+  margin-top: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #d32f2f;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 10px 0;
+  border-bottom: 3px solid #d32f2f;
+  display: inline-block;
+  margin-left: 4.5rem;
+}
+/* ===============button xem tất cả=============== */
+.view-all-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
   margin-top: 2rem;
 }
-
-.pagination a {
-  display: inline-block;
-  padding: 1rem 1.5rem;
-  margin: 0 0.5rem;
-  background-color: #007bff;
+.view-all-btn {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
   color: white;
-  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  border-radius: 1.5rem;
   text-decoration: none;
-  font-size: 1.6rem;
-  transition: background 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
-.pagination a:hover,
-.pagination a.active {
-  background-color: #0056b3;
+.view-all-btn:hover {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  transform: scale(1.08);
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
 }
 
 /* ========================= Footer ========================= */
