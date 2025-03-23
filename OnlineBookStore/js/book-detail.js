@@ -7,7 +7,7 @@ async function fetchCategories() {
     categoryList.innerHTML = categories
       .map(
         (category) => `
-              <div class="nav-dropdown-item">
+              <div class="nav-bar__dropdown-item">
                   <a href="../html/book-list.html?categoryId=${category.categoryID}">
                       ${category.categoryName}
                   </a>
@@ -18,7 +18,7 @@ async function fetchCategories() {
   } catch (error) {
     console.error("Error fetching categories:", error);
     document.getElementById("category-list").innerHTML =
-      '<div class="nav-dropdown-item">Lỗi tải danh mục</div>';
+      '<div class="nav-bar__dropdown-item">Lỗi tải danh mục</div>';
   }
 }
 
@@ -70,18 +70,18 @@ async function fetchBookDetail() {
       relatedBooksContainer.innerHTML = relatedBooks
         .map(
           (related) => `
-                <div class="book-item">
+                <div class="related-books__item">
                     <a href="../html/book-detail.html?id=${related.bookID}">
                         <img src="${related.coverImage}" alt="Book Cover" />
                     </a>
-                    <h3 class="book-name">${related.title}</h3>
-                    <div class="Gia">
-                        <span class="GiaHienTai">${formatPrice(
+                    <h3 class="related-books__name">${related.title}</h3>
+                    <div class="related-books__price">
+                        <span class="related-books__price-current">${formatPrice(
                           related.discountPrice || related.price
                         )}</span>
                         ${
                           related.discountPrice
-                            ? `<span class="discount">${calculateDiscount(
+                            ? `<span class="related-books__discount">${calculateDiscount(
                                 related.price,
                                 related.discountPrice
                               )}%</span>`
@@ -90,12 +90,14 @@ async function fetchBookDetail() {
                     </div>
                     ${
                       related.oldPrice
-                        ? `<span class="GiaCu">${formatPrice(
+                        ? `<span class="related-books__price-old">${formatPrice(
                             related.oldPrice
                           )}</span>`
                         : ""
                     }
-                    <div class="DaBan">Đã bán ${related.soldQuantity || 0}</div>
+                    <div class="related-books__sold">Đã bán ${
+                      related.soldQuantity || 0
+                    }</div>
                 </div>
             `
         )
@@ -126,7 +128,7 @@ function renderReviews(bookId) {
     bookReviews
       .map(
         (review) => `
-            <div class="review">
+            <div class="book-reviews__review">
                 <p><strong>${review.name}</strong></p>
                 <p>${"★".repeat(review.rating)}${"☆".repeat(
           5 - review.rating
@@ -203,4 +205,5 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchBookDetail();
   renderReviews(bookId);
   handleReviewSubmit();
+  handleSearch(); // Added this to ensure search functionality is initialized
 });

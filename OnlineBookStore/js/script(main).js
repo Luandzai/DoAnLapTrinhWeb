@@ -21,11 +21,11 @@ async function fetchCategories() {
     const categories = await response.json();
     const categoryList = document.getElementById("category-list");
 
-    // Render danh mục với class nav-dropdown-item
+    // Render danh mục với class nav__dropdown-item
     categoryList.innerHTML = categories
       .map(
         (category) => `
-          <div class="nav-dropdown-item">
+          <div class="nav__dropdown-item">
             <a href="../html/book-list.html?categoryId=${category.categoryID}">
               ${category.categoryName}
             </a>
@@ -36,7 +36,7 @@ async function fetchCategories() {
   } catch (error) {
     console.error("Error fetching categories:", error);
     document.getElementById("category-list").innerHTML =
-      '<div class="nav-dropdown-item">Lỗi tải danh mục</div>';
+      '<div class="nav__dropdown-item">Lỗi tải danh mục</div>';
   }
 }
 
@@ -45,11 +45,11 @@ async function fetchBooks() {
   try {
     const response = await fetch(`${API_BASE_URL}/books`);
     const books = await response.json();
-    const flashSaleContainer = document.querySelector("#flash-sale .book-list");
+    const flashSaleContainer = document.querySelector(".flash-sale__book-list");
     const featuredBooksContainer = document.querySelector(
-      "#featured-books .book-list"
+      ".featured-books__book-list"
     );
-    const newBooksContainer = document.querySelector("#new-books .book-list");
+    const newBooksContainer = document.querySelector(".new-books__book-list");
 
     // Biến đếm số lượng sách cho từng phần
     let flashSaleCount = 0;
@@ -100,16 +100,20 @@ async function fetchBooks() {
     });
   } catch (error) {
     console.error("Error fetching books:", error);
-    document.querySelectorAll(".book-list").forEach((container) => {
-      container.innerHTML = "<p>Lỗi tải sách</p>";
-    });
+    document
+      .querySelectorAll(
+        ".flash-sale__book-list, .featured-books__book-list, .new-books__book-list"
+      )
+      .forEach((container) => {
+        container.innerHTML = "<p>Lỗi tải sách</p>";
+      });
   }
 }
 
 // Hàm countdown timer
 function startTimer() {
-  const timerElement = document.querySelector(".timer .time");
-  let timeLeft = 54 * 60 + 11;
+  const timerElement = document.querySelector(".flash-sale__time");
+  let timeLeft = 54 * 60 + 11; // 54 phút 11 giây
   setInterval(() => {
     const hours = Math.floor(timeLeft / 3600);
     const minutes = Math.floor((timeLeft % 3600) / 60);

@@ -10,7 +10,7 @@ async function fetchCategories() {
     categoryList.innerHTML = categories
       .map(
         (category) => `
-            <div class="nav-dropdown-item">
+            <div class="nav-bar__dropdown-item">
                 <a href="../html/book-list.html?categoryId=${category.categoryID}">
                     ${category.categoryName}
                 </a>
@@ -21,7 +21,7 @@ async function fetchCategories() {
   } catch (error) {
     console.error("Error fetching categories:", error);
     document.getElementById("category-list").innerHTML =
-      '<div class="nav-dropdown-item">Lỗi tải danh mục</div>';
+      '<div class="nav-bar__dropdown-item">Lỗi tải danh mục</div>';
   }
 }
 
@@ -90,18 +90,18 @@ async function fetchRelatedBooks(categoryId) {
     relatedBooksContainer.innerHTML = relatedBooks
       .map(
         (book) => `
-            <div class="book-item">
+            <div class="related-books__item">
                 <a href="../html/book-detail.html?id=${book.bookID}">
                     <img src="${book.coverImage}" alt="Book Cover" />
                 </a>
-                <h3 class="book-name">${book.title}</h3>
-                <div class="Gia">
-                    <span class="GiaHienTai">${formatPrice(
+                <h3 class="related-books__name">${book.title}</h3>
+                <div class="related-books__price">
+                    <span class="related-books__price-current">${formatPrice(
                       book.discountPrice || book.price
                     )}</span>
                     ${
                       book.discountPrice
-                        ? `<span class="discount">${calculateDiscount(
+                        ? `<span class="related-books__discount">${calculateDiscount(
                             book.price,
                             book.discountPrice
                           )}%</span>`
@@ -110,10 +110,14 @@ async function fetchRelatedBooks(categoryId) {
                 </div>
                 ${
                   book.oldPrice
-                    ? `<span class="GiaCu">${formatPrice(book.oldPrice)}</span>`
+                    ? `<span class="related-books__price-old">${formatPrice(
+                        book.oldPrice
+                      )}</span>`
                     : ""
                 }
-                <div class="DaBan">Đã bán ${book.soldQuantity || 0}</div>
+                <div class="related-books__sold">Đã bán ${
+                  book.soldQuantity || 0
+                }</div>
             </div>
         `
       )
@@ -135,7 +139,7 @@ async function fetchReviews(bookId) {
       reviews
         .map(
           (review) => `
-            <div class="review">
+            <div class="book-reviews__review">
                 <p><strong>${review.name}</strong></p>
                 <p>${"★".repeat(review.rating)}${"☆".repeat(
             5 - review.rating

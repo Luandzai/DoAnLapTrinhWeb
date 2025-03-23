@@ -15,10 +15,10 @@
   <body>
     <div class="container">
       <!-- header -->
-      <header>
-        <div class="main-content">
-          <div class="body">
-            <div class="logo">
+      <header class="header">
+        <div class="header__main-content">
+          <div class="header__body">
+            <div class="header__logo">
               <a href="../html/index.html">
                 <img src="../img/logo.svg" alt="Nha sach online" />
               </a>
@@ -30,25 +30,25 @@
               id="search-input"
               placeholder="Tìm kiếm sách..."
             />
-            <nav class="nav-bar">
-              <div class="nav-container">
-                <div class="nav-item dropdown">
-                  <div class="nav-dropdown-btn">Danh mục ▼</div>
-                  <div class="nav-dropdown-content" id="category-list">
+            <nav class="nav">
+              <div class="nav__container">
+                <div class="nav__item nav__item--dropdown">
+                  <div class="nav__dropdown-btn">Danh mục ▼</div>
+                  <div class="nav__dropdown-content" id="category-list">
                     <!-- Danh mục sẽ được thêm động bằng JS -->
                   </div>
                 </div>
-                <div class="nav-item">
-                  <a href="../html/cart.html" class="nav-link">Giỏ hàng</a>
+                <div class="nav__item">
+                  <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
                 </div>
               </div>
             </nav>
             <div class="login">
-              <div class="sort-dropdown-login">
-                <button class="dropdown-btn-login">
+              <div class="login__sort-dropdown">
+                <button class="login__dropdown-btn">
                   <img src="../img/Login.svg" alt="Dang nhap" />
                 </button>
-                <div class="dropdown-content-login">
+                <div class="login__dropdown-content">
                   <a href="./Login.html" data-sort="oldest">Đăng Nhập</a>
                 </div>
               </div>
@@ -57,38 +57,40 @@
         </div>
       </header>
       <!-- main -->
-      <main>
-        <div class="main-content">
-          <div class="cart-container">
-            <aside class="sidebar">
-              <h2 class="cart-title" id="cart-title">GIỎ HÀNG (0 sản phẩm)</h2>
-              <div class="cart-content" id="cart-content">
+      <main class="main">
+        <div class="main__main-content">
+          <div class="cart">
+            <aside class="cart__sidebar">
+              <h2 class="cart__title" id="cart-title">GIỎ HÀNG (0 sản phẩm)</h2>
+              <div class="cart__content" id="cart-content">
                 <!-- Sách trong giỏ hàng sẽ được thêm động bằng JS -->
               </div>
             </aside>
-            <div class="cart-summary">
-              <div class="promo-section">
+            <div class="cart__summary">
+              <div class="promo">
                 <h3>🎁 Khuyến Mãi</h3>
-                <p class="promo-code">Mã Giảm 10K - Toàn Sàn</p>
-                <p class="promo-info">HSD: 31/03/2025</p>
-                <button class="apply-code">Chọn mã giảm giá</button>
+                <p class="promo__code">Mã Giảm 10K - Toàn Sàn</p>
+                <p class="promo__info">HSD: 31/03/2025</p>
+                <button class="promo__apply-code">Chọn mã giảm giá</button>
               </div>
-              <div class="cart-total">
+              <div class="cart__total">
                 <p>Thành tiền: <span id="subtotal">0 đ</span></p>
-                <p class="total-price">
+                <p class="cart__total-price">
                   Tổng Số Tiền (gồm VAT): <span id="total">0 đ</span>
                 </p>
               </div>
-              <button class="checkout-btn">THANH TOÁN</button>
-              <p class="note">Giảm giá trên web chỉ áp dụng cho bán lẻ</p>
+              <button class="cart__checkout-btn">THANH TOÁN</button>
+              <p class="cart__note">Giảm giá trên web chỉ áp dụng cho bán lẻ</p>
             </div>
           </div>
         </div>
       </main>
       <!-- footer -->
-      <footer>
-        <div class="main-content">
-          <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
+      <footer class="footer">
+        <div class="footer__main-content">
+          <p class="footer__copyright">
+            © 2025 Nhà sách Online. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>

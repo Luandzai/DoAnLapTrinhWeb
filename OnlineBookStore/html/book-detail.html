@@ -9,39 +9,45 @@
   </head>
   <body>
     <!-- Header -->
-    <header>
-      <div class="main-content">
-        <div class="body">
+    <header class="header">
+      <div class="header__main-content">
+        <div class="header__body">
           <div class="logo">
             <a href="../html/index.html">
               <img src="../img/logo.svg" alt="Nha sach online" />
             </a>
             <span>Nhà sách Online</span>
           </div>
-          <input type="text" placeholder="Tìm kiếm sách..." /><input
+          <input
+            type="text"
+            placeholder="Tìm kiếm sách..."
+            class="search-bar__input"
+          />
+          <input
             type="text"
             id="search-input"
             placeholder="Tìm kiếm sách..."
+            class="search-bar__input"
           />
           <nav class="nav-bar">
-            <div class="nav-container">
-              <div class="nav-item dropdown">
-                <div class="nav-dropdown-btn">Danh mục ▼</div>
-                <div class="nav-dropdown-content" id="category-list">
+            <div class="nav-bar__container">
+              <div class="nav-bar__item nav-bar__item--dropdown">
+                <div class="nav-bar__dropdown-btn">Danh mục ▼</div>
+                <div class="nav-bar__dropdown-content" id="category-list">
                   <!-- Danh mục render động -->
                 </div>
               </div>
-              <div class="nav-item">
-                <a href="../html/cart.html" class="nav-link">Giỏ hàng</a>
+              <div class="nav-bar__item">
+                <a href="../html/cart.html" class="nav-bar__link">Giỏ hàng</a>
               </div>
             </div>
           </nav>
           <div class="login">
-            <div class="sort-dropdown-login">
-              <button class="dropdown-btn-login">
+            <div class="login__dropdown">
+              <button class="login__dropdown-btn">
                 <img src="../img/Login.svg" alt="Dang nhap" />
               </button>
-              <div class="dropdown-content-login">
+              <div class="login__dropdown-content">
                 <a href="./Login.html">Đăng Nhập</a>
               </div>
             </div>
@@ -51,55 +57,67 @@
     </header>
 
     <!-- Main content -->
-    <main>
-      <div class="main-content book-detail-page">
+    <main class="main">
+      <div class="main__content book-detail-page">
         <!-- Chi tiết sách -->
         <div class="book-detail">
-          <div class="book-image">
+          <div class="book-detail__image">
             <img id="book-cover" src="" alt="Book Cover" />
           </div>
-          <div class="book-info">
-            <h1 class="book-title" id="book-title"></h1>
-            <p class="author" id="book-author"></p>
-            <p class="price" id="book-price"></p>
-            <p class="old-price" id="book-old-price"></p>
-            <p class="discount" id="book-discount"></p>
-            <p class="stock" id="book-stock"></p>
-            <button class="add-to-cart">Thêm vào giỏ hàng</button>
+          <div class="book-detail__info">
+            <h1 class="book-detail__title" id="book-title"></h1>
+            <p class="book-detail__author" id="book-author"></p>
+            <p class="book-detail__price" id="book-price"></p>
+            <p class="book-detail__old-price" id="book-old-price"></p>
+            <p class="book-detail__discount" id="book-discount"></p>
+            <p class="book-detail__stock" id="book-stock"></p>
+            <button class="book-detail__add-to-cart">Thêm vào giỏ hàng</button>
           </div>
         </div>
 
         <!-- Mô tả sách -->
         <div class="book-description">
-          <h2>Mô tả sách</h2>
-          <input type="checkbox" id="toggle-desc" class="toggle-desc" />
-          <div class="desc-content" id="book-desc-content">
-            <p id="book-desc-short"></p>
-            <p class="more-text" id="book-desc-full"></p>
+          <h2 class="book-description__title">Mô tả sách</h2>
+          <input
+            type="checkbox"
+            id="toggle-desc"
+            class="book-description__toggle"
+          />
+          <div class="book-description__content" id="book-desc-content">
+            <p id="book-desc-short" class="book-description__short"></p>
+            <p class="book-description__full" id="book-desc-full"></p>
           </div>
-          <label for="toggle-desc" class="toggle-btn show-more">Xem thêm</label>
-          <label for="toggle-desc" class="toggle-btn show-less">Thu gọn</label>
+          <label
+            for="toggle-desc"
+            class="book-description__toggle-btn book-description__toggle-btn--show-more"
+            >Xem thêm</label
+          >
+          <label
+            for="toggle-desc"
+            class="book-description__toggle-btn book-description__toggle-btn--show-less"
+            >Thu gọn</label
+          >
         </div>
 
         <!-- Đánh giá sách -->
         <div class="book-reviews">
-          <div class="book-reviews-header">
-            <h2>Đánh giá từ khách hàng</h2>
+          <div class="book-reviews__header">
+            <h2 class="book-reviews__title">Đánh giá từ khách hàng</h2>
           </div>
-          <div class="review-list" id="review-list">
+          <div class="book-reviews__list" id="review-list">
             <!-- Đánh giá render động -->
           </div>
 
           <!-- Form nhập đánh giá -->
-          <div class="review-form">
-            <h3>Viết đánh giá của bạn</h3>
+          <div class="book-reviews__form">
+            <h3 class="book-reviews__form-title">Viết đánh giá của bạn</h3>
             <input
               type="text"
-              class="review-name"
+              class="book-reviews__form-name"
               id="review-name"
               placeholder="Nhập tên của bạn"
             />
-            <div class="review-stars" id="review-stars">
+            <div class="book-reviews__form-stars" id="review-stars">
               <input type="radio" id="star5" name="rating" value="5" /><label
                 for="star5"
                 >★</label
@@ -122,11 +140,11 @@
               >
             </div>
             <textarea
-              class="review-text"
+              class="book-reviews__form-text"
               id="review-text"
               placeholder="Nhập nội dung đánh giá..."
             ></textarea>
-            <button class="submit-review" id="submit-review">
+            <button class="book-reviews__form-submit" id="submit-review">
               Gửi đánh giá
             </button>
           </div>
@@ -134,10 +152,10 @@
 
         <!-- Gợi ý sách liên quan -->
         <div class="related-books">
-          <div class="book-list-header">
-            <h2>Sách cùng danh mục</h2>
+          <div class="related-books__header">
+            <h2 class="related-books__title">Sách cùng danh mục</h2>
           </div>
-          <div class="book-list" id="related-books">
+          <div class="related-books__list" id="related-books">
             <!-- Sách liên quan render động -->
           </div>
         </div>
@@ -145,9 +163,11 @@
     </main>
 
     <!-- Footer -->
-    <footer>
-      <div class="main-content">
-        <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
+    <footer class="footer">
+      <div class="footer__main-content">
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
       </div>
     </footer>
 

@@ -17,7 +17,7 @@ async function fetchCategories() {
     categoryList.innerHTML = categories
       .map(
         (category) => `
-            <div class="nav-dropdown-item">
+            <div class="nav__dropdown-item">
               <a href="../html/book-list.html?categoryId=${category.categoryID}">
                 ${category.categoryName}
               </a>
@@ -28,7 +28,7 @@ async function fetchCategories() {
   } catch (error) {
     console.error("Error fetching categories:", error);
     document.getElementById("category-list").innerHTML =
-      '<div class="nav-dropdown-item">Lỗi tải danh mục</div>';
+      '<div class="nav__dropdown-item">Lỗi tải danh mục</div>';
   }
 }
 
@@ -50,48 +50,48 @@ async function fetchCartItems(cartItems = null) {
     cartContent.innerHTML = items
       .map(
         (item) => `
-            <div class="cart-item">
-              <div class="cart-checkbox">
+            <div class="cart__item">
+              <div class="cart__checkbox">
                 <input type="checkbox" id="checkbox-product-${
                   item.id
                 }" name="checkbox_product_${
           item.id
-        }" class="checkbox-add-cart" />
+        }" class="cart__checkbox-input" />
               </div>
-              <div class="cart-image">
+              <div class="cart__image">
                 <a href="../html/book-detail.html?id=${item.id}">
                   <img src="${item.coverImage}" width="120" height="120" alt="${
           item.title
         }" />
                 </a>
               </div>
-              <div class="cart-info">
-                <h2 class="cart-title">
+              <div class="cart__info">
+                <h2 class="cart__title">
                   <a href="../html/book-detail.html?id=${item.id}">${
           item.title
         }</a>
                 </h2>
-                <div class="cart-prices">
-                  <span class="cart-price-current">${formatPrice(
+                <div class="cart__prices">
+                  <span class="cart__price-current">${formatPrice(
                     item.discountPrice || item.price
                   )}</span>
                   ${
                     item.discountPrice
-                      ? `<span class="cart-price-old">${formatPrice(
+                      ? `<span class="cart__price-old">${formatPrice(
                           item.price
                         )}</span>`
                       : ""
                   }
                 </div>
-                <div class="cart-quantity">
-                  <button class="btn-qty decrease">-</button>
+                <div class="cart__quantity">
+                  <button class="cart__quantity-btn cart__quantity-btn--decrease">-</button>
                   <input type="text" value="${
                     item.quantity
-                  }" class="qty-input" readonly />
-                  <button class="btn-qty increase">+</button>
+                  }" class="cart__quantity-input" readonly />
+                  <button class="cart__quantity-btn cart__quantity-btn--increase">+</button>
                 </div>
               </div>
-              <button class="cart-remove">
+              <button class="cart__remove">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </div>
@@ -104,23 +104,27 @@ async function fetchCartItems(cartItems = null) {
   } catch (error) {
     console.error("Error fetching cart items:", error);
     document.getElementById("cart-content").innerHTML =
-      '<div class="cart-item">Lỗi tải giỏ hàng</div>';
+      '<div class="cart__item">Lỗi tải giỏ hàng</div>';
   }
 }
 
 // Thêm sự kiện cho các nút trong giỏ hàng
 function addCartEventListeners(cartItems) {
-  document.querySelectorAll(".btn-qty").forEach((button) => {
+  document.querySelectorAll(".cart__quantity-btn").forEach((button) => {
     button.addEventListener("click", (e) => {
-      const cartItem = e.target.closest(".cart-item");
-      const qtyInput = cartItem.querySelector(".qty-input");
-      const index = Array.from(document.querySelectorAll(".cart-item")).indexOf(
-        cartItem
-      );
+      const cartItem = e.target.closest(".cart__item");
+      const qtyInput = cartItem.querySelector(".cart__quantity-input");
+      const index = Array.from(
+        document.querySelectorAll(".cart__item")
+      ).indexOf(cartItem);
       let qty = parseInt(qtyInput.value);
 
-      if (e.target.classList.contains("increase")) qty++;
-      else if (e.target.classList.contains("decrease") && qty > 1) qty--;
+      if (e.target.classList.contains("cart__quantity-btn--increase")) qty++;
+      else if (
+        e.target.classList.contains("cart__quantity-btn--decrease") &&
+        qty > 1
+      )
+        qty--;
 
       qtyInput.value = qty;
       cartItems[index].quantity = qty;
@@ -128,18 +132,18 @@ function addCartEventListeners(cartItems) {
     });
   });
 
-  document.querySelectorAll(".cart-remove").forEach((button) => {
+  document.querySelectorAll(".cart__remove").forEach((button) => {
     button.addEventListener("click", (e) => {
-      const cartItem = e.target.closest(".cart-item");
-      const index = Array.from(document.querySelectorAll(".cart-item")).indexOf(
-        cartItem
-      );
+      const cartItem = e.target.closest(".cart__item");
+      const index = Array.from(
+        document.querySelectorAll(".cart__item")
+      ).indexOf(cartItem);
       cartItems.splice(index, 1);
       fetchCartItems(cartItems); // Render lại với mảng đã cập nhật
     });
   });
 
-  document.querySelectorAll(".checkbox-add-cart").forEach((checkbox) => {
+  document.querySelectorAll(".cart__checkbox-input").forEach((checkbox) => {
     checkbox.addEventListener("change", () => updateCartTotal(cartItems));
   });
 }
@@ -147,10 +151,10 @@ function addCartEventListeners(cartItems) {
 // Cập nhật tổng tiền
 function updateCartTotal(cartItems) {
   let subtotal = 0;
-  document.querySelectorAll(".cart-item").forEach((item, index) => {
-    const checkbox = item.querySelector(".checkbox-add-cart");
+  document.querySelectorAll(".cart__item").forEach((item, index) => {
+    const checkbox = item.querySelector(".cart__checkbox-input");
     if (checkbox.checked) {
-      const qty = parseInt(item.querySelector(".qty-input").value);
+      const qty = parseInt(item.querySelector(".cart__quantity-input").value);
       const price = cartItems[index].discountPrice || cartItems[index].price;
       subtotal += price * qty;
     }

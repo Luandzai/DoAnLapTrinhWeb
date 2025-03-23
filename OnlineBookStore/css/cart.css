@@ -16,7 +16,9 @@ body {
 }
 
 /* ========================= Main Layout ========================= */
-.main-content {
+.header__main-content,
+.main__main-content,
+.footer__main-content {
   max-width: 110rem; /* 1100px */
   margin: 0 auto;
   padding: 0.5rem;
@@ -33,7 +35,7 @@ header {
   z-index: 1;
 }
 
-.body {
+.header__body {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,7 +43,7 @@ header {
 }
 
 /* Logo */
-.logo {
+.header__logo {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -49,13 +51,13 @@ header {
   font-weight: bold;
 }
 
-.logo img {
+.header__logo img {
   width: 3rem;
   height: auto;
   object-fit: contain;
 }
 
-.logo img:hover {
+.header__logo img:hover {
   cursor: pointer;
 }
 
@@ -69,13 +71,13 @@ input[type="text"] {
 }
 
 /* Menu điều hướng */
-.nav-bar ul {
+.nav ul {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
-.nav-bar a {
+.nav a {
   color: white;
   text-decoration: none;
   font-size: 1.6rem;
@@ -89,18 +91,18 @@ nav a:hover {
 }
 /* ========================= Dropdown Menu ========================= */
 
-.nav-container {
+.nav__container {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-.nav-item {
+.nav__item {
   position: relative;
 }
 
-.nav-link,
-.nav-dropdown-btn {
+.nav__link,
+.nav__dropdown-btn {
   color: #fff;
   font-size: 1.6rem;
   text-decoration: none;
@@ -115,17 +117,17 @@ nav a:hover {
 }
 
 /* Hiệu ứng hover */
-.nav-link:hover,
-.nav-dropdown-btn:hover {
+.nav__link:hover,
+.nav__dropdown-btn:hover {
   opacity: 0.8;
 }
 
 /* Dropdown */
-.dropdown {
+.nav__item--dropdown {
   position: relative;
 }
 
-.nav-dropdown-content {
+.nav__dropdown-content {
   position: absolute;
   top: 100%;
   left: -100%;
@@ -145,13 +147,13 @@ nav a:hover {
 }
 
 /* Hiển thị dropdown khi hover */
-.dropdown:hover .nav-dropdown-content {
+.nav__item--dropdown:hover .nav__dropdown-content {
   opacity: 1;
   visibility: visible;
 }
 
 /* Dropdown Items */
-.nav-dropdown-item a {
+.nav__dropdown-item a {
   color: #333;
   font-size: 1.6rem;
   padding: 1rem 1.5rem;
@@ -160,7 +162,7 @@ nav a:hover {
   transition: all 0.3s ease-in-out;
 }
 
-.nav-dropdown-item a:hover {
+.nav__dropdown-item a:hover {
   background: #34495e;
   color: white;
   padding-left: 2rem;
@@ -171,12 +173,12 @@ nav a:hover {
   position: relative;
 }
 
-.sort-dropdown-login {
+.login__sort-dropdown {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-btn-login {
+.login__dropdown-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -187,22 +189,22 @@ nav a:hover {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dropdown-btn-login img {
+.login__dropdown-btn img {
   width: 4rem;
   height: auto;
   transition: transform 0.3s ease-in-out;
 }
 
-.dropdown-btn-login:hover {
+.login__dropdown-btn:hover {
   background-color: rgba(0, 0, 0, 0.05);
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-btn-login:hover img {
+.login__dropdown-btn:hover img {
   transform: scale(1.1);
 }
 
-.dropdown-content-login {
+.login__dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
@@ -215,7 +217,7 @@ nav a:hover {
   z-index: 100;
 }
 
-.dropdown-content-login a {
+.login__dropdown-content a {
   display: block;
   padding: 1rem 1.5rem;
   font-size: 1.6rem;
@@ -225,25 +227,25 @@ nav a:hover {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dropdown-content-login a:hover {
+.login__dropdown-content a:hover {
   background-color: #3290a6;
   color: white;
 }
 
 /* Hiển thị dropdown khi hover */
-.sort-dropdown-login:hover .dropdown-content-login {
+.login__sort-dropdown:hover .login__dropdown-content {
   display: block;
 }
 
 /* ======= ===================Giỏ hàng================= ======= */
-.cart-container {
+.cart {
   display: flex;
   gap: 2rem;
   margin-top: 5rem;
 }
 
 /* ========== SIDEBAR GIỎ HÀNG ========== */
-.sidebar {
+.cart__sidebar {
   flex: 2;
   background: #fff;
   padding: 1.5rem;
@@ -251,14 +253,14 @@ nav a:hover {
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
 }
 
-.cart-title {
+.cart__title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
 }
 
 /* Common styles for cart items */
-.cart-item {
+.cart__item {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -269,23 +271,23 @@ nav a:hover {
 }
 
 /* Checkbox */
-.cart-checkbox {
+.cart__checkbox {
   width: 5%;
 }
 
-.cart-checkbox input[type="checkbox"] {
+.cart__checkbox input[type="checkbox"] {
   width: 2rem;
   height: 2rem;
   cursor: pointer;
 }
 
 /* Product image */
-.cart-image {
+.cart__image {
   width: 20%;
   padding-right: 2rem;
 }
 
-.cart-image img {
+.cart__image img {
   display: block;
   width: 100%;
   height: auto;
@@ -293,43 +295,43 @@ nav a:hover {
 }
 
 /* Product info */
-.cart-info {
+.cart__info {
   width: 60%;
   padding-right: 2rem;
 }
 
-.cart-title {
+.cart__title {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   line-height: 1.2;
   font-weight: 600;
 }
-.cart-title a {
+.cart__title a {
   text-decoration: none;
   color: #000;
 }
 
-.cart-prices {
+.cart__prices {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
 }
 
-.cart-price-current {
+.cart__price-current {
   font-weight: bold;
   color: #e74c3c;
   margin-right: 1rem;
 }
 
-.cart-price-old {
+.cart__price-old {
   color: #999;
   text-decoration: line-through;
 }
-.cart-quantity {
+.cart__quantity {
   display: flex;
   align-items: center;
 }
-.cart-quantity .btn-qty {
+.cart__quantity .cart__quantity-btn {
   width: 3rem;
   height: 3rem;
   background-color: #eee;
@@ -340,10 +342,10 @@ nav a:hover {
   color: #333;
   border-radius: 0;
 }
-.cart-quantity .btn-qty:hover {
+.cart__quantity .cart__quantity-btn:hover {
   background-color: #ddd;
 }
-.cart-quantity .qty-input {
+.cart__quantity .cart__quantity-input {
   width: 4rem;
   height: 3rem;
   text-align: center;
@@ -353,7 +355,7 @@ nav a:hover {
 }
 
 /* Remove button */
-.cart-remove {
+.cart__remove {
   position: absolute;
   top: 2rem;
   right: 2rem;
@@ -364,7 +366,7 @@ nav a:hover {
   color: #999;
 }
 
-.cart-remove i {
+.cart__remove i {
   width: 2rem;
   height: 2rem;
   background-color: #eee;
@@ -373,12 +375,12 @@ nav a:hover {
   text-align: center;
   line-height: 2rem;
 }
-.cart-remove:hover {
+.cart__remove:hover {
   color: #333;
 }
 
 /* ========== TỔNG TIỀN & THANH TOÁN ========== */
-.cart-summary {
+.cart__summary {
   flex: 1;
   background: #fff;
   padding: 1.5rem;
@@ -386,7 +388,7 @@ nav a:hover {
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
 }
 
-.promo-section {
+.promo {
   background: #f8f8f8;
   padding: 1rem;
   border-radius: 0.6rem;
@@ -394,13 +396,13 @@ nav a:hover {
   margin-bottom: 1.5rem;
 }
 
-.promo-code {
+.promo__code {
   font-size: 1.4rem;
   font-weight: bold;
   color: #27ae60;
 }
 
-.apply-code {
+.promo__apply-code {
   background: #27ae60;
   color: white;
   padding: 0.8rem;
@@ -412,22 +414,22 @@ nav a:hover {
   transition: 0.3s;
 }
 
-.apply-code:hover {
+.promo__apply-code:hover {
   background: #219150;
 }
 
-.cart-total {
+.cart__total {
   font-size: 1.6rem;
   font-weight: bold;
   margin: 1.5rem 0rem;
 }
 
-.total-price span {
+.cart__total-price span {
   color: #e44d26;
   font-size: 1.8rem;
 }
 
-.checkout-btn {
+.cart__checkout-btn {
   background: #e44d26;
   color: white;
   padding: 1rem;
@@ -439,11 +441,11 @@ nav a:hover {
   transition: 0.3s;
 }
 
-.checkout-btn:hover {
+.cart__checkout-btn:hover {
   background: #c0392b;
 }
 
-.note {
+.cart__note {
   font-size: 1.2rem;
   text-align: center;
   margin-top: 1rem;
@@ -452,7 +454,7 @@ nav a:hover {
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-  .cart-container {
+  .cart {
     flex-direction: column;
   }
 }
