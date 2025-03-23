@@ -1,0 +1,168 @@
+/* Định dạng chung */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+}
+
+/* Container chính */
+.container {
+    display: flex;
+    max-width: 1100px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    padding: 15px;
+    background: #fff;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+.sidebar ul li:hover {
+    background: #f0f0f0;
+    color: #d93025;
+}
+
+.sidebar ul li.active {
+    background: #007bff; /* Màu nền xanh */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.sidebar ul li:hover {
+    background: #f0f0f0;
+    color: #d93025;
+}
+
+
+/* Nội dung thông tin tài khoản */
+.account-info {
+    flex: 1;
+    padding: 20px;
+}
+
+.account-info h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.account-info form {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-info label {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.account-info input,
+.account-info select {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.account-info button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.account-info button:hover {
+    background: #0056b3;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    background: #a0a7ab;
+    padding: 20px 0;
+    text-align: center;
+    color: white;
+}
+
+footer .main-content {
+    margin-bottom: 10px;
+}
+
+/* Định dạng phần đăng ký nhận bản tin */
+.newsletter {
+    display: flex;
+    justify-content: center;
+}
+
+.newsletter-container {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    max-width: 90%;
+}
+
+.newsletter i {
+    font-size: 18px;
+    color: #a0a7ab;
+    margin-right: 10px;
+}
+
+.newsletter span {
+    font-weight: bold;
+    color: #333;
+    margin-right: 15px;
+}
+
+.newsletter input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+}
+
+.newsletter button {
+    background: #f7931e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.newsletter button:hover {
+    background: #e57c00;
+}
