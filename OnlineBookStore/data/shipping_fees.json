@@ -1,0 +1,6 @@
+[
+  { "province": "Hà Nội", "fee": 25000 },
+  { "province": "TP. Hồ Chí Minh", "fee": 30000 },
+  { "province": "Đà Nẵng", "fee": 20000 },
+  { "province": "Hải Phòng", "fee": 27000 }
+]
