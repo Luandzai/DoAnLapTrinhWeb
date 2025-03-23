@@ -321,13 +321,48 @@ input[type="text"] {
 }
 
 /* ========================= Tổng Tiền ========================= */
-.checkout__total {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #d32f2f;
+.checkout__cost-details {
   text-align: right;
+  padding: 1.5rem; /* Thêm padding để tạo khoảng cách với mép */
+  border-top: 1px solid #e0e0e0; /* Đường kẻ phân cách với danh sách sản phẩm */
 }
 
+/* Các dòng chi tiết (subtotal, shipping, discount) */
+.checkout__cost-details p {
+  font-size: 1.6rem; /* Kích thước chữ vừa phải cho các dòng chi tiết */
+  margin-bottom: 1rem; /* Khoảng cách giữa các dòng */
+  color: #161313; /* Màu gần đen, dễ đọc */
+  display: flex; /* Dùng flex để căn chỉnh nhãn và giá trị */
+  justify-content: space-between; /* Nhãn bên trái, giá trị bên phải */
+}
+
+/* Tổng tiền cuối cùng */
+.checkout__cost-details .checkout__total {
+  font-size: 2rem; /* Lớn hơn để nhấn mạnh */
+  font-weight: bold;
+  color: #d32f2f; /* Màu đỏ nổi bật */
+  margin-top: 1.5rem; /* Khoảng cách lớn hơn với các dòng trên */
+  border-top: 1px dashed #d32f2f; /* Đường kẻ phân cách nhẹ */
+  padding-top: 1rem; /* Khoảng cách phía trên đường kẻ */
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+  .checkout__cost-details {
+    padding: 1rem;
+  }
+
+  .checkout__cost-details p {
+    font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
+    flex-direction: column; /* Chuyển sang dạng cột để dễ đọc */
+    text-align: left; /* Căn trái cho nhãn và giá trị */
+  }
+
+  .checkout__cost-details .checkout__total {
+    font-size: 1.8rem;
+    margin-top: 1rem;
+  }
+}
 /* ========================= Button Thanh Toán ========================= */
 .checkout__actions {
   text-align: center;
@@ -450,9 +485,30 @@ input[type="text"] {
   box-shadow: 0 0 0.5rem rgba(50, 144, 166, 0.5);
 }
 
-.checkout__discount {
-  margin-top: 2rem;
+/* ========================= Dropdown Chọn Tỉnh/Thành Phố ========================= */
+#province {
+  width: 100%;
+  padding: 1rem;
   font-size: 1.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#province:focus {
+  border-color: #3290a6;
+  outline: none;
+  box-shadow: 0 0 0.5rem rgba(50, 144, 166, 0.5);
+}
+
+/* ========================= Phí vận chuyển ========================= */
+.checkout__shipping {
+  font-size: 1.6rem;
+  color: #333;
+  font-weight: bold;
+  margin-top: 1rem;
 }
 
 /* ========================= Footer ========================= */

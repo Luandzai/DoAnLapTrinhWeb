@@ -69,14 +69,17 @@
               <input type="text" id="phone" required />
             </div>
             <div class="form-group">
-              <label for="address">Địa chỉ:</label>
-              <input type="text" id="address" required />
+              <label for="province">Tỉnh/Thành phố:</label>
+              <select id="province">
+                <option value="">Chọn tỉnh/thành phố</option>
+                <!-- JS sẽ render danh sách tỉnh/thành phố -->
+              </select>
             </div>
           </form>
         </div>
         <!-- Danh sách sản phẩm -->
         <div class="checkout__section">
-          <h3>3. Xác nhận đơn hàng</h3>
+          <h3>2. Xác nhận đơn hàng</h3>
           <div class="checkout__order-summary">
             <div id="order-items">
               <!-- JS sẽ render danh sách sản phẩm -->
@@ -86,7 +89,7 @@
 
         <!-- Phương thức thanh toán -->
         <div class="checkout__section">
-          <h3>2. Chọn phương thức thanh toán</h3>
+          <h3>3. Chọn phương thức thanh toán</h3>
           <div class="payment-options">
             <!-- JS sẽ render danh sách phương thức thanh toán -->
           </div>
@@ -101,11 +104,8 @@
               <!-- JS sẽ render danh sách mã giảm giá -->
             </select>
           </div>
-          <p class="checkout__discount">
-            Giảm giá: <span id="discount-amount">0đ</span>
-          </p>
         </div>
-        
+
         <!-- Danh sách sản phẩm -->
         <div class="checkout__section">
           <h3>5. Xác nhận đơn hàng</h3>
@@ -113,12 +113,20 @@
             <div id="order-items">
               <!-- JS sẽ render danh sách sản phẩm -->
             </div>
-            <p class="checkout__total">
-              Tổng tiền: <span id="total-price">0đ</span>
-            </p>
+            <div class="checkout__cost-details">
+              <p>
+                <span>Tổng tiền sản phẩm:</span> <span id="subtotal">0đ</span>
+              </p>
+              <p>
+                <span>Phí vận chuyển:</span> <span id="shipping-fee">0đ</span>
+              </p>
+              <p><span>Giảm giá:</span> <span id="discount-amount">0đ</span></p>
+              <p class="checkout__total">
+                <span>Tổng tiền:</span> <span id="total-price">0đ</span>
+              </p>
+            </div>
           </div>
         </div>
-
         <!-- Nút đặt hàng -->
         <div class="checkout__actions">
           <button class="btn checkout__btn" id="place-order-btn">
