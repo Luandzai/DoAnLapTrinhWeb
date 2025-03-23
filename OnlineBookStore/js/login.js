@@ -9,3 +9,4 @@ registerLink.onclick = () => {
 loginLink.onclick = () => {
     wrapper.classList.remove('active')
 }
+
