@@ -63,7 +63,7 @@ async function fetchCategories() {
 async function fetchBooks(page = 1, sort = "newest") {
   const urlParams = new URLSearchParams(window.location.search);
   const categoryIdFromUrl = parseInt(urlParams.get("categoryId")); // Chuyển sang số
-  const searchKeyword = urlParams.get("search") || ""; // Lấy từ khóa tìm kiếm từ URL
+  let searchKeyword = urlParams.get("search") || ""; // Lấy từ khóa tìm kiếm từ URL
   const bookList = document.getElementById("book-list");
   const pagination = document.getElementById("pagination");
   const title = document.getElementById("book-list-title");
@@ -76,10 +76,33 @@ async function fetchBooks(page = 1, sort = "newest") {
   try {
     // Tạo query string cho API
     let query = `?page=${page}&sort=${sort}`;
-    if (searchKeyword) {
-      query += `&search=${encodeURIComponent(searchKeyword)}`;
-    } else if (checkedCategories.length > 0) {
+
+    // Kiểm tra nếu nhấn nút "Tìm kiếm" ở sidebar mà không chọn checkbox
+    const isSidebarSearch =
+      document.activeElement === document.querySelector(".sidebar__filter-btn");
+
+    if (checkedCategories.length > 0) {
       query += `&categories=${checkedCategories.join(",")}`;
+      searchKeyword = ""; // Xóa từ khóa tìm kiếm
+      window.history.replaceState(
+        {},
+        document.title,
+        `${window.location.pathname}`
+      );
+    } else if (
+      isSidebarSearch &&
+      checkedCategories.length === 0 &&
+      searchKeyword
+    ) {
+      // Nếu nhấn nút sidebar mà không chọn checkbox, bỏ qua searchKeyword
+      searchKeyword = "";
+      window.history.replaceState(
+        {},
+        document.title,
+        `${window.location.pathname}`
+      );
+    } else if (searchKeyword) {
+      query += `&search=${encodeURIComponent(searchKeyword)}`;
     } else if (categoryIdFromUrl) {
       query += `&categoryId=${categoryIdFromUrl}`;
     }
@@ -93,7 +116,7 @@ async function fetchBooks(page = 1, sort = "newest") {
     if (searchKeyword) {
       title.textContent = `Kết quả tìm kiếm: "${searchKeyword}" (${books.length} sách)`;
     } else if (checkedCategories.length > 0) {
-      title.textContent = "Sách theo danh mục đã chọn";
+      title.textContent = `Sách theo danh mục đã chọn (${books.length} sách)`;
     } else if (categoryIdFromUrl) {
       const categoriesResponse = await fetch(`${API_BASE_URL}/categories`);
       const categories = await categoriesResponse.json();

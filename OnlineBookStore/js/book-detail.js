@@ -113,12 +113,20 @@ async function fetchBookDetail() {
   }
 }
 
-// Mock data cho đánh giá (sẽ lưu tạm trong localStorage)
-let reviews = JSON.parse(localStorage.getItem("reviews")) || [
-  { bookId: 1, name: "Nguyễn Văn A", rating: 3, comment: "Rất hay! Đáng mua!" },
-  { bookId: 1, name: "Nguyễn Văn B", rating: 5, comment: "Rất hay! Đáng mua!" },
-  { bookId: 1, name: "Trần Thị C", rating: 4, comment: "Sách rất hữu ích!" },
-];
+// Hàm lấy đánh giá từ file JSON và thêm đánh giá mới (tạm thời trong phiên)
+let reviews = [];
+async function fetchReviews(bookId) {
+  try {
+    const response = await fetch("../data/reviews.json");
+    const initialReviews = await response.json();
+    reviews = [...initialReviews]; // Sao chép dữ liệu từ file JSON
+    renderReviews(bookId);
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    document.getElementById("review-list").innerHTML =
+      "<p>Lỗi tải đánh giá.</p>";
+  }
+}
 
 // Hàm render đánh giá
 function renderReviews(bookId) {
@@ -154,8 +162,7 @@ function handleReviewSubmit() {
 
     if (name && rating && comment) {
       const newReview = { bookId, name, rating: parseInt(rating), comment };
-      reviews.push(newReview);
-      localStorage.setItem("reviews", JSON.stringify(reviews));
+      reviews.push(newReview); // Thêm đánh giá mới vào mảng tạm
       renderReviews(bookId);
 
       // Reset form
@@ -203,7 +210,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchCategories();
   fetchBookDetail();
-  renderReviews(bookId);
+  fetchReviews(bookId); // Thay renderReviews bằng fetchReviews
   handleReviewSubmit();
-  handleSearch(); // Added this to ensure search functionality is initialized
+  handleSearch();
+});
+
+// Thêm hàm này vào file book-detail.js đã có
+function handleAddToCart() {
+  const addToCartButton = document.querySelector(".book-detail__add-to-cart");
+
+  addToCartButton.addEventListener("click", async () => {
+    try {
+      // Lấy bookId từ URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookId = parseInt(urlParams.get("id"));
+
+      // Lấy thông tin sách hiện tại
+      const response = await fetch("../data/books.json");
+      const books = await response.json();
+      const book = books.find((b) => b.bookID === bookId);
+
+      if (!book) {
+        alert("Không tìm thấy sách!");
+        return;
+      }
+
+      // Kiểm tra số lượng tồn kho
+      if (book.stockQuantity <= 0) {
+        alert("Sách đã hết hàng!");
+        return;
+      }
+
+      // Tạo object cho item trong giỏ hàng
+      const cartItem = {
+        bookId: book.bookID,
+        title: book.title,
+        price: book.discountPrice || book.price,
+        coverImage: book.coverImage,
+        quantity: 1,
+        stockQuantity: book.stockQuantity,
+      };
+
+      // Lấy giỏ hàng từ localStorage (nếu có)
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Kiểm tra xem sách đã có trong giỏ hàng chưa
+      const existingItemIndex = cart.findIndex(
+        (item) => item.bookId === bookId
+      );
+
+      if (existingItemIndex >= 0) {
+        // Nếu sách đã có trong giỏ, tăng số lượng (nếu còn hàng)
+        if (
+          cart[existingItemIndex].quantity <
+          cart[existingItemIndex].stockQuantity
+        ) {
+          cart[existingItemIndex].quantity += 1;
+          alert("Đã tăng số lượng sách trong giỏ hàng!");
+        } else {
+          alert("Không thể thêm nữa! Đã đạt số lượng tối đa trong kho.");
+          return;
+        }
+      } else {
+        // Nếu sách chưa có trong giỏ, thêm mới
+        cart.push(cartItem);
+        alert("Đã thêm sách vào giỏ hàng!");
+      }
+
+      // Lưu giỏ hàng mới vào localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      // Cập nhật giao diện nếu cần (ví dụ: số lượng trên icon giỏ hàng)
+      updateCartDisplay();
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert("Có lỗi xảy ra khi thêm vào giỏ hàng!");
+    }
+  });
+}
+
+// Thêm vào phần khởi chạy khi trang load
+document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const bookId = parseInt(urlParams.get("id"));
+
+  fetchCategories();
+  fetchBookDetail();
+  fetchReviews(bookId);
+  handleReviewSubmit();
+  handleSearch();
+  handleAddToCart(); // Thêm hàm xử lý giỏ hàng
 });

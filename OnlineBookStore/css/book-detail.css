@@ -16,7 +16,9 @@ body {
 }
 
 /* ========================= Main Layout ========================= */
-.main__content {
+.main__content,
+.header__main-content,
+.footer__main-content {
   max-width: 110rem; /* 1100px */
   margin: 0 auto;
   padding: 0.5rem;

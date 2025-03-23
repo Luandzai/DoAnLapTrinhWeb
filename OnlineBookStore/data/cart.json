@@ -24,6 +24,54 @@
       "price": 149000,
       "discountPrice": 64070,
       "quantity": 2
+    },
+    {
+      "id": "237249",
+      "title": "Trump Ở Nhà Trắng",
+      "coverImage": "../img/truyen16.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 1
+    },
+    {
+      "id": "237250",
+      "title": "Lorem ipsum dolor sit amet",
+      "coverImage": "../img/truyen17.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 2
+    },
+    {
+      "id": "237251",
+      "title": "Trump Ở Nhà Trắng",
+      "coverImage": "https://cdn0.fahasa.com/media/catalog/product//8/9/8935280902671.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 1
+    },
+    {
+      "id": "237252",
+      "title": "Lorem ipsum dolor sit amet",
+      "coverImage": "../img/truyen18.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 2
+    },
+    {
+      "id": "237253",
+      "title": "Trump Ở Nhà Trắng",
+      "coverImage": "https://cdn0.fahasa.com/media/catalog/product//8/9/8935280902671.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 1
+    },
+    {
+      "id": "237254",
+      "title": "Lorem ipsum dolor sit amet",
+      "coverImage": "../img/truyen19.jpg",
+      "price": 149000,
+      "discountPrice": 64070,
+      "quantity": 2
     }
   ]
 }

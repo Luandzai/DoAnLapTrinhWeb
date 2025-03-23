@@ -61,7 +61,7 @@ async function fetchBooks(page = 1, sort = "newest") {
     const response = await fetch("../data/books.json");
     let books = await response.json();
 
-    // Nếu có checkedCategories, xóa searchKeyword và chỉ lọc theo danh mục
+    // Nếu có checkedCategories, lọc theo danh mục và xóa searchKeyword
     if (checkedCategories.length > 0) {
       searchKeyword = ""; // Xóa từ khóa tìm kiếm
       window.history.replaceState(
@@ -73,15 +73,36 @@ async function fetchBooks(page = 1, sort = "newest") {
         checkedCategories.includes(book.categoryID)
       );
     }
-    // Nếu có searchKeyword và không có checkedCategories, lọc theo từ khóa
-    else if (searchKeyword) {
-      books = books.filter((book) =>
-        book.title.toLowerCase().includes(searchKeyword.toLowerCase())
-      );
-    }
-    // Nếu không có cả hai, lọc theo categoryId từ URL (nếu có)
-    else if (categoryIdFromUrl) {
+    // Nếu có categoryId từ URL và không có checkedCategories, lọc theo danh mục từ header
+    else if (categoryIdFromUrl && checkedCategories.length === 0) {
       books = books.filter((book) => book.categoryID === categoryIdFromUrl);
+    }
+    // Nếu có searchKeyword và không có checkedCategories, lọc theo từ khóa
+    else if (searchKeyword && checkedCategories.length === 0) {
+      // Kiểm tra xem có phải nhấn nút "Tìm kiếm" sidebar không
+      const isSidebarSearch =
+        document.activeElement ===
+        document.querySelector(".sidebar__filter-btn");
+      if (isSidebarSearch) {
+        searchKeyword = ""; // Bỏ qua từ khóa tìm kiếm từ URL
+        window.history.replaceState(
+          {},
+          document.title,
+          `${window.location.pathname}`
+        ); // Xóa ?search=... khỏi URL
+      } else {
+        books = books.filter((book) =>
+          book.title.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+      }
+    }
+    // Nếu không có gì, hiển thị toàn bộ sách
+    else if (
+      !searchKeyword &&
+      !categoryIdFromUrl &&
+      checkedCategories.length === 0
+    ) {
+      // Giữ nguyên toàn bộ sách
     }
 
     // Sắp xếp
