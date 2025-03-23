@@ -1,0 +1,6 @@
+[
+  { "id": "cod", "name": "Thanh toán khi nhận hàng (COD)" },
+  { "id": "momo", "name": "Ví MoMo" },
+  { "id": "bank", "name": "Chuyển khoản ngân hàng" },
+  { "id": "credit_card", "name": "Thẻ tín dụng / Ghi nợ" }
+]

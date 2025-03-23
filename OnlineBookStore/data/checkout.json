@@ -1,0 +1,16 @@
+[
+  {
+    "bookID": 1,
+    "title": "Đắc Nhân Tâm",
+    "coverImage": "../img/truyen1.jpg",
+    "price": 120000,
+    "quantity": 2
+  },
+  {
+    "bookID": 2,
+    "title": "Nhà Giả Kim",
+    "coverImage": "../img/truyen2.jpg",
+    "price": 95000,
+    "quantity": 1
+  }
+]

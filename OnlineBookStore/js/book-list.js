@@ -46,7 +46,7 @@ async function fetchCategories() {
 // Hàm lấy và hiển thị sách từ file JSON
 async function fetchBooks(page = 1, sort = "newest") {
   const urlParams = new URLSearchParams(window.location.search);
-  const categoryIdFromUrl = parseInt(urlParams.get("categoryId")); // Chuyển sang số
+  let categoryIdFromUrl = parseInt(urlParams.get("categoryId")); // Chuyển sang số
   let searchKeyword = urlParams.get("search") || ""; // Lấy từ khóa tìm kiếm từ URL
   const bookList = document.getElementById("book-list");
   const pagination = document.getElementById("pagination");
@@ -61,17 +61,32 @@ async function fetchBooks(page = 1, sort = "newest") {
     const response = await fetch("../data/books.json");
     let books = await response.json();
 
-    // Nếu có checkedCategories, lọc theo danh mục và xóa searchKeyword
+    // Kiểm tra nếu nhấn nút "Tìm kiếm" ở sidebar
+    const isSidebarSearch =
+      document.activeElement === document.querySelector(".sidebar__filter-btn");
+
+    // Nếu có checkedCategories, lọc theo danh mục và xóa các bộ lọc khác
     if (checkedCategories.length > 0) {
       searchKeyword = ""; // Xóa từ khóa tìm kiếm
+      categoryIdFromUrl = null; // Xóa categoryId từ URL
       window.history.replaceState(
         {},
         document.title,
         `${window.location.pathname}`
-      ); // Xóa ?search=... khỏi URL
+      ); // Xóa ?search=... và ?categoryId=... khỏi URL
       books = books.filter((book) =>
         checkedCategories.includes(book.categoryID)
       );
+    }
+    // Nếu nhấn nút "Tìm kiếm" sidebar mà không chọn checkbox, hiển thị toàn bộ sách
+    else if (isSidebarSearch && checkedCategories.length === 0) {
+      searchKeyword = ""; // Bỏ qua từ khóa tìm kiếm
+      categoryIdFromUrl = null; // Bỏ qua danh mục từ URL
+      window.history.replaceState(
+        {},
+        document.title,
+        `${window.location.pathname}`
+      ); // Xóa ?search=... và ?categoryId=... khỏi URL
     }
     // Nếu có categoryId từ URL và không có checkedCategories, lọc theo danh mục từ header
     else if (categoryIdFromUrl && checkedCategories.length === 0) {
@@ -79,22 +94,9 @@ async function fetchBooks(page = 1, sort = "newest") {
     }
     // Nếu có searchKeyword và không có checkedCategories, lọc theo từ khóa
     else if (searchKeyword && checkedCategories.length === 0) {
-      // Kiểm tra xem có phải nhấn nút "Tìm kiếm" sidebar không
-      const isSidebarSearch =
-        document.activeElement ===
-        document.querySelector(".sidebar__filter-btn");
-      if (isSidebarSearch) {
-        searchKeyword = ""; // Bỏ qua từ khóa tìm kiếm từ URL
-        window.history.replaceState(
-          {},
-          document.title,
-          `${window.location.pathname}`
-        ); // Xóa ?search=... khỏi URL
-      } else {
-        books = books.filter((book) =>
-          book.title.toLowerCase().includes(searchKeyword.toLowerCase())
-        );
-      }
+      books = books.filter((book) =>
+        book.title.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
     }
     // Nếu không có gì, hiển thị toàn bộ sách
     else if (

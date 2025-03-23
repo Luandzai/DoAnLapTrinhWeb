@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh toán - Nhà sách Online</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/checkout.css" />
+  </head>
+  <body>
+    <!-- header -->
+    <header class="header">
+      <div class="header__main-content">
+        <!-- Body Header -->
+        <div class="header__body">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nha sach online" />
+            </a>
+            <span>Nhà sách Online</span>
+          </div>
+          <!-- Search bar -->
+          <input type="text" id="search-input" placeholder="Tìm kiếm sách..." />
+          <!-- Nav bar -->
+          <nav class="nav">
+            <div class="nav__container">
+              <div class="nav__item nav__item--dropdown">
+                <div class="nav__dropdown-btn">Danh mục ▼</div>
+                <div class="nav__dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
+                </div>
+              </div>
+              <div class="nav__item">
+                <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
+              </div>
+            </div>
+          </nav>
+          <!-- Login -->
+          <div class="login">
+            <div class="login__dropdown">
+              <button class="login__dropdown-btn">
+                <img src="../img/Login.svg" alt="Dang nhap" />
+              </button>
+              <div class="login__dropdown-content">
+                <a href="./Login.html" data-sort="oldest">Đăng Nhập</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="main__content checkout">
+        <h2 class="checkout__title">Thông tin thanh toán</h2>
+
+        <!-- Thông tin giao hàng -->
+        <div class="checkout__section">
+          <h3>1. Thông tin giao hàng</h3>
+          <form id="checkout-form">
+            <div class="form-group">
+              <label for="full-name">Họ và Tên:</label>
+              <input type="text" id="full-name" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Số điện thoại:</label>
+              <input type="text" id="phone" required />
+            </div>
+            <div class="form-group">
+              <label for="address">Địa chỉ:</label>
+              <input type="text" id="address" required />
+            </div>
+          </form>
+        </div>
+        <!-- Danh sách sản phẩm -->
+        <div class="checkout__section">
+          <h3>3. Xác nhận đơn hàng</h3>
+          <div class="checkout__order-summary">
+            <div id="order-items">
+              <!-- JS sẽ render danh sách sản phẩm -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Phương thức thanh toán -->
+        <div class="checkout__section">
+          <h3>2. Chọn phương thức thanh toán</h3>
+          <div class="payment-options">
+            <!-- JS sẽ render danh sách phương thức thanh toán -->
+          </div>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="checkout__section">
+          <h3>3. Xác nhận đơn hàng</h3>
+          <div class="checkout__order-summary">
+            <div id="order-items">
+              <!-- JS sẽ render danh sách sản phẩm -->
+            </div>
+            <p class="checkout__total">
+              Tổng tiền: <span id="total-price">0đ</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Nút đặt hàng -->
+        <div class="checkout__actions">
+          <button class="btn checkout__btn" id="place-order-btn">
+            Xác nhận đặt hàng
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="footer__main-content">
+        <!-- Copy right -->
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/checkout.js"></script>
+  </body>
+</html>
