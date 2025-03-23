@@ -5,8 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lịch sử mua hàng</title>
     <link rel="stylesheet" href="../css/PurchaseHistory.css">
+    <link rel="stylesheet" href="../css/style.css"> <!-- CSS chung -->
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__main-content">
+            <div class="header__body">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="../html/index.html">
+                        <img src="../img/logo.svg" alt="Nhà sách Online" />
+                    </a>
+                    <span>Nhà sách Online</span>
+                </div>
+
+                <!-- Thanh tìm kiếm sách đã mua -->
+                <div class="search-bar">
+                    <input type="text" id="search-purchased-books" placeholder="Tìm kiếm sách đã mua...">
+                    <button onclick="searchPurchasedBooks()">Tìm kiếm</button>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav">
+                    <ul>
+                        <li><a href="../html/index.html">Trang chủ</a></li>
+                        <li><a href="../html/books.html">Sách</a></li>
+                        <li><a href="../html/contact.html">Liên hệ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Container -->
     <div class="container">
         <div class="sidebar">
             <ul>
@@ -22,6 +54,7 @@
                 <thead>
                     <tr>
                         <th>STT</th>
+                        <th>Sách</th>
                         <th>Ngày mua</th>
                         <th>Tổng tiền</th>
                         <th>Chi tiết</th>
@@ -30,18 +63,21 @@
                 <tbody>
                     <tr>
                         <td>1</td>
+                        <td>Đắc Nhân Tâm</td>
                         <td>20/10/2021</td>
                         <td>200.000đ</td>
                         <td><a href="#">Xem chi tiết</a></td>
                     </tr>
                     <tr>
                         <td>2</td>
+                        <td>Nhà Giả Kim</td>
                         <td>21/10/2021</td>
                         <td>300.000đ</td>
                         <td><a href="#">Xem chi tiết</a></td>
                     </tr>
                     <tr>
                         <td>3</td>
+                        <td>Tư Duy Nhanh Và Chậm</td>
                         <td>22/10/2021</td>
                         <td>400.000đ</td>
                         <td><a href="#">Xem chi tiết</a></td>
@@ -53,16 +89,17 @@
 
     <footer>
         <div class="main-content">
-            <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
+          <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
         </div>
-        <div class="newsletter">
-            <div class="newsletter-container">
-                <i class="fas fa-envelope"></i> 
-                <span>ĐĂNG KÝ NHẬN BẢN TIN</span>
-                <input type="email" placeholder="Nhập địa chỉ email của bạn">
-                <button>Đăng ký</button>
-            </div>
+            <div class="newsletter">
+                <div class="newsletter-container">
+                    <i class="fas fa-envelope"></i> 
+                    <span>ĐĂNG KÝ NHẬN BẢN TIN</span>
+                    <input type="email" placeholder="Nhập địa chỉ email của bạn">
+                    <button>Đăng ký</button>
+                </div>
         </div>
     </footer>
+    <script src="../js/SearchPurchaseHistory.js"></script>
 </body>
 </html>
