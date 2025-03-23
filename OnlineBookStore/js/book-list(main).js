@@ -25,7 +25,7 @@ async function fetchCategories() {
     categoryList.innerHTML = categories
       .map(
         (category) => `
-          <div class="nav-dropdown-item">
+          <div class="nav__dropdown-item">
             <a href="../html/book-list.html?categoryId=${category.categoryID}">
               ${category.categoryName}
             </a>
@@ -53,7 +53,7 @@ async function fetchCategories() {
   } catch (error) {
     console.error("Error fetching categories:", error);
     document.getElementById("category-list").innerHTML =
-      '<div class="nav-dropdown-item">Lỗi tải danh mục</div>';
+      '<div class="nav__dropdown-item">Lỗi tải danh mục</div>';
     document.getElementById("category-checkbox-list").innerHTML =
       "<li>Lỗi tải danh mục</li>";
   }
@@ -70,7 +70,7 @@ async function fetchBooks(page = 1, sort = "newest") {
 
   // Lấy danh mục đã chọn từ checkbox
   const checkedCategories = Array.from(
-    document.querySelectorAll('input[name="category"]:checked')
+    document.querySelectorAll('.sidebar__filter input[name="category"]:checked')
   ).map((checkbox) => parseInt(checkbox.value)); // Chuyển sang số
 
   try {
@@ -172,7 +172,7 @@ async function fetchBooks(page = 1, sort = "newest") {
 
 // Xử lý sắp xếp
 function handleSort() {
-  document.querySelectorAll(".sort-dropdown a").forEach((link) => {
+  document.querySelectorAll(".book-list__sort-content a").forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
       const sort = e.target.getAttribute("data-sort");
@@ -189,7 +189,7 @@ document.getElementById("category-filter").addEventListener("submit", (e) => {
 
 // Xử lý ô tìm kiếm trong header
 function handleSearch() {
-  const searchInput = document.querySelector("header input[type='text']");
+  const searchInput = document.querySelector(".header__search");
   searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       const keyword = searchInput.value.trim();

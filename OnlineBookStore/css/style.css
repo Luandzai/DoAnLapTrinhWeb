@@ -16,14 +16,16 @@ body {
 }
 
 /* ========================= Main Layout ========================= */
-.main-content {
+.header__main-content,
+.main__content,
+.footer__main-content {
   max-width: 110rem; /* 1100px */
   margin: 0 auto;
   padding: 0.5rem;
 }
 
 /* ========================= Header ========================= */
-header {
+.header {
   padding: 1.5rem 2rem;
   background-color: #3290a6;
   color: white;
@@ -33,7 +35,7 @@ header {
   z-index: 1;
 }
 
-.body {
+.header__body {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,13 +71,13 @@ input[type="text"] {
 }
 
 /* Menu điều hướng */
-.nav-bar ul {
+.nav ul {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
-.nav-bar a {
+.nav a {
   color: white;
   text-decoration: none;
   font-size: 1.6rem;
@@ -84,23 +86,23 @@ input[type="text"] {
   transition: color 0.3s ease-in-out;
 }
 
-nav a:hover {
+.nav a:hover {
   color: black;
 }
-/* ========================= Dropdown Menu ========================= */
 
-.nav-container {
+/* ========================= Dropdown Menu ========================= */
+.nav__container {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-.nav-item {
+.nav__item {
   position: relative;
 }
 
-.nav-link,
-.nav-dropdown-btn {
+.nav__link,
+.nav__dropdown-btn {
   color: #fff;
   font-size: 1.6rem;
   text-decoration: none;
@@ -115,17 +117,17 @@ nav a:hover {
 }
 
 /* Hiệu ứng hover */
-.nav-link:hover,
-.nav-dropdown-btn:hover {
+.nav__link:hover,
+.nav__dropdown-btn:hover {
   opacity: 0.8;
 }
 
 /* Dropdown */
-.dropdown {
+.nav__item--dropdown {
   position: relative;
 }
 
-.nav-dropdown-content {
+.nav__dropdown-content {
   position: absolute;
   top: 100%;
   left: -100%;
@@ -137,21 +139,19 @@ nav a:hover {
   border-radius: 0.5rem;
   z-index: 100;
   padding: 1rem 0;
-
-  /* Ẩn dropdown mặc định */
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 /* Hiển thị dropdown khi hover */
-.dropdown:hover .nav-dropdown-content {
+.nav__item--dropdown:hover .nav__dropdown-content {
   opacity: 1;
   visibility: visible;
 }
 
 /* Dropdown Items */
-.nav-dropdown-item a {
+.nav__dropdown-item a {
   color: #333;
   font-size: 1.6rem;
   padding: 1rem 1.5rem;
@@ -160,7 +160,7 @@ nav a:hover {
   transition: all 0.3s ease-in-out;
 }
 
-.nav-dropdown-item a:hover {
+.nav__dropdown-item a:hover {
   background: #34495e;
   color: white;
   padding-left: 2rem;
@@ -171,12 +171,12 @@ nav a:hover {
   position: relative;
 }
 
-.sort-dropdown-login {
+.login__dropdown {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-btn-login {
+.login__dropdown-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -187,22 +187,22 @@ nav a:hover {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dropdown-btn-login img {
+.login__dropdown-btn img {
   width: 4rem;
   height: auto;
   transition: transform 0.3s ease-in-out;
 }
 
-.dropdown-btn-login:hover {
+.login__dropdown-btn:hover {
   background-color: rgba(0, 0, 0, 0.05);
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-btn-login:hover img {
+.login__dropdown-btn:hover img {
   transform: scale(1.1);
 }
 
-.dropdown-content-login {
+.login__dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
@@ -215,7 +215,7 @@ nav a:hover {
   z-index: 100;
 }
 
-.dropdown-content-login a {
+.login__dropdown-content a {
   display: block;
   padding: 1rem 1.5rem;
   font-size: 1.6rem;
@@ -225,15 +225,16 @@ nav a:hover {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dropdown-content-login a:hover {
+.login__dropdown-content a:hover {
   background-color: #3290a6;
   color: white;
 }
 
 /* Hiển thị dropdown khi hover */
-.sort-dropdown-login:hover .dropdown-content-login {
+.login__dropdown:hover .login__dropdown-content {
   display: block;
 }
+
 /* ========================= Banner ========================= */
 .banner {
   width: 100%;
@@ -244,18 +245,18 @@ nav a:hover {
   align-items: center;
 }
 
-.slider {
+.banner__slider {
   display: flex;
   width: 100%;
   gap: 0.3rem;
 }
 
-.slide {
+.banner__slide {
   flex: 1;
   flex-shrink: 0;
 }
 
-.slide img {
+.banner__slide img {
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
@@ -264,14 +265,14 @@ nav a:hover {
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.slide img:hover {
-  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+.banner__slide img:hover {
+  transform: scale(1.05);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
+
 /* ========================= FLASH SALE ========================= */
-/* FLASH SALE */
-.flash-sale-container {
+.flash-sale {
   background: linear-gradient(90deg, #ff416c, #ff4b2b);
   color: white;
   text-align: center;
@@ -280,7 +281,7 @@ nav a:hover {
   margin: 3rem 0rem;
 }
 
-.flash-sale-header {
+.flash-sale__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -288,14 +289,14 @@ nav a:hover {
   flex-wrap: wrap;
 }
 
-.flash-sale-header h2 {
+.flash-sale__header h2 {
   font-size: 4rem;
   font-weight: bold;
   color: rgb(240, 215, 215);
   margin-bottom: 3rem;
 }
 
-.timer {
+.flash-sale__timer {
   font-size: 5rem;
   font-weight: bold;
   background: #ffffff;
@@ -304,7 +305,7 @@ nav a:hover {
   border-radius: 0.5rem;
 }
 
-.view-all {
+.flash-sale__view-all {
   font-size: 1.6rem;
   color: white;
   text-decoration: none;
@@ -314,14 +315,14 @@ nav a:hover {
   transition: all 0.3s ease-in-out;
 }
 
-.view-all:hover {
+.flash-sale__view-all:hover {
   background: rgba(255, 255, 255, 0.4);
 }
 
 /* ========================= Danh sách sách ========================= */
-
-/* Danh sách sản phẩm */
-.book-list {
+.flash-sale__book-list,
+.featured-books__book-list,
+.new-books__book-list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -346,7 +347,7 @@ nav a:hover {
 .book-item:hover {
   box-shadow: 0 0 2rem rgba(33, 37, 41, 0.3);
   text-shadow: 0 0 0.5rem rgba(59, 57, 57, 0.2);
-  transform: translateY(-5px); /* Hiệu ứng nổi nhẹ */
+  transform: translateY(-5px);
 }
 
 .book-item img {
@@ -363,12 +364,12 @@ nav a:hover {
   color: #333;
   line-height: 1.4;
   font-weight: bold;
-  max-height: 4.48rem; /* 2 dòng */
+  max-height: 4.48rem;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis; /* Thêm dấu "..." */
+  text-overflow: ellipsis;
   color: #2c3e50;
   word-break: break-all;
 }
@@ -412,7 +413,6 @@ nav a:hover {
 }
 
 /* ========================= Tiêu đề nổi bật ========================= */
-
 h2 {
   text-align: center;
   margin-top: 20px;
@@ -426,14 +426,16 @@ h2 {
   display: inline-block;
   margin-left: 4.5rem;
 }
+
 /* ===============button xem tất cả=============== */
-.view-all-container {
+.view-all {
   display: flex;
   justify-content: center;
   padding: 3rem;
   margin-top: 2rem;
 }
-.view-all-btn {
+
+.view-all__btn {
   border: none;
   cursor: pointer;
   outline: none;
@@ -448,14 +450,14 @@ h2 {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
-.view-all-btn:hover {
+.view-all__btn:hover {
   background: linear-gradient(90deg, #ff4b2b, #ff416c);
   transform: scale(1.08);
   box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
 }
 
 /* ========================= Footer ========================= */
-footer {
+.footer {
   text-align: center;
   padding: 1.5rem;
   background-color: #007bff;
@@ -463,4 +465,3 @@ footer {
   margin-top: 2rem;
   border-radius: 0.5rem;
 }
-

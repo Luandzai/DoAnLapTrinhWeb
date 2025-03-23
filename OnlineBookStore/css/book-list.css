@@ -16,14 +16,16 @@ body {
 }
 
 /* ========================= Main Layout ========================= */
-.main-content {
+.header__main-content,
+.main__content,
+.footer__main-content {
   max-width: 110rem; /* 1100px */
   margin: 0 auto;
   padding: 0.5rem;
 }
 
 /* ========================= Header ========================= */
-header {
+.header {
   padding: 1.5rem 2rem;
   background-color: #3290a6;
   color: white;
@@ -33,7 +35,7 @@ header {
   z-index: 1;
 }
 
-.body {
+.header__body {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,7 +62,7 @@ header {
 }
 
 /* Thanh tìm kiếm */
-input[type="text"] {
+.header__search {
   padding: 0.8rem;
   font-size: 1.6rem;
   border: none;
@@ -69,13 +71,13 @@ input[type="text"] {
 }
 
 /* Menu điều hướng */
-.nav-bar ul {
+.nav ul {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
-.nav-bar a {
+.nav a {
   color: white;
   text-decoration: none;
   font-size: 1.6rem;
@@ -84,23 +86,23 @@ input[type="text"] {
   transition: color 0.3s ease-in-out;
 }
 
-nav a:hover {
+.nav a:hover {
   color: black;
 }
-/* ========================= Dropdown Menu ========================= */
 
-.nav-container {
+/* ========================= Dropdown Menu ========================= */
+.nav__container {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-.nav-item {
+.nav__item {
   position: relative;
 }
 
-.nav-link,
-.nav-dropdown-btn {
+.nav__link,
+.nav__dropdown-btn {
   color: #fff;
   font-size: 1.6rem;
   text-decoration: none;
@@ -115,17 +117,17 @@ nav a:hover {
 }
 
 /* Hiệu ứng hover */
-.nav-link:hover,
-.nav-dropdown-btn:hover {
+.nav__link:hover,
+.nav__dropdown-btn:hover {
   opacity: 0.8;
 }
 
 /* Dropdown */
-.dropdown {
+.nav__item--dropdown {
   position: relative;
 }
 
-.nav-dropdown-content {
+.nav__dropdown-content {
   position: absolute;
   top: 100%;
   left: -100%;
@@ -137,21 +139,19 @@ nav a:hover {
   border-radius: 0.5rem;
   z-index: 100;
   padding: 1rem 0;
-
-  /* Ẩn dropdown mặc định */
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 /* Hiển thị dropdown khi hover */
-.dropdown:hover .nav-dropdown-content {
+.nav__item--dropdown:hover .nav__dropdown-content {
   opacity: 1;
   visibility: visible;
 }
 
 /* Dropdown Items */
-.nav-dropdown-item a {
+.nav__dropdown-item a {
   color: #333;
   font-size: 1.6rem;
   padding: 1rem 1.5rem;
@@ -160,7 +160,7 @@ nav a:hover {
   transition: all 0.3s ease-in-out;
 }
 
-.nav-dropdown-item a:hover {
+.nav__dropdown-item a:hover {
   background: #34495e;
   color: white;
   padding-left: 2rem;
@@ -171,12 +171,12 @@ nav a:hover {
   position: relative;
 }
 
-.sort-dropdown-login {
+.login__dropdown {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-btn-login {
+.login__dropdown-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -187,22 +187,22 @@ nav a:hover {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dropdown-btn-login img {
+.login__dropdown-btn img {
   width: 4rem;
   height: auto;
   transition: transform 0.3s ease-in-out;
 }
 
-.dropdown-btn-login:hover {
+.login__dropdown-btn:hover {
   background-color: rgba(0, 0, 0, 0.05);
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-btn-login:hover img {
+.login__dropdown-btn:hover img {
   transform: scale(1.1);
 }
 
-.dropdown-content-login {
+.login__dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
@@ -215,7 +215,7 @@ nav a:hover {
   z-index: 100;
 }
 
-.dropdown-content-login a {
+.login__dropdown-content a {
   display: block;
   padding: 1rem 1.5rem;
   font-size: 1.6rem;
@@ -225,44 +225,45 @@ nav a:hover {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dropdown-content-login a:hover {
+.login__dropdown-content a:hover {
   background-color: #3290a6;
   color: white;
 }
 
 /* Hiển thị dropdown khi hover */
-.sort-dropdown-login:hover .dropdown-content-login {
+.login__dropdown:hover .login__dropdown-content {
   display: block;
 }
+
 /* ========================= Sidebar ========================= */
 .sidebar {
   width: 20%;
   background-color: #90ddd7;
-  padding: 5.5rem 2rem; /* Trước đây là 20px, giờ là 2rem */
-  border-radius: 0.8rem; /* 8px = 0.8rem */
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1); /* 2px = 0.2rem, 5px = 0.5rem */
+  padding: 5.5rem 2rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
   height: fit-content;
   margin-top: 3.5rem;
 }
 
-.sidebar h2 {
+.sidebar__title {
   color: #2c3e50;
-  font-size: 2.4rem; /* 24px = 2.4rem */
-  margin-bottom: 2rem; /* 20px = 2rem */
-  border-bottom: 0.2rem solid #3498db; /* 2px = 0.2rem */
-  padding-bottom: 1rem; /* 10px = 1rem */
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+  border-bottom: 0.2rem solid #3498db;
+  padding-bottom: 1rem;
 }
 
-.category-filter ul {
+.sidebar__filter ul {
   list-style: none;
   padding: 0;
 }
 
-.category-filter li {
-  margin: 1.2rem 0; /* 12px = 1.2rem */
+.sidebar__filter li {
+  margin: 1.2rem 0;
 }
 
-.category-filter label {
+.sidebar__filter label {
   display: flex;
   align-items: center;
   color: #34495e;
@@ -270,67 +271,68 @@ nav a:hover {
   transition: color 0.3s ease;
 }
 
-.category-filter label:hover {
+.sidebar__filter label:hover {
   color: #3498db;
 }
 
-.category-filter input[type="checkbox"] {
-  margin-right: 1rem; /* 10px = 1rem */
+.sidebar__filter input[type="checkbox"] {
+  margin-right: 1rem;
   accent-color: #3498db;
-  width: 1.6rem; /* 16px = 1.6rem */
-  height: 1.6rem; /* 16px = 1.6rem */
+  width: 1.6rem;
+  height: 1.6rem;
   cursor: pointer;
 }
 
-.filter-btn {
+.sidebar__filter-btn {
   width: 100%;
-  padding: 1rem; /* 10px = 1rem */
+  padding: 1rem;
   background-color: #3498db;
   color: white;
   border: none;
-  border-radius: 0.5rem; /* 5px = 0.5rem */
+  border-radius: 0.5rem;
   cursor: pointer;
-  margin-top: 1.5rem; /* 15px = 1.5rem */
-  font-size: 1.6rem; /* 16px = 1.6rem */
+  margin-top: 1.5rem;
+  font-size: 1.6rem;
   transition: background-color 0.3s ease;
 }
 
-.filter-btn:hover {
+.sidebar__filter-btn:hover {
   background-color: #2980b9;
 }
 
 /* ========================= Book List Layout ========================= */
-.Danhmuc-page {
+.main__content--danhmuc-page {
   display: flex;
   gap: 3rem;
   margin-top: 2rem;
 }
 
-.book-list-container {
+.book-list {
   flex: 1;
 }
 
 /* ========================= Book List Header ========================= */
-.book-list-header {
+.book-list__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
   color: rgb(245, 11, 11);
 }
-.book-list-header h2 {
+
+.book-list__title {
   font-size: 3.5rem;
   border-bottom: 1px solid #3498db;
   padding-right: 15rem;
 }
 
 /* ========================= Sort Dropdown ========================= */
-.sort-dropdown {
+.book-list__sort {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-btn {
+.book-list__sort-btn {
   background: white;
   color: #ff4b2b;
   font-size: 1.6rem;
@@ -345,12 +347,12 @@ nav a:hover {
   margin-top: 2rem;
 }
 
-.dropdown-btn:hover {
+.book-list__sort-btn:hover {
   background-color: #ff4b2b;
   color: white;
 }
 
-.dropdown-content {
+.book-list__sort-content {
   display: none;
   position: absolute;
   top: 100%;
@@ -363,7 +365,7 @@ nav a:hover {
   overflow: hidden;
 }
 
-.dropdown-content a {
+.book-list__sort-content a {
   color: #333;
   font-size: 1.6rem;
   padding: 1rem 1.5rem;
@@ -372,20 +374,18 @@ nav a:hover {
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-.dropdown-content a:hover {
+.book-list__sort-content a:hover {
   background-color: #ff4b2b;
   color: white;
 }
 
 /* Hiển thị dropdown khi hover */
-.sort-dropdown:hover .dropdown-content {
+.book-list__sort:hover .book-list__sort-content {
   display: block;
 }
 
 /* ========================= Danh sách sách ========================= */
-
-/* Danh sách sản phẩm */
-.book-list {
+.book-list__items {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -410,7 +410,7 @@ nav a:hover {
 .book-item:hover {
   box-shadow: 0 0 2rem rgba(33, 37, 41, 0.3);
   text-shadow: 0 0 0.5rem rgba(59, 57, 57, 0.2);
-  transform: translateY(-5px); /* Hiệu ứng nổi nhẹ */
+  transform: translateY(-5px);
 }
 
 .book-item img {
@@ -427,12 +427,12 @@ nav a:hover {
   color: #333;
   line-height: 1.4;
   font-weight: bold;
-  max-height: 4.48rem; /* 2 dòng */
+  max-height: 4.48rem;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis; /* Thêm dấu "..." */
+  text-overflow: ellipsis;
   color: #2c3e50;
   word-break: break-all;
 }
@@ -499,7 +499,7 @@ nav a:hover {
 }
 
 /* ========================= Footer ========================= */
-footer {
+.footer {
   text-align: center;
   padding: 1.5rem;
   background-color: #007bff;

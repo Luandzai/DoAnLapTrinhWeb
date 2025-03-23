@@ -9,9 +9,9 @@
   </head>
   <body>
     <!-- Header -->
-    <header>
-      <div class="main-content">
-        <div class="body">
+    <header class="header">
+      <div class="header__main-content">
+        <div class="header__body">
           <!-- Logo -->
           <div class="logo">
             <a href="../html/index.html">
@@ -20,28 +20,32 @@
             <span>Nhà sách Online</span>
           </div>
           <!-- Search bar -->
-          <input type="text" placeholder="Tìm kiếm sách..." />
+          <input
+            type="text"
+            placeholder="Tìm kiếm sách..."
+            class="header__search"
+          />
           <!-- Nav bar -->
-          <nav class="nav-bar">
-            <div class="nav-container">
-              <div class="nav-item dropdown">
-                <div class="nav-dropdown-btn">Danh mục ▼</div>
-                <div class="nav-dropdown-content" id="category-list">
+          <nav class="nav">
+            <div class="nav__container">
+              <div class="nav__item nav__item--dropdown">
+                <div class="nav__dropdown-btn">Danh mục ▼</div>
+                <div class="nav__dropdown-content" id="category-list">
                   <!-- Danh mục sẽ được render tự động bằng JS -->
                 </div>
               </div>
-              <div class="nav-item">
-                <a href="../html/cart.html" class="nav-link">Giỏ hàng</a>
+              <div class="nav__item">
+                <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
               </div>
             </div>
           </nav>
           <!-- Login -->
           <div class="login">
-            <div class="sort-dropdown-login">
-              <button class="dropdown-btn-login">
+            <div class="login__dropdown">
+              <button class="login__dropdown-btn">
                 <img src="../img/Login.svg" alt="Dang nhap" />
               </button>
-              <div class="dropdown-content-login">
+              <div class="login__dropdown-content">
                 <a href="./Login.html" data-sort="oldest">Đăng Nhập</a>
               </div>
             </div>
@@ -51,32 +55,34 @@
     </header>
 
     <!-- Main content -->
-    <main>
-      <div class="main-content Danhmuc-page">
+    <main class="main">
+      <div class="main__content main__content--danhmuc-page">
         <!-- Sidebar -->
         <aside class="sidebar">
-          <h2>Danh mục sách</h2>
-          <form class="category-filter" id="category-filter">
-            <ul id="category-checkbox-list">
+          <h2 class="sidebar__title">Danh mục sách</h2>
+          <form class="sidebar__filter" id="category-filter">
+            <ul class="sidebar__checkbox-list" id="category-checkbox-list">
               <!-- Checkbox danh mục sẽ được render tự động bằng JS -->
             </ul>
-            <button type="submit" class="filter-btn">Tìm kiếm</button>
+            <button type="submit" class="sidebar__filter-btn">Tìm kiếm</button>
           </form>
         </aside>
 
         <!-- Book List -->
-        <div class="book-list-container">
-          <div class="book-list-header">
-            <h2 id="book-list-title">Danh sách Sách</h2>
-            <div class="sort-dropdown">
-              <button class="dropdown-btn">Xếp theo ▼</button>
-              <div class="dropdown-content">
+        <div class="book-list">
+          <div class="book-list__header">
+            <h2 class="book-list__title" id="book-list-title">
+              Danh sách Sách
+            </h2>
+            <div class="book-list__sort">
+              <button class="book-list__sort-btn">Xếp theo ▼</button>
+              <div class="book-list__sort-content">
                 <a href="#" data-sort="oldest">Cũ nhất</a>
                 <a href="#" data-sort="newest">Mới nhất</a>
               </div>
             </div>
           </div>
-          <div class="book-list" id="book-list">
+          <div class="book-list__items" id="book-list">
             <!-- Sách sẽ được render tự động bằng JS -->
           </div>
 
@@ -89,9 +95,11 @@
     </main>
 
     <!-- Footer -->
-    <footer>
-      <div class="main-content">
-        <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
+    <footer class="footer">
+      <div class="footer__main-content">
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
       </div>
     </footer>
 
