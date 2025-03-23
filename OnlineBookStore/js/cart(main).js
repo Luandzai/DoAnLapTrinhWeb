@@ -1,4 +1,3 @@
-// API endpoints
 const API_BASE_URL = "http://localhost:5000/api";
 
 // Hàm định dạng giá tiền
@@ -15,15 +14,16 @@ async function fetchCategories() {
     const response = await fetch(`${API_BASE_URL}/categories`);
     const categories = await response.json();
     const categoryList = document.getElementById("category-list");
+
     categoryList.innerHTML = categories
       .map(
         (category) => `
-          <div class="nav__dropdown-item">
-            <a href="../html/book-list.html?categoryId=${category.categoryID}">
-              ${category.categoryName}
-            </a>
-          </div>
-        `
+            <div class="nav__dropdown-item">
+              <a href="../html/book-list.html?categoryId=${category.categoryID}">
+                ${category.categoryName}
+              </a>
+            </div>
+          `
       )
       .join("");
   } catch (error) {
@@ -34,69 +34,76 @@ async function fetchCategories() {
 }
 
 // Hàm lấy giỏ hàng từ API
-async function fetchCartItems() {
+async function fetchCartItems(cartItems = null) {
   try {
-    const response = await fetch(`${API_BASE_URL}/cart`);
-    const cartItems = await response.json();
+    let items = cartItems;
+    if (!items) {
+      const response = await fetch(`${API_BASE_URL}/cart`);
+      items = await response.json();
+    }
+
+    // Lưu toàn bộ cartItems vào localStorage để sử dụng ở checkout
+    localStorage.setItem("cartItems", JSON.stringify(items));
+
     const cartContent = document.getElementById("cart-content");
     const cartTitle = document.getElementById("cart-title");
 
-    cartTitle.textContent = `GIỎ HÀNG (${cartItems.length} sản phẩm)`;
+    cartTitle.textContent = `GIỎ HÀNG (${items.length} sản phẩm)`;
 
-    cartContent.innerHTML = cartItems
+    cartContent.innerHTML = items
       .map(
         (item) => `
-          <div class="cart__item">
-            <div class="cart__checkbox">
-              <input type="checkbox" id="checkbox-product-${
-                item.id
-              }" name="checkbox_product_${
+            <div class="cart__item" data-id="${item.id}">
+              <div class="cart__checkbox">
+                <input type="checkbox" id="checkbox-product-${
+                  item.id
+                }" name="checkbox_product_${
           item.id
         }" class="cart__checkbox-input" />
-            </div>
-            <div class="cart__image">
-              <a href="../html/book-detail.html?id=${item.id}">
-                <img src="${item.coverImage}" width="120" height="120" alt="${
+              </div>
+              <div class="cart__image">
+                <a href="../html/book-detail.html?id=${item.id}">
+                  <img src="${item.coverImage}" width="120" height="120" alt="${
           item.title
         }" />
-              </a>
-            </div>
-            <div class="cart__info">
-              <h2 class="cart__title">
-                <a href="../html/book-detail.html?id=${item.id}">${
+                </a>
+              </div>
+              <div class="cart__info">
+                <h2 class="cart__title">
+                  <a href="../html/book-detail.html?id=${item.id}">${
           item.title
         }</a>
-              </h2>
-              <div class="cart__prices">
-                <span class="cart__price-current">${formatPrice(
-                  item.discountPrice || item.price
-                )}</span>
-                ${
-                  item.discountPrice
-                    ? `<span class="cart__price-old">${formatPrice(
-                        item.price
-                      )}</span>`
-                    : ""
-                }
+                </h2>
+                <div class="cart__prices">
+                  <span class="cart__price-current">${formatPrice(
+                    item.discountPrice || item.price
+                  )}</span>
+                  ${
+                    item.discountPrice
+                      ? `<span class="cart__price-old">${formatPrice(
+                          item.price
+                        )}</span>`
+                      : ""
+                  }
+                </div>
+                <div class="cart__quantity">
+                  <button class="cart__quantity-btn cart__quantity-btn--decrease">-</button>
+                  <input type="text" value="${
+                    item.quantity
+                  }" class="cart__quantity-input" readonly />
+                  <button class="cart__quantity-btn cart__quantity-btn--increase">+</button>
+                </div>
               </div>
-              <div class="cart__quantity">
-                <button class="cart__quantity-btn cart__quantity-btn--decrease">-</button>
-                <input type="text" value="${
-                  item.quantity
-                }" class="cart__quantity-input" readonly />
-                <button class="cart__quantity-btn cart__quantity-btn--increase">+</button>
-              </div>
+              <button class="cart__remove">
+                <i class="fa-solid fa-trash"></i>
+              </button>
             </div>
-            <button class="cart__remove">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </div>
-        `
+          `
       )
       .join("");
 
-    addCartEventListeners(cartItems);
-    updateCartTotal(cartItems);
+    addCartEventListeners(items);
+    updateCartTotal(items);
   } catch (error) {
     console.error("Error fetching cart items:", error);
     document.getElementById("cart-content").innerHTML =
@@ -124,14 +131,18 @@ function addCartEventListeners(cartItems) {
 
       qtyInput.value = qty;
       cartItems[index].quantity = qty;
-
-      // Cập nhật số lượng lên backend
-      await fetch(`${API_BASE_URL}/cart/${cartItems[index].id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity: qty }),
-      });
       updateCartTotal(cartItems);
+
+      // Gửi yêu cầu cập nhật số lượng lên server
+      try {
+        await fetch(`${API_BASE_URL}/cart`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(cartItems),
+        });
+      } catch (error) {
+        console.error("Error updating cart:", error);
+      }
     });
   });
 
@@ -141,11 +152,19 @@ function addCartEventListeners(cartItems) {
       const index = Array.from(
         document.querySelectorAll(".cart__item")
       ).indexOf(cartItem);
-      await fetch(`${API_BASE_URL}/cart/${cartItems[index].id}`, {
-        method: "DELETE",
-      });
       cartItems.splice(index, 1);
-      fetchCartItems();
+
+      // Cập nhật giỏ hàng lên server
+      try {
+        await fetch(`${API_BASE_URL}/cart`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(cartItems),
+        });
+        fetchCartItems(cartItems); // Render lại giỏ hàng
+      } catch (error) {
+        console.error("Error updating cart:", error);
+      }
     });
   });
 
@@ -183,6 +202,29 @@ function handleSearch() {
     }
   });
 }
+
+// Xử lý khi nhấn nút Thanh toán
+document.querySelector(".cart__checkout-btn").addEventListener("click", () => {
+  const selectedItems = [];
+  document.querySelectorAll(".cart__item").forEach((item, index) => {
+    const checkbox = item.querySelector(".cart__checkbox-input");
+    if (checkbox.checked) {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      selectedItems.push(cartItems[index]);
+    }
+  });
+
+  if (selectedItems.length === 0) {
+    alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+    return;
+  }
+
+  // Lưu danh sách sách được chọn vào localStorage
+  localStorage.setItem("selectedCartItems", JSON.stringify(selectedItems));
+
+  // Chuyển hướng sang trang checkout
+  window.location.href = "../html/checkout.html";
+});
 
 // Khởi chạy khi trang load
 document.addEventListener("DOMContentLoaded", () => {

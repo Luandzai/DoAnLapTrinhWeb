@@ -92,9 +92,23 @@
           </div>
         </div>
 
+        <!-- Mã giảm giá -->
+        <div class="checkout__section">
+          <h3>4. Mã giảm giá</h3>
+          <div class="checkout__voucher">
+            <select id="voucher-select">
+              <option value="">Chọn mã giảm giá</option>
+              <!-- JS sẽ render danh sách mã giảm giá -->
+            </select>
+          </div>
+          <p class="checkout__discount">
+            Giảm giá: <span id="discount-amount">0đ</span>
+          </p>
+        </div>
+        
         <!-- Danh sách sản phẩm -->
         <div class="checkout__section">
-          <h3>3. Xác nhận đơn hàng</h3>
+          <h3>5. Xác nhận đơn hàng</h3>
           <div class="checkout__order-summary">
             <div id="order-items">
               <!-- JS sẽ render danh sách sản phẩm -->

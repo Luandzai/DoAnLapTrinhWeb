@@ -1,3 +1,5 @@
+const API_BASE_URL = "http://localhost:5000/api";
+
 // Hàm định dạng giá tiền
 function formatPrice(price) {
   return new Intl.NumberFormat("vi-VN", {
@@ -26,17 +28,17 @@ function renderCartItems(cartItems) {
 
   cartItems.forEach((item) => {
     const itemHTML = `
-          <div class="order-item">
-            <img src="${item.coverImage}" alt="${item.title}" />
-            <div class="order-item__info">
-              <p class="order-item__title">${item.title}</p>
-              <p class="order-item__quantity">Số lượng: ${item.quantity}</p>
-              <p class="order-item__price">${formatPrice(
-                (item.discountPrice || item.price) * item.quantity
-              )}</p>
-            </div>
+        <div class="order-item">
+          <img src="${item.coverImage}" alt="${item.title}" />
+          <div class="order-item__info">
+            <p class="order-item__title">${item.title}</p>
+            <p class="order-item__quantity">Số lượng: ${item.quantity}</p>
+            <p class="order-item__price">${formatPrice(
+              (item.discountPrice || item.price) * item.quantity
+            )}</p>
           </div>
-        `;
+        </div>
+      `;
     orderItemsContainer.innerHTML += itemHTML;
   });
 }
@@ -50,16 +52,14 @@ function updateTotal(cartItems) {
   document.getElementById("total-price").textContent = formatPrice(total);
 }
 
-// Hàm fetch danh sách phương thức thanh toán từ file JSON
+// Hàm fetch danh sách phương thức thanh toán từ API
 async function fetchPaymentMethods() {
   try {
-    const response = await fetch("../data/payment_methods.json");
+    const response = await fetch(`${API_BASE_URL}/payment-methods`);
     const methods = await response.json();
     renderPaymentMethods(methods);
   } catch (error) {
     console.error("Lỗi khi tải phương thức thanh toán:", error);
-    const paymentContainer = document.querySelector(".payment-options");
-    paymentContainer.innerHTML = "<p>Lỗi tải phương thức thanh toán</p>";
   }
 }
 
@@ -70,60 +70,66 @@ function renderPaymentMethods(methods) {
 
   methods.forEach((method, index) => {
     const methodHTML = `
-          <label>
-            <input type="radio" name="payment-method" value="${method.id}" ${
+        <label>
+          <input type="radio" name="payment-method" value="${method.id}" ${
       index === 0 ? "checked" : ""
     } />
-            ${method.name}
-          </label>
-        `;
+          ${method.name}
+        </label>
+      `;
     paymentContainer.innerHTML += methodHTML;
   });
 }
 
-// Xử lý khi nhấn nút "Xác nhận đặt hàng" (không cần backend)
-document.getElementById("place-order-btn").addEventListener("click", () => {
-  const selectedItems = JSON.parse(localStorage.getItem("selectedCartItems"));
-  const fullName = document.getElementById("full-name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const paymentMethod = document.querySelector(
-    'input[name="payment-method"]:checked'
-  )?.value;
+document
+  .getElementById("place-order-btn")
+  .addEventListener("click", async () => {
+    const selectedItems = JSON.parse(localStorage.getItem("selectedCartItems"));
+    const fullName = document.getElementById("full-name").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
+    const paymentMethod = document.querySelector(
+      'input[name="payment-method"]:checked'
+    ).value;
 
-  // Kiểm tra dữ liệu đầu vào
-  if (!selectedItems || selectedItems.length === 0) {
-    alert("Không có sản phẩm nào để đặt hàng!");
-    return;
-  }
-  if (!fullName || !phone || !address) {
-    alert("Vui lòng điền đầy đủ thông tin giao hàng!");
-    return;
-  }
-  if (!paymentMethod) {
-    alert("Vui lòng chọn phương thức thanh toán!");
-    return;
-  }
+    const orderData = {
+      items: selectedItems,
+      shippingInfo: { fullName, phone, address },
+      paymentMethod,
+    };
 
-  // Tạo dữ liệu đơn hàng (chỉ để log hoặc sử dụng sau này)
-  const orderData = {
-    items: selectedItems,
-    shippingInfo: { fullName, phone, address },
-    paymentMethod,
-  };
+    try {
+      const response = await fetch(`${API_BASE_URL}/checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData),
+      });
+      if (response.ok) {
+        alert("Đặt hàng thành công!");
+        localStorage.removeItem("selectedCartItems"); // Xóa sau khi đặt hàng
+        window.location.href = "../html/index.html";
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Có lỗi khi đặt hàng!");
+    }
+  });
 
-  // Mô phỏng đặt hàng thành công
-  console.log("Order data:", orderData); // Log dữ liệu để kiểm tra
-  alert("Đặt hàng thành công!");
-  localStorage.removeItem("selectedCartItems"); // Xóa dữ liệu sau khi đặt hàng
-  window.location.href = "../html/index.html"; // Chuyển hướng về trang chủ
-});
-
-// Hàm fetch danh sách voucher từ file JSON
-async function fetchVouchersFromJSON() {
+// Hàm fetch danh sách voucher
+async function fetchVouchers() {
   try {
-    const response = await fetch("../data/vouchers.json");
-    const vouchers = await response.json();
+    let vouchers;
+
+    if (backendAvailable()) {
+      // Fetch từ backend nếu có API
+      const response = await fetch(API_URL);
+      vouchers = await response.json();
+    } else {
+      // Fetch từ file JSON nếu chưa có backend
+      const response = await fetch("../data/vouchers.json");
+      vouchers = await response.json();
+    }
+
     renderVouchers(vouchers);
   } catch (error) {
     console.error("Lỗi khi tải danh sách voucher:", error);
@@ -186,5 +192,5 @@ function formatPrice(price) {
 document.addEventListener("DOMContentLoaded", () => {
   fetchCartItems();
   fetchPaymentMethods();
-  fetchVouchersFromJSON();
+  fetchVouchers();
 });
