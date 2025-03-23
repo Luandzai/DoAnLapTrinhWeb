@@ -432,6 +432,29 @@ input[type="text"] {
   }
 }
 
+/* ========================= Mã Giảm Giá (Dropdown) ========================= */
+#voucher-select {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#voucher-select:focus {
+  border-color: #3290a6;
+  outline: none;
+  box-shadow: 0 0 0.5rem rgba(50, 144, 166, 0.5);
+}
+
+.checkout__discount {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+}
+
 /* ========================= Footer ========================= */
 .footer {
   text-align: center;

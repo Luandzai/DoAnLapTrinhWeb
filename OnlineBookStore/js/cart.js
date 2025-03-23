@@ -32,7 +32,7 @@ async function fetchCategories() {
   }
 }
 
-// Hàm lấy giỏ hàng từ file JSON
+// Hàm lấy giỏ hàng từ file JSON hoặc mảng truyền vào
 async function fetchCartItems(cartItems = null) {
   try {
     let items = cartItems;
@@ -41,6 +41,9 @@ async function fetchCartItems(cartItems = null) {
       const data = await response.json();
       items = data.cart; // Lấy mảng cart từ JSON
     }
+
+    // Lưu toàn bộ cartItems vào localStorage
+    localStorage.setItem("cartItems", JSON.stringify(items));
 
     const cartContent = document.getElementById("cart-content");
     const cartTitle = document.getElementById("cart-title");
@@ -177,6 +180,29 @@ function handleSearch() {
     }
   });
 }
+
+// Xử lý khi nhấn nút Thanh toán
+document.querySelector(".cart__checkout-btn").addEventListener("click", () => {
+  const selectedItems = [];
+  document.querySelectorAll(".cart__item").forEach((item, index) => {
+    const checkbox = item.querySelector(".cart__checkbox-input");
+    if (checkbox.checked) {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      selectedItems.push(cartItems[index]);
+    }
+  });
+
+  if (selectedItems.length === 0) {
+    alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+    return;
+  }
+
+  // Lưu danh sách sách được chọn vào localStorage
+  localStorage.setItem("selectedCartItems", JSON.stringify(selectedItems));
+
+  // Chuyển hướng sang trang checkout
+  window.location.href = "../html/checkout.html";
+});
 
 // Khởi chạy khi trang load
 document.addEventListener("DOMContentLoaded", () => {
