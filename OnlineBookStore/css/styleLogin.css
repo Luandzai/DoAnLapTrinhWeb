@@ -192,7 +192,10 @@ input {
 	transform: translateX(0);
 	transition: transform 0.6s ease-in-out;
 }
-
+body {
+	background-color: #eff1e3;
+	font-size: 1.6rem; /* 16px */
+  }
 .overlay-left {
 	transform: translateX(-20%);
 }
