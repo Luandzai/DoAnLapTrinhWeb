@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin CRUD Management</title>
+    <link rel="stylesheet" href="../css/Admin.css"> 
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="../img/icons8-admin-100.png" style="display: block; margin: 0 auto;" alt="Admin Avatar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="#dashboard" onclick="showSection('dashboard')">Dashboard</a></li>
+            <li><a href="#manage-users" onclick="showSection('manage-users')">Manage Users</a></li>
+            <li><a href="#manage-products" onclick="showSection('manage-products')">Manage Products</a></li>
+            <li><a href="#manage-orders" onclick="showSection('manage-orders')">Manage Orders</a></li>
+            <li><a href="#settings" onclick="showSection('settings')">Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="main-content">
+        <header>    
+            <h1>Admin Dashboard</h1>
+            <div class="admin-info">
+                
+                <span>Welcome, Master Trường </span>
+               
+                <a href="#logout" class="logout-btn">Logout</a>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section">
+            <h2>Dashboard</h2>
+            <p>This is the dashboard overview.</p>
+        </section>
+
+        <!-- Manage Users Section -->
+        <section id="manage-users" class="content-section" style="display: none;">
+            <h2>Manage Users</h2>
+            <button class="add-btn" onclick="showAddUserForm()">Add New User</button>
+            <table id="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User Data will be displayed here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Manage Products Section -->
+        <section id="manage-products" class="content-section" style="display: none;">
+            <h2>Manage Products</h2>
+            <p>This is where you manage products.</p>
+        </section>
+
+        <!-- Manage Orders Section -->
+        <section id="manage-orders" class="content-section" style="display: none;">
+            <h2>Manage Orders</h2>
+            <p>This is where you manage orders.</p>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="content-section" style="display: none;">
+            <h2>Settings</h2>
+            <p>This is where you manage settings.</p>
+        </section>
+    </div>
+
+    <!-- Modal for adding users -->
+    <div id="addUserModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAddUserForm()">&times;</span>
+            <h2>Add New User</h2>
+            <form id="addUserForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+
+                <button type="submit" class="submit-btn">Add User</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/Admin.js"></script>
+</body>
+</html>
