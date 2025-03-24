@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhà sách Online</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header__main-content">
+        <div class="header__body">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nhà sách Online" />
+            </a>
+            <span>Nhà sách Online</span>
+          </div>
+          <!-- Search bar -->
+          <input type="text" id="search-input" placeholder="Tìm kiếm sách..." />
+          <!-- Nav bar -->
+          <nav class="nav">
+            <div class="nav__container">
+              <div class="nav__item nav__item--dropdown">
+                <div class="nav__dropdown-btn">Danh mục ▼</div>
+                <div class="nav__dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
+                </div>
+              </div>
+              <div class="nav__item">
+                <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
+              </div>
+            </div>
+          </nav>
+          <!-- Login -->
+          <div class="login">
+            <div class="login__dropdown">
+              <button class="login__dropdown-btn">
+                <img src="../img/Login.svg" alt="Đăng nhập" />
+              </button>
+              <div class="login__dropdown-content">
+                <a href="./Login.html">Đăng Nhập</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="main__content">
+        <!-- Banner -->
+        <div class="banner">
+          <div class="banner__slider">
+            <div class="banner__slide">
+              <a href="khuyen-mai-1.html">
+                <img src="../img/sale1.png" alt="Giảm giá sốc 50%" />
+              </a>
+            </div>
+            <div class="banner__slide">
+              <a href="khuyen-mai-2.html">
+                <img src="../img/sale2.png" alt="Mua 1 tặng 1" />
+              </a>
+            </div>
+            <div class="banner__slide">
+              <a href="khuyen-mai-3.html">
+                <img src="../img/sale3.jpg" alt="Flash Sale chỉ 99K" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flash Sale -->
+        <section class="flash-sale" id="flash-sale">
+          <div class="flash-sale__header">
+            <h2>FLASH SALE</h2>
+            <div class="flash-sale__timer">
+              <span>Kết thúc trong</span>
+              <span class="flash-sale__time">00 : 54 : 11</span>
+            </div>
+            <a
+              href="../html/book-list.html?flashsale=true"
+              class="flash-sale__view-all"
+              >Xem tất cả →</a
+            >
+          </div>
+          <div class="flash-sale__book-list">
+            <!-- Sách Flash Sale sẽ được render tự động bằng JS -->
+          </div>
+        </section>
+
+        <!-- Sách nổi bật -->
+        <section class="featured-books" id="featured-books">
+          <h2>Sách nổi bật</h2>
+          <div class="featured-books__book-list">
+            <!-- Sách nổi bật sẽ được render tự động bằng JS -->
+          </div>
+        </section>
+
+        <!-- Sách mới cập nhật -->
+        <section class="new-books" id="new-books">
+          <h2>Sách mới</h2>
+          <div class="new-books__book-list">
+            <!-- Sách mới sẽ được render tự động bằng JS -->
+          </div>
+        </section>
+
+        <!-- Nút Xem Toàn Bộ -->
+        <div class="view-all">
+          <a href="../html/book-list.html" class="view-all__btn"
+            >Xem toàn bộ sách</a
+          >
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__main-content">
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+  </body>
+</html>

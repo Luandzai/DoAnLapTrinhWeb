@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh sách Sách - Nhà sách Online</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/book-list.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header__main-content">
+        <div class="header__body">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nha sach online" />
+            </a>
+            <span>Nhà sách Online</span>
+          </div>
+          <!-- Search bar -->
+          <input type="text" id="search-books" placeholder="Tìm kiếm sách..." />
+          <!-- Nav bar -->
+          <nav class="nav">
+            <div class="nav__container">
+              <div class="nav__item nav__item--dropdown">
+                <div class="nav__dropdown-btn">Danh mục ▼</div>
+                <div class="nav__dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
+                </div>
+              </div>
+              <div class="nav__item">
+                <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
+              </div>
+            </div>
+          </nav>
+          <!-- Login -->
+          <div class="login">
+            <div class="login__dropdown">
+              <button class="login__dropdown-btn">
+                <img src="../img/Login.svg" alt="Dang nhap" />
+              </button>
+              <div class="login__dropdown-content">
+                <a href="./Login.html" data-sort="oldest">Đăng Nhập</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main">
+      <div class="main__content main__content--danhmuc-page">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <h2 class="sidebar__title">Danh mục sách</h2>
+          <form class="sidebar__filter" id="category-filter">
+            <ul class="sidebar__checkbox-list" id="category-checkbox-list">
+              <!-- Danh mục sẽ được render vào đây bằng JS -->
+            </ul>
+            <button type="submit" class="sidebar__filter-btn">Tìm kiếm</button>
+          </form>
+        </aside>
+
+        <!-- Book List -->
+        <div class="book-list">
+          <div class="book-list__header">
+            <h2 class="book-list__title" id="book-list-title">
+              Danh sách Sách
+            </h2>
+            <div class="book-list__sort">
+              <button class="book-list__sort-btn">Xếp theo ▼</button>
+              <div class="book-list__sort-content">
+                <a href="#" data-sort="oldest">Cũ nhất</a>
+                <a href="#" data-sort="newest">Mới nhất</a>
+              </div>
+            </div>
+          </div>
+          <div class="book-list__items" id="book-list">
+            <!-- Sách sẽ được render tự động bằng JS -->
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination" id="pagination">
+            <!-- Phân trang sẽ được render tự động bằng JS -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__main-content">
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/book-list.js"></script>
+  </body>
+</html>
