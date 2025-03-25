@@ -18,4 +18,6 @@ public partial class Discount
     public int? UsageLimit { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual ICollection<UserDiscount> UserDiscounts { get; set; } = new List<UserDiscount>();
 }

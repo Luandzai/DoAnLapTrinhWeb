@@ -5178,11 +5178,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
+      "projectUniqueName": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
       "projectName": "BookStoreApi",
-      "projectPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
+      "projectPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
       "packagesPath": "C:\\Users\\THIS PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\obj\\",
+      "outputPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages",

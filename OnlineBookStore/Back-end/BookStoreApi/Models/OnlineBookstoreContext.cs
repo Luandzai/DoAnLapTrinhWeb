@@ -39,6 +39,8 @@ public partial class OnlineBookstoreContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserDiscount> UserDiscounts { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=TRANLUAN;Database=OnlineBookstore;Trusted_Connection=True;TrustServerCertificate=True;");
@@ -47,7 +49,7 @@ public partial class OnlineBookstoreContext : DbContext
     {
         modelBuilder.Entity<Author>(entity =>
         {
-            entity.HasKey(e => e.AuthorId).HasName("PK__Authors__70DAFC1445229710");
+            entity.HasKey(e => e.AuthorId).HasName("PK__Authors__70DAFC14F977DFEA");
 
             entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
             entity.Property(e => e.AuthorName).HasMaxLength(255);
@@ -55,9 +57,9 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Book>(entity =>
         {
-            entity.HasKey(e => e.BookId).HasName("PK__Books__3DE0C227C807287A");
+            entity.HasKey(e => e.BookId).HasName("PK__Books__3DE0C22761A98402");
 
-            entity.HasIndex(e => e.Isbn, "UQ__Books__447D36EA5A4AE9F4").IsUnique();
+            entity.HasIndex(e => e.Isbn, "UQ__Books__447D36EAC87EA155").IsUnique();
 
             entity.Property(e => e.BookId).HasColumnName("BookID");
             entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
@@ -95,7 +97,7 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Cart__51BCD7975332B935");
+            entity.HasKey(e => e.CartId).HasName("PK__Cart__51BCD7975F4FA095");
 
             entity.ToTable("Cart");
 
@@ -118,11 +120,11 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A2BC9D10D40");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A2B22F7FA01");
 
             entity.ToTable(tb => tb.HasTrigger("PreventCategoryLoop"));
 
-            entity.HasIndex(e => e.CategoryName, "UQ__Categori__8517B2E0B9621260").IsUnique();
+            entity.HasIndex(e => e.CategoryName, "UQ__Categori__8517B2E0348899BB").IsUnique();
 
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.CategoryName).HasMaxLength(255);
@@ -135,9 +137,9 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Discount>(entity =>
         {
-            entity.HasKey(e => e.DiscountId).HasName("PK__Discount__E43F6DF6A5A93A2E");
+            entity.HasKey(e => e.DiscountId).HasName("PK__Discount__E43F6DF697BF6C9E");
 
-            entity.HasIndex(e => e.Code, "UQ__Discount__A25C5AA712CD7DAC").IsUnique();
+            entity.HasIndex(e => e.Code, "UQ__Discount__A25C5AA72F8ADF88").IsUnique();
 
             entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
             entity.Property(e => e.Code).HasMaxLength(50);
@@ -149,7 +151,7 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BAF09AB42AB");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BAFCF1394B3");
 
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
@@ -175,7 +177,7 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D30C1AF08BA1");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D30CA28208E7");
 
             entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
             entity.Property(e => e.BookId).HasColumnName("BookID");
@@ -193,9 +195,9 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A589887E638");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A5882CD4671");
 
-            entity.HasIndex(e => e.TransactionId, "UQ__Payments__55433A4A805DF5E7").IsUnique();
+            entity.HasIndex(e => e.TransactionId, "UQ__Payments__55433A4AE332AC13").IsUnique();
 
             entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
@@ -212,9 +214,9 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Publisher>(entity =>
         {
-            entity.HasKey(e => e.PublisherId).HasName("PK__Publishe__4C657E4B6B81BC3C");
+            entity.HasKey(e => e.PublisherId).HasName("PK__Publishe__4C657E4BFBD28670");
 
-            entity.HasIndex(e => e.PublisherName, "UQ__Publishe__5F0E2249568C30F2").IsUnique();
+            entity.HasIndex(e => e.PublisherName, "UQ__Publishe__5F0E22496A170DB2").IsUnique();
 
             entity.Property(e => e.PublisherId).HasColumnName("PublisherID");
             entity.Property(e => e.Address).HasMaxLength(255);
@@ -223,7 +225,7 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Review>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79AE2ECB458D");
+            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79AE227D451E");
 
             entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
             entity.Property(e => e.BookId).HasColumnName("BookID");
@@ -243,7 +245,7 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<Transaction>(entity =>
         {
-            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4BA923E776");
+            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4BB3022D2A");
 
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
             entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
@@ -271,9 +273,9 @@ public partial class OnlineBookstoreContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC8205A347");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC1123C27F");
 
-            entity.HasIndex(e => e.Email, "UQ__Users__A9D105340A4C3B9B").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Users__A9D1053434F023D4").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Address).HasMaxLength(255);
@@ -288,6 +290,27 @@ public partial class OnlineBookstoreContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<UserDiscount>(entity =>
+        {
+            entity.HasKey(e => e.UserDiscountId).HasName("PK__UserDisc__FBA8DCA2425FE18C");
+
+            entity.Property(e => e.UserDiscountId).HasColumnName("UserDiscountID");
+            entity.Property(e => e.AssignedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
+            entity.Property(e => e.IsUsed).HasDefaultValue(false);
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Discount).WithMany(p => p.UserDiscounts)
+                .HasForeignKey(d => d.DiscountId)
+                .HasConstraintName("FK__UserDisco__Disco__778AC167");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserDiscounts)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__UserDisco__UserI__76969D2E");
         });
 
         OnModelCreatingPartial(modelBuilder);

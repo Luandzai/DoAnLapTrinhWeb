@@ -48,7 +48,9 @@ public class BooksController : ControllerBase
                 b.OldPrice,
                 b.DiscountPrice,
                 coverImage = $"{Request.Scheme}://{Request.Host}/images/{b.CoverImage}",
-                soldQuantity = b.SoldQuantity
+                soldQuantity = b.SoldQuantity,
+                createdAt = b.CreatedAt, // Thêm trường CreatedAt
+                updatedAt = b.UpdatedAt  // Thêm trường UpdatedAt
             })
             .ToListAsync();
 
@@ -77,7 +79,9 @@ public class BooksController : ControllerBase
                 stockQuantity = b.StockQuantity,
                 categoryName = b.Category.CategoryName,
                 authorName = b.Author.AuthorName,
-                publisherName = b.Publisher.PublisherName
+                publisherName = b.Publisher.PublisherName,
+                createdAt = b.CreatedAt, // Thêm trường CreatedAt
+                updatedAt = b.UpdatedAt  // Thêm trường UpdatedAt
             })
             .Take(4)
             .ToListAsync();
@@ -107,7 +111,9 @@ public class BooksController : ControllerBase
                 stockQuantity = b.StockQuantity,
                 categoryName = b.Category.CategoryName,
                 authorName = b.Author.AuthorName,
-                publisherName = b.Publisher.PublisherName
+                publisherName = b.Publisher.PublisherName,
+                createdAt = b.CreatedAt, // Thêm trường CreatedAt
+                updatedAt = b.UpdatedAt  // Thêm trường UpdatedAt
             })
             .ToListAsync();
 
@@ -132,10 +138,83 @@ public class BooksController : ControllerBase
                 b.DiscountPrice,
                 b.OldPrice,
                 coverImage = $"{Request.Scheme}://{Request.Host}/images/{b.CoverImage}",
-                soldQuantity = b.SoldQuantity
+                soldQuantity = b.SoldQuantity,
+                createdAt = b.CreatedAt, // Thêm trường CreatedAt
+                updatedAt = b.UpdatedAt  // Thêm trường UpdatedAt
             })
             .ToListAsync();
 
         return Ok(newBooks);
+    }
+
+    [HttpGet("discount")]
+    public async Task<ActionResult<IEnumerable<Book>>> GetDiscountBooks()
+    {
+        var books = await _context.Books
+            .Where(b => b.DiscountPrice != null)
+            .Select(b => new
+            {
+                bookId = b.BookId,
+                title = b.Title,
+                price = b.Price,
+                oldPrice = b.OldPrice,
+                discountPrice = b.DiscountPrice,
+                coverImage = $"{Request.Scheme}://{Request.Host}/images/{b.CoverImage}",
+                soldQuantity = b.SoldQuantity,
+                createdAt = b.CreatedAt, // Thêm trường CreatedAt
+                updatedAt = b.UpdatedAt  // Thêm trường UpdatedAt
+            })
+            .ToListAsync();
+
+        return Ok(books);
+    }
+    // 🟢 API: Lấy chi tiết một cuốn sách theo ID
+    [HttpGet("{id}")]
+    public async Task<ActionResult<object>> GetBookById(int id)
+    {
+        var book = await _context.Books
+            .Include(b => b.Author)
+            .Include(b => b.Publisher)
+            .Include(b => b.Category)
+            .Include(b => b.Reviews)
+            .ThenInclude(r => r.User)
+            .FirstOrDefaultAsync(b => b.BookId == id);
+
+        if (book == null)
+        {
+            return NotFound(new { message = "Không tìm thấy sách!" });
+        }
+
+        var result = new
+        {
+            book.BookId,
+            book.Title,
+            book.Price,
+            book.OldPrice,
+            book.DiscountPrice,
+            coverImage = $"{Request.Scheme}://{Request.Host}/images/{book.CoverImage}",
+            soldQuantity = book.SoldQuantity,
+            stockQuantity = book.StockQuantity,
+            description = book.Description,
+            authorName = book.Author?.AuthorName ?? "Không có tác giả",
+            publisherName = book.Publisher?.PublisherName ?? "Không có NXB",
+            categoryId = book.Category?.CategoryId,
+            categoryName = book.Category?.CategoryName ?? "Không có danh mục",
+            isbn = book.Isbn,
+            publishedDate = book.PublishedDate,
+            createdAt = book.CreatedAt,
+            updatedAt = book.UpdatedAt,
+            reviews = book.Reviews.Select(r => new
+            {
+                r.ReviewId,
+                r.UserId,
+                userName = r.User?.FullName ?? "Người dùng không xác định",
+                r.Rating,
+                r.Comment,
+                r.CreatedAt
+            }).ToList()
+        };
+
+        return Ok(result);
     }
 }
