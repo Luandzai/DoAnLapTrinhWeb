@@ -1,6 +1,6 @@
-﻿CREATE DATABASE ONLINEBOOKSTORE1
+CREATE DATABASE ONLINEBOOKSTORE
 go
-use ONLINEBOOKSTORE1
+use ONLINEBOOKSTORE
 go
 
 -- Bảng Người dùng
@@ -141,6 +141,18 @@ CREATE TABLE Transactions (
     FOREIGN KEY (PaymentID) REFERENCES Payments(PaymentID) ON DELETE NO ACTION 
 );
 go
+
+CREATE TABLE UserDiscounts (
+    UserDiscountID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL,
+    DiscountID INT NOT NULL,
+    IsUsed BIT DEFAULT 0, -- 0: chưa dùng, 1: đã dùng
+    AssignedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (DiscountID) REFERENCES Discounts(DiscountID) ON DELETE CASCADE
+);
+Go
+
 -- ✅ Cập nhật Trigger kiểm tra vòng lặp danh mục
 CREATE TRIGGER PreventCategoryLoop
 ON Categories
@@ -224,26 +236,28 @@ INSERT INTO Books (Title, AuthorID, PublisherID, CategoryID, Price, OldPrice, Di
 
 -- 📈 Kinh tế
 (N'Cha giàu cha nghèo', 2, 2, 5, 99000, 129000, 95000, 700, 50, '9786041189001', '1997-04-11', N'Bài học tài chính cá nhân quan trọng.', 'cha_giau_cha_ngheo.jpg', GETDATE(), GETDATE()),
-(N'Người giàu có nhất thành Babylon', 3, 3, 14, 89000, 120000, NULL, 420, 60, '9786041189202', '1926-08-01', N'Những nguyên tắc tài chính bất hủ từ Babylon.', 'babylon.jpg', GETDATE(), GETDATE()),
-(N'Bí mật tư duy triệu phú', 1, 1, 15, 125000, 160000, 115000, 390, 40, '9786041199999', '2005-06-15', N'Tư duy tài chính giúp bạn làm giàu hiệu quả.', 'bi_mat_tu_duy.jpg', GETDATE(), GETDATE()),
+(N'Người giàu có nhất thành Babylon', 3, 3, 6, 89000, 120000, NULL, 420, 60, '9786041189202', '1926-08-01', N'Những nguyên tắc tài chính bất hủ từ Babylon.', 'babylon.jpg', GETDATE(), GETDATE()),
+(N'Bí mật tư duy triệu phú', 1, 1, 7, 125000, 160000, 115000, 390, 40, '9786041199999', '2005-06-15', N'Tư duy tài chính giúp bạn làm giàu hiệu quả.', 'bi_mat_tu_duy.jpg', GETDATE(), GETDATE()),
 
 -- 💻 Công nghệ
-(N'Lập trình C++ từ cơ bản đến nâng cao', 2, 2, 16, 159000, 190000, 149000, 250, 30, '9786041309876', '2018-09-30', N'Tài liệu học lập trình C++ chi tiết.', 'cpp_book.jpg', GETDATE(), GETDATE()),
-(N'Trí tuệ nhân tạo và ứng dụng', 3, 3, 17, 189000, 220000, 179000, 220, 20, '9786041323456', '2021-04-20', N'Tìm hiểu về AI và ứng dụng thực tế.', 'ai_book.jpg', GETDATE(), GETDATE()),
-(N'Python cho người mới bắt đầu', 1, 1, 18, 129000, 150000, 119000, 310, 50, '9786041334567', '2019-07-15', N'Hướng dẫn học Python từ căn bản.', 'python_book.jpg', GETDATE(), GETDATE()),
+(N'Lập trình C++ từ cơ bản đến nâng cao', 2, 2, 8, 159000, 190000, 149000, 250, 30, '9786041309876', '2018-09-30', N'Tài liệu học lập trình C++ chi tiết.', 'cpp_book.jpg', GETDATE(), GETDATE()),
+(N'Trí tuệ nhân tạo và ứng dụng', 3, 3, 9, 189000, 220000, 179000, 220, 20, '9786041323456', '2021-04-20', N'Tìm hiểu về AI và ứng dụng thực tế.', 'ai_book.jpg', GETDATE(), GETDATE()),
+(N'Python cho người mới bắt đầu', 1, 1, 10, 129000, 150000, 119000, 310, 50, '9786041334567', '2019-07-15', N'Hướng dẫn học Python từ căn bản.', 'python_book.jpg', GETDATE(), GETDATE()),
 
 -- 🔬 Khoa học
-(N'Vũ trụ trong vỏ hạt dẻ', 2, 2, 19, 135000, 170000, 125000, 280, 40, '9786041345678', '2001-11-05', N'Khám phá vũ trụ cùng Stephen Hawking.', 'vu_tru_hat_de.jpg', GETDATE(), GETDATE()),
-(N'Lược sử thời gian', 3, 3, 20, 120000, 150000, NULL, 450, 35, '9786041356789', '1988-06-01', N'Tìm hiểu về vật lý hiện đại.', 'luoc_su_thoi_gian.jpg', GETDATE(), GETDATE()),
-(N'Hành trình về phương Đông', 1, 1, 21, 99000, 125000, 90000, 500, 60, '9786041367890', '1924-09-10', N'Một cuộc hành trình khám phá tâm linh.', 'hanh_trinh_phuong_dong.jpg', GETDATE(), GETDATE()),
+(N'Vũ trụ trong vỏ hạt dẻ', 2, 2, 11, 135000, 170000, 125000, 280, 40, '9786041345678', '2001-11-05', N'Khám phá vũ trụ cùng Stephen Hawking.', 'vu_tru_hat_de.jpg', GETDATE(), GETDATE()),
+(N'Lược sử thời gian', 3, 3, 12, 120000, 150000, NULL, 450, 35, '9786041356789', '1988-06-01', N'Tìm hiểu về vật lý hiện đại.', 'luoc_su_thoi_gian.jpg', GETDATE(), GETDATE()),
+(N'Hành trình về phương Đông', 1, 1, 13, 99000, 125000, 90000, 500, 60, '9786041367890', '1924-09-10', N'Một cuộc hành trình khám phá tâm linh.', 'hanh_trinh_phuong_dong.jpg', GETDATE(), GETDATE()),
 
 -- 🏛️ Lịch sử
 (N'Lịch sử thế giới', 2, 2, 1, 180000, 220000, 165000, 300, 45, '9786041378901', '2015-03-15', N'Cuốn sách tổng hợp lịch sử thế giới qua các thời kỳ.', 'lich_su_the_gioi.jpg', GETDATE(), GETDATE()),
-(N'Chiến tranh thế giới thứ hai', 3, 3, 15, 210000, 250000, 195000, 220, 30, '9786041389012', '2009-07-22', N'Thông tin chi tiết về Thế Chiến II.', 'chien_tranh_the_gioi.jpg', GETDATE(), GETDATE()),
+(N'Chiến tranh thế giới thứ hai', 3, 3, 2, 210000, 250000, 195000, 220, 30, '9786041389012', '2009-07-22', N'Thông tin chi tiết về Thế Chiến II.', 'chien_tranh_the_gioi.jpg', GETDATE(), GETDATE()),
 
 -- 📚 Một số cuốn khác
-(N'Tâm lý học tội phạm', 1, 1, 2, 150000, 180000, NULL, 190, 40, '9786041390123', '2010-11-11', N'Nghiên cứu về tâm lý tội phạm.', 'tam_ly_to_pham.jpg', GETDATE(), GETDATE()),
-(N'Cuộc cách mạng công nghiệp 4.0', 2, 2, 3, 175000, 200000, 165000, 270, 25, '9786041401234', '2018-12-01', N'Cách mạng công nghệ và tác động của nó.', 'cach_mang_4.0.jpg', GETDATE(), GETDATE());
+(N'Tâm lý học tội phạm', 1, 1, 3, 150000, 180000, NULL, 190, 40, '9786041390123', '2010-11-11', N'Nghiên cứu về tâm lý tội phạm.', 'tam_ly_to_pham.jpg', GETDATE(), GETDATE()),
+(N'Cuộc cách mạng công nghiệp 4.0', 2, 2, 4, 175000, 200000, 165000, 270, 25, '9786041401234', '2018-12-01', N'Cách mạng công nghệ và tác động của nó.', 'cach_mang_4.0.jpg', GETDATE(), GETDATE());
+
+
 
 SELECT * FROM Books;
 
@@ -282,3 +296,36 @@ INSERT INTO Reviews (UserID, BookID, Rating, Comment) VALUES
 INSERT INTO Transactions (UserID, OrderID, PaymentID, Amount) VALUES
 (1, 2, 1, 240000),
 (2, 1, 2, 200000);
+
+
+INSERT INTO Books (Title, AuthorID, PublisherID, CategoryID, Price, OldPrice, DiscountPrice, SoldQuantity, StockQuantity, ISBN, PublishedDate, Description, CoverImage, CreatedAt, UpdatedAt) VALUES
+-- 📖 Văn học
+(N'Ánh Đèn Rực Rỡ', 1, 1, 1, 105000, 135000, 95000, 420, 85, '9786041501234', '2010-05-15', N'Câu chuyện về một gia đình vượt qua khó khăn trong chiến tranh.', 'anh_den_ruc_ro.jpg', '2023-01-01 10:00:00', '2023-01-02 12:00:00'),
+(N'Hương Phù Sa', 2, 2, 2, 130000, 160000, 120000, 380, 70, '9786041502345', '1995-08-20', N'Tiểu thuyết về tình yêu quê hương và ký ức tuổi thơ.', 'huong_phu_sa.jpg', '2023-02-01 10:00:00', '2023-02-02 12:00:00'),
+(N'Cánh Đồng Vô Tận', 3, 3, 3, 140000, 170000, 130000, 500, 90, '9786041503456', '2008-03-10', N'Hành trình tìm lại chính mình giữa những biến cố cuộc đời.', 'canh_dong_vo_tan.jpg', '2023-03-01 10:00:00', '2023-03-02 12:00:00'),
+(N'Mùa Hè Không Tên', 1, 1, 4, 95000, 125000, 85000, 300, 60, '9786041504567', '2015-07-25', N'Tuổi trẻ đầy nhiệt huyết và những giấc mơ chưa thành.', 'mua_he_khong_ten.jpg', '2023-04-01 10:00:00', '2023-04-02 12:00:00'),
+
+-- 📈 Kinh tế
+(N'Tiền Đẻ Ra Tiền', 2, 2, 5, 110000, 140000, 100000, 600, 55, '9786041505678', '2012-11-30', N'Bí quyết đầu tư thông minh để gia tăng tài sản.', 'tien_de_ra_tien.jpg', '2023-05-01 10:00:00', '2023-05-02 12:00:00'),
+(N'Kinh Tế Học Hài Hước', 3, 3, 6, 120000, 150000, 110000, 350, 65, '9786041506789', '2007-09-15', N'Giải thích các khái niệm kinh tế qua lăng kính hài hước.', 'kinh_te_hai_huoc.jpg', '2023-06-01 10:00:00', '2023-06-02 12:00:00'),
+(N'Tăng Tốc Đến Thành Công', 1, 1, 7, 135000, 165000, 125000, 400, 50, '9786041507890', '2019-04-10', N'Chiến lược phát triển bản thân trong thời đại số.', 'tang_toc_thanh_cong.jpg', '2023-07-01 10:00:00', '2023-07-02 12:00:00'),
+
+-- 💻 Công nghệ
+(N'Học SQL Trong 24 Giờ', 2, 2, 8, 145000, 175000, 135000, 220, 35, '9786041508901', '2020-06-05', N'Hướng dẫn học SQL nhanh chóng và hiệu quả.', 'sql_24h.jpg', '2023-08-01 10:00:00', '2023-08-02 12:00:00'),
+(N'Blockchain Từ A Đến Z', 3, 3, 9, 195000, 230000, 185000, 200, 25, '9786041509012', '2021-08-15', N'Tìm hiểu công nghệ blockchain và ứng dụng thực tiễn.', 'blockchain_a_z.jpg', '2023-09-01 10:00:00', '2023-09-02 12:00:00'),
+(N'Học Lập Trình Web Với HTML & CSS', 1, 1, 10, 125000, 155000, 115000, 280, 45, '9786041509123', '2018-12-20', N'Cẩm nang thiết kế web cho người mới bắt đầu.', 'html_css.jpg', '2023-10-01 10:00:00', '2023-10-02 12:00:00'),
+
+-- 🔬 Khoa học
+(N'Bí Ẩn Dưới Đại Dương', 2, 2, 11, 140000, 170000, 130000, 310, 50, '9786041509234', '2016-02-18', N'Khám phá thế giới sinh vật biển đầy kỳ thú.', 'bi_an_duoi_dai_duong.jpg', '2023-11-01 10:00:00', '2023-11-02 12:00:00'),
+(N'Thuyết Tương Đối Dễ Hiểu', 3, 3, 12, 115000, 145000, 105000, 470, 40, '9786041509345', '2014-05-22', N'Giải thích thuyết tương đối của Einstein một cách đơn giản.', 'thuyet_tuong_doi.jpg', '2023-12-01 10:00:00', '2023-12-02 12:00:00'),
+(N'Khám Phá Hệ Mặt Trời', 1, 1, 13, 100000, 130000, 90000, 520, 70, '9786041509456', '2017-09-30', N'Hành trình khám phá các hành tinh trong hệ mặt trời.', 'kham_pha_he_mat_troi.jpg', '2024-01-01 10:00:00', '2024-01-02 12:00:00'),
+
+-- 🏛️ Lịch sử
+(N'Vương Triều Cuối Cùng', 2, 2, 1, 185000, 225000, 170000, 290, 55, '9786041509567', '2013-01-12', N'Lịch sử triều đại phong kiến cuối cùng của Việt Nam.', 'vuong_trieu_cuoi_cung.jpg', '2024-02-01 10:00:00', '2024-02-02 12:00:00'),
+(N'Cuộc Chiến 100 Năm', 3, 3, 2, 215000, 255000, 200000, 230, 35, '9786041509678', '2011-06-08', N'Phân tích cuộc chiến tranh kéo dài 100 năm ở châu Âu.', 'cuoc_chien_100_nam.jpg', '2024-03-01 10:00:00', '2024-03-02 12:00:00'),
+
+-- 📚 Một số cuốn khác
+(N'Tư Duy Phản Biện', 1, 1, 3, 155000, 185000, 145000, 210, 45, '9786041509789', '2019-10-15', N'Rèn luyện kỹ năng tư duy phản biện trong cuộc sống.', 'tu_duy_phan_bien.jpg', '2024-04-01 10:00:00', '2024-04-02 12:00:00'),
+(N'Thời Đại Công Nghệ Số', 2, 2, 4, 165000, 195000, 155000, 250, 30, '9786041509890', '2020-11-20', N'Tác động của công nghệ số đến xã hội hiện đại.', 'thoi_dai_cong_nghe_so.jpg', '2024-05-01 10:00:00', '2024-05-02 12:00:00');
+
+
