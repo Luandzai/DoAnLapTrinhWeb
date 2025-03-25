@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   await fetchBooks(keyword, categoryId);
   await fetchCategories();
+  renderLoginSection(); // Thêm chức năng render login
 });
 
 // Biến toàn cục lưu sách để tìm kiếm
@@ -12,6 +13,7 @@ let allBooks = [];
 let filteredBooks = [];
 let currentPage = 1;
 const booksPerPage = 16;
+let currentSort = "newest"; // Mặc định sắp xếp theo mới nhất
 
 // 🟢 Fetch sách từ API (hỗ trợ tìm kiếm & lọc danh mục)
 async function fetchBooks(keyword = "", categoryId = "") {
@@ -31,13 +33,39 @@ async function fetchBooks(keyword = "", categoryId = "") {
 
     const data = await response.json();
     allBooks = data.$values || [];
-    filteredBooks = [...allBooks];
-
-    renderPagination();
-    renderBooks();
+    applyFiltersAndSort(); // Áp dụng sắp xếp sau khi lấy dữ liệu
   } catch (error) {
     console.error("❌ Lỗi tải sách:", error);
   }
+}
+
+// Hàm áp dụng sắp xếp
+function applyFiltersAndSort() {
+  filteredBooks = [...allBooks];
+
+  // Sắp xếp sách
+  filteredBooks.sort((a, b) => {
+    const dateA = new Date(a.createdAt || a.updatedAt || "1970-01-01T00:00:00");
+    const dateB = new Date(b.createdAt || b.updatedAt || "1970-01-01T00:00:00");
+
+    // Kiểm tra nếu ngày không hợp lệ
+    if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+      console.error("Invalid date format:", {
+        dateA: a.createdAt,
+        dateB: b.createdAt,
+      });
+      return 0; // Không sắp xếp nếu ngày không hợp lệ
+    }
+
+    return currentSort === "newest" ? dateB - dateA : dateA - dateB;
+  });
+
+  // Reset về trang 1 khi sắp xếp
+  currentPage = 1;
+
+  // Render sách và pagination
+  renderBooks();
+  renderPagination();
 }
 
 // 🟢 Hàm xử lý khi chọn danh mục trong header
@@ -56,7 +84,7 @@ document
 // 🟢 Hàm xử lý tìm kiếm theo danh mục trong sidebar
 document
   .getElementById("category-filter")
-  ?.addEventListener("submit", function (e) {
+  ?.addEventListener("submit", async function (e) {
     e.preventDefault();
     const selectedCategories = [
       ...document.querySelectorAll('input[name="category"]:checked'),
@@ -64,8 +92,16 @@ document
       .map((input) => input.value)
       .join(",");
 
+    // Lấy từ khóa tìm kiếm hiện tại từ ô input #search-books
+    const searchInput = document.getElementById("search-books");
+    const keyword = searchInput ? searchInput.value.trim() : "";
+
     if (selectedCategories) {
+      // Nếu có danh mục được chọn, chuyển hướng như hiện tại
       window.location.href = `../html/book-list.html?categoryId=${selectedCategories}`;
+    } else {
+      // Nếu không có danh mục nào được chọn, load lại toàn bộ sách
+      await fetchBooks(keyword, "");
     }
   });
 
@@ -178,6 +214,12 @@ document
     }
   });
 
+// Thêm sự kiện sắp xếp
+document.getElementById("sort-books")?.addEventListener("change", function () {
+  currentSort = this.value;
+  applyFiltersAndSort();
+});
+
 // Hàm định dạng giá tiền
 function formatPrice(price) {
   return price ? price.toLocaleString("vi-VN") + " VND" : "Liên hệ";
@@ -239,6 +281,58 @@ function renderCategories(categories, elementId) {
             `;
     })
     .join("");
+}
+
+// Hàm render phần login dựa trên trạng thái đăng nhập
+function renderLoginSection() {
+  const loginSection = document.getElementById("login-section");
+  const user = JSON.parse(localStorage.getItem("user")); // Lấy thông tin user từ localStorage
+
+  if (!loginSection) {
+    console.error("Không tìm thấy login-section trong HTML");
+    return;
+  }
+
+  if (!user) {
+    // Chưa đăng nhập
+    loginSection.innerHTML = `
+      <button class="login__dropdown-btn">
+        <img src="../img/Login.svg" alt="Đăng nhập" />
+      </button>
+      <div class="login__dropdown-content">
+        <a href="./Login.html">Đăng Nhập</a>
+      </div>
+    `;
+  } else {
+    // Đã đăng nhập
+    const menuItems =
+      user.role === "Admin"
+        ? `
+          <a href="../html/admin.html">Quản lý</a>
+          <a href="#" id="logout-btn">Đăng xuất</a>
+        `
+        : `
+          <a href="../html/user.html">Thông tin cá nhân</a>
+          <a href="#" id="logout-btn">Đăng xuất</a>
+        `;
+
+    loginSection.innerHTML = `
+      <div class="login__user">
+        <img src="../img/login.svg" alt="Avatar" />
+        <span>${user.fullName}</span>
+      </div>
+      <div class="login__dropdown-content">
+        ${menuItems}
+      </div>
+    `;
+
+    // Xử lý đăng xuất
+    document.getElementById("logout-btn")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("user"); // Xóa thông tin user
+      window.location.reload(); // Tải lại trang
+    });
+  }
 }
 
 // Hàm render danh mục vào sidebar (checkbox)

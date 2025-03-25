@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Danh sách Sách - Nhà sách Online</title>
+    <title>Ưu đãi giảm giá - Nhà sách Online</title>
     <link rel="stylesheet" href="../css/reset.css" />
-    <link rel="stylesheet" href="../css/book-list.css" />
+    <link rel="stylesheet" href="../css/discount.css" />
   </head>
   <body>
     <!-- Header -->
@@ -15,12 +15,12 @@
           <!-- Logo -->
           <div class="logo">
             <a href="../html/index.html">
-              <img src="../img/logo.svg" alt="Nha sach online" />
+              <img src="../img/logo.svg" alt="Nhà sách Online" />
             </a>
             <span>Nhà sách Online</span>
           </div>
           <!-- Search bar -->
-          <input type="text" id="search-books" placeholder="Tìm kiếm sách..." />
+          <input type="text" id="search-input" placeholder="Tìm kiếm sách..." />
           <!-- Nav bar -->
           <nav class="nav">
             <div class="nav__container">
@@ -31,7 +31,7 @@
                 </div>
               </div>
               <div class="nav__item">
-                <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
+                <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
               </div>
             </div>
           </nav>
@@ -47,41 +47,32 @@
 
     <!-- Main content -->
     <main class="main">
-      <div class="main__content main__content--danhmuc-page">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-          <h2 class="sidebar__title">Danh mục sách</h2>
-          <form class="sidebar__filter" id="category-filter">
-            <ul class="sidebar__checkbox-list" id="category-checkbox-list">
-              <!-- Danh mục sẽ được render vào đây bằng JS -->
-            </ul>
-            <button type="submit" class="sidebar__filter-btn">Tìm kiếm</button>
-          </form>
-        </aside>
+      <div class="main__content main__content--discount-page">
+        <!-- Main Top: Mã giảm giá -->
+        <section class="main-top">
+          <h2 class="main-top__title">Mã Giảm Giá</h2>
+          <div class="discount-code__list" id="discount-code-list">
+            <!-- Mã giảm giá sẽ được render tự động bằng JS -->
+          </div>
+        </section>
 
-        <!-- Book List -->
-        <div class="book-list">
+        <!-- Main Bottom: Danh sách sách giảm giá -->
+        <section class="main-bottom">
           <div class="book-list__header">
-            <h2 class="book-list__title" id="book-list-title">
-              Danh sách Sách
-            </h2>
-            <div class="sort-books">
-              <label for="sort-books">Sắp xếp theo: </label>
-              <select id="sort-books">
+            <h2 class="book-list__title">Sách Đang Giảm Giá</h2>
+            <!-- Bộ lọc sắp xếp -->
+            <div class="filter-section">
+              <select id="sort-discount-books">
                 <option value="newest">Mới nhất</option>
                 <option value="oldest">Cũ nhất</option>
               </select>
             </div>
           </div>
-          <div class="book-list__items" id="book-list">
-            <!-- Sách sẽ được render tự động bằng JS -->
+          <div class="new-books__book-list" id="discount-book-list">
+            <!-- Sách giảm giá sẽ được render tự động bằng JS -->
           </div>
-
-          <!-- Pagination -->
-          <div class="pagination" id="pagination">
-            <!-- Phân trang sẽ được render tự động bằng JS -->
-          </div>
-        </div>
+          <div id="discount-book-pagination" class="pagination"></div>
+        </section>
       </div>
     </main>
 
@@ -94,6 +85,7 @@
       </div>
     </footer>
 
-    <script src="../js/book-list.js"></script>
+    <!-- Liên kết file JavaScript riêng -->
+    <script src="../js/discount.js"></script>
   </body>
 </html>

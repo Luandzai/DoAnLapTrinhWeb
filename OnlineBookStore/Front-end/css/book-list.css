@@ -315,13 +315,36 @@ body {
   transform: scale(1.1);
 }
 
+/* CSS cho phần đã đăng nhập */
+.login__user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.login__user img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%; /* Làm avatar tròn */
+}
+
+.login__user:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hiệu ứng hover nhẹ */
+}
+
+/* CSS cho dropdown */
 .login__dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
-  left: -160%;
+  right: 0; /* Căn phải thay vì lệch trái */
   background-color: #fff;
-  min-width: 13rem;
+  min-width: 15rem; /* Tăng chiều rộng để dễ đọc */
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
   overflow: hidden;
@@ -333,7 +356,7 @@ body {
   padding: 1rem 1.5rem;
   font-size: 1.6rem;
   color: #333;
-  text-align: center;
+  text-align: left; /* Căn trái cho tự nhiên hơn */
   text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -348,6 +371,22 @@ body {
   display: block;
 }
 
+/* Responsive cho dropdown */
+@media (max-width: 768px) {
+  .login__dropdown-content {
+    right: 0; /* Đảm bảo căn phải trên mobile */
+    min-width: 12rem; /* Giảm chiều rộng trên mobile */
+  }
+
+  .login__user {
+    font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
+  }
+
+  .login__user img {
+    width: 2rem;
+    height: 2rem;
+  }
+}
 /* ========================= Sidebar ========================= */
 .sidebar {
   width: 20%;
@@ -440,63 +479,20 @@ body {
 }
 
 /* ========================= Sort Dropdown ========================= */
-.book-list__sort {
-  position: relative;
-  display: inline-block;
+.sort-books {
+  margin-bottom: 20px;
 }
 
-.book-list__sort-btn {
-  background: white;
-  color: #ff4b2b;
-  font-size: 1.6rem;
-  padding: 0.8rem 1.5rem;
-  border: 0.1rem solid #ff4b2b;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease-in-out;
-  margin-top: 2rem;
+.sort-books label {
+  margin-right: 10px;
 }
 
-.book-list__sort-btn:hover {
-  background-color: #ff4b2b;
-  color: white;
+.sort-books select {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
-
-.book-list__sort-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: -12%;
-  background-color: white;
-  min-width: 13rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  border-radius: 0.5rem;
-  z-index: 10;
-  overflow: hidden;
-}
-
-.book-list__sort-content a {
-  color: #333;
-  font-size: 1.6rem;
-  padding: 1rem 1.5rem;
-  text-decoration: none;
-  display: block;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-.book-list__sort-content a:hover {
-  background-color: #ff4b2b;
-  color: white;
-}
-
-/* Hiển thị dropdown khi hover */
-.book-list__sort:hover .book-list__sort-content {
-  display: block;
-}
-
 /* ========================= Danh sách sách ========================= */
 .book-list__items {
   display: flex;

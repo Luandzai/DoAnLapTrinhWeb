@@ -196,44 +196,6 @@ async function fetchFeaturedBooks() {
 }
 
 // Hàm lấy và hiển thị sách mới (New Books)
-// async function fetchNewBooks() {
-//   try {
-//     const response = await fetch(`${API_BASE_URL}/Books`);
-//     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-//     const data = await response.json();
-//     console.log("New Books from API:", data);
-
-//     const books = data.$values || data;
-//     if (!Array.isArray(books)) {
-//       throw new Error("Dữ liệu sách mới không phải là mảng");
-//     }
-
-//     const newBooksContainer = document.querySelector(".new-books__book-list");
-//     if (!newBooksContainer) {
-//       console.error("Không tìm thấy new-books__book-list trong HTML");
-//       return;
-//     }
-
-//     newBooksContainer.innerHTML = "";
-//     let newBooksCount = 0;
-
-//     books.forEach((book) => {
-//       if (newBooksCount < 16) {
-//         const bookElement = renderBook(book);
-//         newBooksContainer.innerHTML += bookElement;
-//         newBooksCount++;
-//       }
-//     });
-//   } catch (error) {
-//     console.error("❌ Lỗi tải sách mới:", error);
-//     const newBooksContainer = document.querySelector(".new-books__book-list");
-//     if (newBooksContainer) {
-//       newBooksContainer.innerHTML = "<p>Lỗi tải sách mới</p>";
-//     }
-//   }
-// }
-
 async function fetchNewBooks() {
   try {
     const response = await fetch(`${API_BASE_URL}/Books/New`);
@@ -304,6 +266,58 @@ function handleSearch() {
   });
 }
 
+// Hàm render phần login dựa trên trạng thái đăng nhập
+function renderLoginSection() {
+  const loginSection = document.getElementById("login-section");
+  const user = JSON.parse(localStorage.getItem("user")); // Lấy thông tin user từ localStorage
+
+  if (!loginSection) {
+    console.error("Không tìm thấy login-section trong HTML");
+    return;
+  }
+
+  if (!user) {
+    // Chưa đăng nhập
+    loginSection.innerHTML = `
+      <button class="login__dropdown-btn">
+        <img src="../img/Login.svg" alt="Đăng nhập" />
+      </button>
+      <div class="login__dropdown-content">
+        <a href="./Login.html">Đăng Nhập</a>
+      </div>
+    `;
+  } else {
+    // Đã đăng nhập
+    const menuItems =
+      user.role === "Admin"
+        ? `
+          <a href="../html/admin.html">Quản lý</a>
+          <a href="#" id="logout-btn">Đăng xuất</a>
+        `
+        : `
+          <a href="../html/user.html">Thông tin cá nhân</a>
+          <a href="#" id="logout-btn">Đăng xuất</a>
+        `;
+
+    loginSection.innerHTML = `
+      <div class="login__user">
+        <img src="../img/login.svg" alt="Avatar" />
+        <span>${user.fullName}</span>
+      </div>
+      <div class="login__dropdown-content">
+        ${menuItems}
+      </div>
+    `;
+
+    // Xử lý đăng xuất
+    document.getElementById("logout-btn")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("user"); // Xóa thông tin user
+      window.location.reload(); // Tải lại trang
+    });
+  }
+}
+
 // Khởi chạy khi trang load
 document.addEventListener("DOMContentLoaded", async () => {
   await fetchCategories();
@@ -312,4 +326,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   await fetchNewBooks();
   startTimer();
   handleSearch();
+  renderLoginSection(); // Thêm chức năng render login
 });

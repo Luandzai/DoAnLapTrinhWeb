@@ -13,15 +13,17 @@ html {
 body {
   background-color: #eff1e3;
   font-size: 1.6rem; /* 16px */
+  line-height: 1.5;
+  min-height: 100vh;
 }
 
 /* ========================= Main Layout ========================= */
-.main__content,
 .header__main-content,
+.main__content,
 .footer__main-content {
   max-width: 110rem; /* 1100px */
   margin: 0 auto;
-  padding: 0.5rem;
+  padding: 1rem;
 }
 
 /* ========================= Header ========================= */
@@ -32,7 +34,8 @@ body {
   border-radius: 0.5rem;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 1000;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 .header__body {
@@ -74,13 +77,13 @@ input[type="text"] {
 }
 
 /* Menu điều hướng */
-.nav-bar ul {
+.nav ul {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
-.nav-bar a {
+.nav a {
   color: white;
   text-decoration: none;
   font-size: 1.6rem;
@@ -89,7 +92,7 @@ input[type="text"] {
   transition: color 0.3s ease-in-out;
 }
 
-.nav-bar a:hover {
+.nav a:hover {
   color: black;
 }
 
@@ -262,6 +265,7 @@ input[type="text"] {
     transform: translateY(0);
   }
 }
+
 /* ========================= Login Dropdown ========================= */
 .login {
   position: relative;
@@ -370,396 +374,143 @@ input[type="text"] {
     height: 2rem;
   }
 }
-
-/* ========================= Chi tiết sách ========================= */
-.book-detail {
-  display: flex;
-  gap: 3rem;
-  background: white;
-  padding: 3rem;
-  border-radius: 1rem;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
-  align-items: center;
-}
-
-.book-detail__image {
-  flex: 1;
-}
-
-.book-detail__image img {
-  width: 100%;
-  max-width: 40rem;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-}
-
-.book-detail__info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  border: 1px solid #f1f1f1;
-  padding: 5rem;
-  border-radius: 2rem;
-}
-
-.book-detail__title {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #2c3e50;
-  text-transform: uppercase;
-  line-height: 1.67;
-  max-height: 10.02rem; /* 2 dòng */
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis; /* Thêm dấu "..." */
-  word-break: break-all;
-}
-
-.book-detail__author {
-  font-size: 1.8rem;
-  color: #555;
-}
-
-.book-detail__price {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ff4b2b;
-}
-
-.book-detail__old-price {
-  font-size: 1.6rem;
-  text-decoration: line-through;
-  color: #888;
-}
-
-.book-detail__discount {
-  font-size: 1.6rem;
-  color: #fff;
-  background: #ff4b2b;
-  display: inline-block;
-  padding: 0.5rem 1rem;
+/* ========================= Main Top: Mã Giảm Giá ========================= */
+.main-top {
+  background: linear-gradient(90deg, #ffecd2, #fcb69f);
+  padding: 2rem;
   border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
-.book-detail__stock {
-  font-size: 1.6rem;
-  color: #27ae60;
-}
-
-.book-detail__add-to-cart {
-  background: linear-gradient(90deg, #ff416c, #ff4b2b);
-  color: white;
-  padding: 1.5rem 2.5rem;
-  border: none;
-  font-size: 1.8rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+.main-top__title {
   text-align: center;
+  margin-bottom: 2rem;
+  font-size: 3.2rem;
   font-weight: bold;
-}
-
-.book-detail__add-to-cart:hover {
-  background: linear-gradient(90deg, #ff4b2b, #ff416c);
-  transform: scale(1.08);
-  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
-}
-
-/* ========================= Mô tả sách ========================= */
-.book-description,
-.book-reviews,
-.related-books {
-  background: white;
-  padding: 2rem;
-  margin-top: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-  line-height: 1.4;
-}
-
-.book-description__title,
-.book-reviews__title,
-.related-books__title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #f5131e;
-  font-weight: bold;
-}
-
-.book-description {
-  background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
-}
-
-.book-description__content {
-  overflow: hidden;
-  max-height: 10rem; /* Giới hạn độ cao ban đầu */
-  transition: max-height 0.5s ease-in-out;
-}
-
-/* Ẩn checkbox */
-.book-description__toggle {
-  display: none;
-}
-
-/* Ẩn cả hai nút ban đầu để kiểm soát hiển thị đúng */
-.book-description__toggle-btn--show-more,
-.book-description__toggle-btn--show-less {
-  display: none;
-}
-
-/* Chỉ hiển thị nút "Xem thêm" ban đầu */
-.book-description__toggle:not(:checked)
-  ~ .book-description__toggle-btn--show-more {
-  display: inline-block;
-}
-
-/* Khi checkbox được chọn, mở rộng nội dung */
-.book-description__toggle:checked ~ .book-description__content {
-  max-height: 100%;
-}
-
-/* Khi checkbox được chọn, ẩn "Xem thêm" và hiện "Thu gọn" */
-.book-description__toggle:checked ~ .book-description__toggle-btn--show-more {
-  display: none;
-}
-
-.book-description__toggle:checked ~ .book-description__toggle-btn--show-less {
-  display: inline-block;
-}
-
-/* Style cho nút */
-.book-description__toggle-btn {
-  cursor: pointer;
-  color: #ff4b2b;
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  transition: color 0.3s ease-in-out;
-}
-
-.book-description__toggle-btn:hover {
   color: #d32f2f;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 1rem 0;
+  border-bottom: 3px solid #d32f2f;
+  display: inline-block;
 }
 
-.book-description__full {
-  font-size: 1.6rem;
-  color: #333;
-  line-height: 1.6;
-  display: none; /* Ẩn mô tả đầy đủ ban đầu */
-}
-
-.book-description__toggle:checked
-  ~ .book-description__content
-  .book-description__short {
-  display: none; /* Ẩn mô tả ngắn khi mở */
-}
-
-.book-description__toggle:checked
-  ~ .book-description__content
-  .book-description__full {
-  display: block; /* Hiển thị mô tả đầy đủ khi mở */
-}
-
-/* ========================= Đánh giá ========================= */
-.book-reviews {
-  background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
-}
-
-.book-reviews__header {
+.discount-code__list {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #f0f0f0;
-  padding-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
 }
 
-.book-reviews__header .book-reviews__title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.review-item {
-  background: #f7f7f7;
+.discount-code__item {
+  background-color: #fff;
   padding: 1.5rem;
   border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  line-height: 1.67;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  width: 25rem;
+  text-align: center;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.review-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+.discount-code__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
 }
 
-.review-item strong {
-  font-size: 1.6rem;
-  color: #34495e;
-}
-
-.review-item p {
-  font-size: 1.4rem;
-  color: #555;
-  margin-top: 0.5rem;
-}
-
-.review-item p:nth-child(2) {
-  font-size: 1.8rem;
-  color: #ffcc00;
-}
-
-.book-reviews__list {
-  max-height: 30rem;
-  overflow-y: auto;
-  margin-top: 1rem;
-  padding-right: 1rem;
-}
-
-.book-reviews__list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.book-reviews__list::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 3px;
-}
-
-.book-reviews__list::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-
-/* ========================= Form đánh giá ========================= */
-.book-reviews__form {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
-}
-
-.book-reviews__form-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #2c3e50;
-}
-
-/* Ô nhập tên */
-.book-reviews__form-name {
-  width: 100%;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-}
-
-/* Chọn số sao */
-.book-reviews__form-stars {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 0.5rem;
+.discount-code__code {
   font-size: 2rem;
-  margin-bottom: 1rem;
-  justify-content: flex-end;
+  font-weight: bold;
+  color: #ff4d4d;
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
-.book-reviews__form-stars input {
-  display: none;
-}
-
-.book-reviews__form-stars label {
-  color: #ccc;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
-}
-
-.book-reviews__form-stars label:hover {
-  transform: scale(1.2);
-  color: #ffcc00;
-}
-
-.book-reviews__form-stars input:checked ~ label {
-  color: #ffcc00;
-}
-
-/* Ô nhập nội dung */
-.book-reviews__form-text {
-  width: 100%;
-  height: 8rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
+.discount-code__amount {
   font-size: 1.6rem;
-  resize: none;
+  color: #333;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.discount-code__date {
+  font-size: 1.4rem;
+  color: #888;
+  display: block;
   margin-bottom: 1rem;
 }
 
-/* Nút gửi đánh giá */
-.book-reviews__form-submit {
-  background: linear-gradient(90deg, #ff416c, #ff4b2b);
-  color: white;
-  padding: 1rem 2rem;
+.discount-code__save-btn {
   border: none;
+  padding: 0.8rem 1.5rem;
   font-size: 1.6rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
-.book-reviews__form-submit:hover {
+.discount-code__save-btn:hover {
   background: linear-gradient(90deg, #ff4b2b, #ff416c);
   transform: scale(1.05);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-}
-/* ========================= Sách liên quan ========================= */
-.related-books {
-  background: white;
-  padding: 2rem;
-  margin-top: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
-.related-books__header {
-  text-align: center;
+/* ========================= Main Bottom: Danh sách sách giảm giá ========================= */
+.main-bottom {
+  padding: 2rem;
+}
+
+/* ======================================== TITLE ========================================= */
+.book-list__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
 }
 
-.related-books__header .related-books__title {
-  font-size: 2.4rem;
+.book-list__title {
+  font-size: 3.2rem;
   font-weight: bold;
-  color: #2c3e50;
+  color: #d32f2f;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 1rem 0;
+  border-bottom: 3px solid #d32f2f;
+  display: inline-block;
 }
 
-/* Danh sách sản phẩm */
-.related-books__list {
+/* ======================================== Sort ============================================= */
+
+.filter-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+#search-input {
+  padding: 8px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#sort-discount-books {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+/* ======================================Book List========================================= */
+.new-books__book-list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
   margin: 2rem 0;
-  overflow-x: auto; /* Thêm để hỗ trợ cuộn ngang nếu cần */
 }
 
 .book-item {
   width: 23%;
-  min-width: 200px; /* Đảm bảo không bị co quá nhỏ */
-  height: 50rem;
   background-color: #fff;
   text-align: center;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
@@ -769,35 +520,35 @@ input[type="text"] {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  border-radius: 0.5rem;
 }
 
 .book-item:hover {
   box-shadow: 0 0 2rem rgba(33, 37, 41, 0.3);
   text-shadow: 0 0 0.5rem rgba(59, 57, 57, 0.2);
-  transform: translateY(-5px); /* Hiệu ứng nổi nhẹ */
+  transform: translateY(-5px);
 }
 
 .book-item img {
   width: 100%;
   height: 35rem;
   object-fit: cover;
-  border-radius: 0.5rem 0.5rem 0 0; /* Chỉ bo góc trên */
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 
 .book-name {
   font-size: 1.6rem;
   margin: 1rem 0.5rem;
-  color: #2c3e50;
+  color: #333;
   line-height: 1.4;
   font-weight: bold;
-  max-height: 4.48rem; /* 2 dòng */
+  max-height: 4.48rem;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis; /* Thêm dấu "..." */
+  text-overflow: ellipsis;
+  color: #2c3e50;
   word-break: break-all;
 }
 
@@ -805,38 +556,82 @@ input[type="text"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
 .GiaHienTai {
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: bold;
-  color: #e74c3c; /* Đồng bộ màu đỏ */
+  color: #ff4d4d;
 }
 
 .discount {
-  background-color: #e74c3c; /* Đồng bộ màu đỏ */
+  background-color: #ff4d4d;
   color: #fff;
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 1.2rem;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
 }
 
 .GiaCu {
-  font-size: 1.2rem;
+  font-size: 12px;
   color: #888;
   text-decoration: line-through;
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 5px;
 }
 
 .DaBan {
-  background-color: #e74c3c; /* Đồng bộ màu đỏ */
+  background-color: #ff4d4d;
   color: #fff;
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  border-radius: 0 0 0.8rem 0.8rem; /* Bo góc dưới */
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .discount-code__item {
+    width: 45%;
+  }
+
+  .book-item {
+    width: 48%;
+  }
+}
+
+@media (max-width: 480px) {
+  .discount-code__item {
+    width: 100%;
+  }
+
+  .book-item {
+    width: 100%;
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-btn {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.page-btn:hover {
+  background-color: #e9ecef;
 }
 
 /* ========================= Footer ========================= */
@@ -847,8 +642,7 @@ input[type="text"] {
   color: white;
   margin-top: 2rem;
   border-radius: 0.5rem;
-}
-
-.footer__copyright {
-  /* No specific styles were applied to .copyright in the original, so this is just a placeholder */
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
