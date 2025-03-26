@@ -91,6 +91,9 @@ CREATE TABLE Orders (
     TotalPrice DECIMAL(10,2) NOT NULL,
     Status NVARCHAR(20) CHECK (Status IN (N'Pending', N'Shipped', N'Delivered', N'Canceled')) NOT NULL,
     UpdatedAt DATETIME DEFAULT GETDATE(),
+	ShippingAddress NVARCHAR(255),
+    PaymentMethod NVARCHAR(50),
+    ShippingFee DECIMAL(10,2),
     FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     FOREIGN KEY (DiscountID) REFERENCES Discounts(DiscountID) ON DELETE SET NULL
 );
@@ -152,6 +155,13 @@ CREATE TABLE UserDiscounts (
     FOREIGN KEY (DiscountID) REFERENCES Discounts(DiscountID) ON DELETE CASCADE
 );
 Go
+
+CREATE TABLE ShippingFees (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Province NVARCHAR(100) NOT NULL,
+    Fee DECIMAL(10,2) NOT NULL
+);
+go
 
 -- ✅ Cập nhật Trigger kiểm tra vòng lặp danh mục
 CREATE TRIGGER PreventCategoryLoop
@@ -327,5 +337,16 @@ INSERT INTO Books (Title, AuthorID, PublisherID, CategoryID, Price, OldPrice, Di
 -- 📚 Một số cuốn khác
 (N'Tư Duy Phản Biện', 1, 1, 3, 155000, 185000, 145000, 210, 45, '9786041509789', '2019-10-15', N'Rèn luyện kỹ năng tư duy phản biện trong cuộc sống.', 'tu_duy_phan_bien.jpg', '2024-04-01 10:00:00', '2024-04-02 12:00:00'),
 (N'Thời Đại Công Nghệ Số', 2, 2, 4, 165000, 195000, 155000, 250, 30, '9786041509890', '2020-11-20', N'Tác động của công nghệ số đến xã hội hiện đại.', 'thoi_dai_cong_nghe_so.jpg', '2024-05-01 10:00:00', '2024-05-02 12:00:00');
+
+
+
+INSERT INTO ShippingFees (Province, Fee) VALUES
+(N'TP HCM', 10000),
+(N'Hà Nội', 12000),
+(N'Đà Nẵng', 15000),
+(N'Cần Thơ', 18000),
+(N'Hải Phòng', 20000);
+
+
 
 
