@@ -35,6 +35,8 @@ public partial class OnlineBookstoreContext : DbContext
 
     public virtual DbSet<Review> Reviews { get; set; }
 
+    public virtual DbSet<ShippingFee> ShippingFees { get; set; }
+
     public virtual DbSet<Transaction> Transactions { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -158,6 +160,9 @@ public partial class OnlineBookstoreContext : DbContext
             entity.Property(e => e.OrderDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.PaymentMethod).HasMaxLength(50);
+            entity.Property(e => e.ShippingAddress).HasMaxLength(255);
+            entity.Property(e => e.ShippingFee).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Status).HasMaxLength(20);
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.UpdatedAt)
@@ -241,6 +246,14 @@ public partial class OnlineBookstoreContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Reviews__UserID__6B24EA82");
+        });
+
+        modelBuilder.Entity<ShippingFee>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Shipping__3214EC07EAE04C8B");
+
+            entity.Property(e => e.Fee).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Province).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Transaction>(entity =>

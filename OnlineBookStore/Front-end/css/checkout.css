@@ -94,7 +94,7 @@ input[type="text"] {
 .nav__container {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .nav__item {
@@ -104,22 +104,24 @@ input[type="text"] {
 .nav__link,
 .nav__dropdown-btn {
   color: #fff;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   text-decoration: none;
-  padding: 1rem 1.5rem;
-  transition: background-color 0.3s ease-in-out;
+  padding: 1.2rem 1.8rem;
+  transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   cursor: pointer;
-  height: 4rem;
+  height: 4.5rem;
+  border-radius: 0.5rem;
 }
 
-/* Hiệu ứng hover */
+/* Hiệu ứng hover cho nút */
 .nav__link:hover,
 .nav__dropdown-btn:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Dropdown */
@@ -130,40 +132,132 @@ input[type="text"] {
 .nav__dropdown-content {
   position: absolute;
   top: 100%;
-  left: -100%;
-  background-color: white;
-  min-width: 20rem;
-  max-height: 30rem;
-  overflow-y: auto;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  border-radius: 0.5rem;
-  z-index: 100;
-  padding: 1rem 0;
+  left: 0;
+  background-color: #fff;
+  min-width: 25rem;
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.8rem;
+  border: 1px solid #e0e0e0;
+  z-index: 1000;
+  padding: 1.5rem;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out,
+    transform 0.4s ease-in-out;
 }
 
 /* Hiển thị dropdown khi hover */
 .nav__item--dropdown:hover .nav__dropdown-content {
   opacity: 1;
   visibility: visible;
+  transform: translateY(0);
 }
 
 /* Dropdown Items */
+.nav__dropdown-item {
+  position: relative; /* Đặt position: relative để làm tham chiếu cho submenu */
+  margin-bottom: 0.8rem;
+}
+
 .nav__dropdown-item a {
   color: #333;
   font-size: 1.6rem;
-  padding: 1rem 1.5rem;
+  padding: 1.2rem 1.5rem;
   text-decoration: none;
-  display: block;
-  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    padding-left 0.3s ease-in-out;
 }
 
 .nav__dropdown-item a:hover {
   background: #34495e;
   color: white;
   padding-left: 2rem;
+  font-weight: bold;
+}
+
+/* Submenu (danh mục con) */
+.nav__dropdown-subcontent {
+  position: absolute;
+  left: 100%;
+  top: 0; /* Căn chỉnh với đỉnh của nav__dropdown-item */
+  background-color: #f9f9f9;
+  min-width: 25rem;
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.8rem;
+  border: 1px solid #e0e0e0;
+  z-index: 1000;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out,
+    transform 0.4s ease-in-out;
+}
+
+/* Hiển thị submenu khi hover */
+.nav__dropdown-item:hover .nav__dropdown-subcontent {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.nav__dropdown-subitem {
+  margin-bottom: 0.8rem;
+}
+
+.nav__dropdown-subitem a {
+  color: #555;
+  font-size: 1.5rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    padding-left 0.3s ease-in-out;
+}
+
+.nav__dropdown-subitem a:hover {
+  background: #34495e;
+  color: white;
+  padding-left: 2rem;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav__container {
+    gap: 1.5rem;
+  }
+
+  .nav__link,
+  .nav__dropdown-btn {
+    font-size: 1.6rem;
+    padding: 1rem 1.2rem;
+    height: 4rem;
+  }
+
+  .nav__dropdown-content {
+    min-width: 20rem;
+    left: 0;
+  }
+
+  .nav__dropdown-subcontent {
+    left: 0; /* Hiển thị submenu bên dưới thay vì bên phải */
+    top: 100%; /* Căn chỉnh bên dưới nav__dropdown-item */
+    min-width: 20rem;
+    transform: translateY(10px); /* Hiệu ứng trượt từ trên xuống */
+  }
+
+  .nav__dropdown-item:hover .nav__dropdown-subcontent {
+    transform: translateY(0);
+  }
 }
 
 /* ========================= Login Dropdown ========================= */
@@ -202,13 +296,36 @@ input[type="text"] {
   transform: scale(1.1);
 }
 
+/* CSS cho phần đã đăng nhập */
+.login__user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.login__user img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%; /* Làm avatar tròn */
+}
+
+.login__user:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hiệu ứng hover nhẹ */
+}
+
+/* CSS cho dropdown */
 .login__dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
-  left: -160%;
+  right: 0; /* Căn phải thay vì lệch trái */
   background-color: #fff;
-  min-width: 13rem;
+  min-width: 15rem; /* Tăng chiều rộng để dễ đọc */
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
   overflow: hidden;
@@ -220,7 +337,7 @@ input[type="text"] {
   padding: 1rem 1.5rem;
   font-size: 1.6rem;
   color: #333;
-  text-align: center;
+  text-align: left; /* Căn trái cho tự nhiên hơn */
   text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -235,6 +352,22 @@ input[type="text"] {
   display: block;
 }
 
+/* Responsive cho dropdown */
+@media (max-width: 768px) {
+  .login__dropdown-content {
+    right: 0; /* Đảm bảo căn phải trên mobile */
+    min-width: 12rem; /* Giảm chiều rộng trên mobile */
+  }
+
+  .login__user {
+    font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
+  }
+
+  .login__user img {
+    width: 2rem;
+    height: 2rem;
+  }
+}
 /* ========================= Trang Thanh Toán ========================= */
 .checkout {
   max-width: 60rem;
@@ -368,7 +501,7 @@ input[type="text"] {
   text-align: center;
 }
 
-.checkout__btn {
+.place-order-btn {
   padding: 1.2rem 2.5rem;
   font-size: 1.8rem;
   font-weight: bold;
@@ -381,7 +514,7 @@ input[type="text"] {
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
 }
 
-.checkout__btn:hover {
+.place-order-btn:hover {
   background: linear-gradient(90deg, #ff4b2b, #ff416c);
   transform: scale(1.05);
   box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.2);

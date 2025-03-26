@@ -19,27 +19,23 @@ namespace BookStoreApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Discount>>> GetDiscounts()
         {
-            // Lấy danh sách mã giảm giá còn hiệu lực (StartDate <= Now <= EndDate)
             var currentDate = DateTime.Now;
             var discounts = await _context.Discounts
                 .Where(d => d.StartDate <= currentDate && d.EndDate >= currentDate)
                 .ToListAsync();
-
-            // Luôn trả về mảng, kể cả khi không có dữ liệu
-            return Ok(discounts ?? new List<Discount>());
+            return Ok(discounts);
         }
+
         // POST: api/Discounts/save
         [HttpPost("save")]
         public async Task<ActionResult<UserDiscount>> SaveDiscount([FromBody] SaveDiscountRequest request)
         {
-            // Kiểm tra xem mã giảm giá có tồn tại không
             var discount = await _context.Discounts.FindAsync(request.DiscountId);
             if (discount == null)
             {
                 return NotFound(new { message = "Mã giảm giá không tồn tại." });
             }
 
-            // Kiểm tra xem người dùng đã lưu mã này chưa
             var existingUserDiscount = await _context.UserDiscounts
                 .FirstOrDefaultAsync(ud => ud.UserId == request.UserId && ud.DiscountId == request.DiscountId);
             if (existingUserDiscount != null)
@@ -47,13 +43,12 @@ namespace BookStoreApi.Controllers
                 return BadRequest(new { message = "Bạn đã lưu mã giảm giá này rồi." });
             }
 
-            // Tạo bản ghi mới trong UserDiscount
             var userDiscount = new UserDiscount
             {
                 UserId = request.UserId,
                 DiscountId = request.DiscountId,
-                AssignedDate = DateTime.Now, // Sử dụng AssignedDate thay vì SavedAt
-                IsUsed = false // Đặt mặc định là chưa sử dụng
+                AssignedDate = DateTime.Now,
+                IsUsed = false
             };
 
             _context.UserDiscounts.Add(userDiscount);
@@ -61,8 +56,49 @@ namespace BookStoreApi.Controllers
 
             return Ok(new { message = "Lưu mã giảm giá thành công!", userDiscount });
         }
+
+        // GET: api/Discounts/user/{userId}
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetUserDiscounts(int userId)
+        {
+            var currentDate = DateTime.Now;
+            var userDiscounts = await _context.UserDiscounts
+                .Where(ud => ud.UserId == userId && (ud.IsUsed == false))
+                .Include(ud => ud.Discount)
+                .Where(ud => ud.Discount.StartDate <= currentDate && ud.Discount.EndDate >= currentDate)
+                .Select(ud => new
+                {
+                    ud.DiscountId,
+                    ud.Discount.Code,
+                    ud.Discount.DiscountAmount, // Đảm bảo dùng DiscountAmount
+                    ud.Discount.StartDate,
+                    ud.Discount.EndDate,
+                    ud.AssignedDate
+                })
+                .ToListAsync();
+
+            return Ok(userDiscounts); // Loại bỏ ?? để tránh lỗi CS0019
+        }
+
+        // DELETE: api/Discounts/user/{userId}/discount/{discountId}
+        [HttpDelete("user/{userId}/discount/{discountId}")]
+        public async Task<IActionResult> DeleteUserDiscount(int userId, int discountId)
+        {
+            var userDiscount = await _context.UserDiscounts
+                .FirstOrDefaultAsync(ud => ud.UserId == userId && ud.DiscountId == discountId);
+
+            if (userDiscount == null)
+            {
+                return NotFound(new { message = "Mã giảm giá không tồn tại hoặc không được lưu bởi người dùng này." });
+            }
+
+            _context.UserDiscounts.Remove(userDiscount);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Xóa mã giảm giá thành công!" });
+        }
     }
-    
+
     // DTO để nhận dữ liệu từ frontend
     public class SaveDiscountRequest
     {

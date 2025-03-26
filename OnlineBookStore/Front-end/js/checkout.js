@@ -1,246 +1,427 @@
+// Định nghĩa API base URL
+const API_BASE_URL = "http://localhost:5000/api";
+
 // Hàm định dạng giá tiền
-function formatPrice(price) {
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
+function formatPrice(amount) {
+  if (!amount || isNaN(amount)) return "0 đ";
+  return amount.toLocaleString("vi-VN") + " đ";
 }
 
-// Hàm fetch dữ liệu giỏ hàng từ localStorage
-function fetchCartItems() {
-  const selectedItems = JSON.parse(localStorage.getItem("selectedCartItems"));
-  if (selectedItems && selectedItems.length > 0) {
-    renderCartItems(selectedItems);
-    updateTotalWithShipping();
-  } else {
-    document.getElementById("order-items").innerHTML =
-      "<p>Không có sản phẩm nào được chọn.</p>";
-    document.getElementById("subtotal").textContent = formatPrice(0);
-    document.getElementById("shipping-fee").textContent = formatPrice(0);
-    document.getElementById("discount-amount").textContent = formatPrice(0);
-    document.getElementById("total-price").textContent = formatPrice(0);
-  }
-}
-
-// Hàm render danh sách sách trong giỏ hàng
-function renderCartItems(cartItems) {
+// Render danh sách sản phẩm đã chọn
+function renderSelectedBooks() {
   const orderItemsContainer = document.getElementById("order-items");
-  orderItemsContainer.innerHTML = "";
+  const checkoutItems = JSON.parse(localStorage.getItem("checkoutItems")) || [];
 
-  cartItems.forEach((item) => {
-    const itemHTML = `
+  if (checkoutItems.length === 0) {
+    orderItemsContainer.innerHTML = "<p>Không có sản phẩm nào được chọn.</p>";
+    return;
+  }
+
+  orderItemsContainer.innerHTML = checkoutItems
+    .map(
+      (item) => `
       <div class="order-item">
-        <img src="${item.coverImage}" alt="${item.title}" />
-        <div class="order-item__info">
-          <p class="order-item__title">${item.title}</p>
-          <p class="order-item__quantity">Số lượng: ${item.quantity}</p>
-          <p class="order-item__price">${formatPrice(
-            (item.discountPrice || item.price) * item.quantity
-          )}</p>
-        </div>
-      </div>
-    `;
-    orderItemsContainer.innerHTML += itemHTML;
-  });
-}
-
-// Hàm fetch danh sách voucher từ JSON
-async function fetchVouchers() {
-  const voucherSelect = document.getElementById("voucher-select");
-  if (!voucherSelect) return;
-
-  try {
-    const response = await fetch("../data/vouchers.json");
-    const vouchers = await response.json();
-    renderVouchers(vouchers);
-  } catch (error) {
-    console.error("Lỗi khi tải danh sách voucher:", error);
-    voucherSelect.innerHTML = '<option value="">Lỗi tải mã giảm giá</option>';
-  }
-}
-
-// Hàm render danh sách mã giảm giá
-function renderVouchers(vouchers) {
-  const voucherSelect = document.getElementById("voucher-select");
-  voucherSelect.innerHTML = '<option value="">Chọn mã giảm giá</option>';
-
-  vouchers.forEach((voucher) => {
-    const option = document.createElement("option");
-    option.value = voucher.discountAmount;
-    option.textContent = `${voucher.code} (-${formatPrice(
-      voucher.discountAmount
-    )})`;
-    voucherSelect.appendChild(option);
-  });
-
-  voucherSelect.addEventListener("change", applyVoucher);
-}
-
-// Hàm áp dụng mã giảm giá
-function applyVoucher() {
-  updateTotalWithShipping();
-}
-
-// Hàm fetch danh sách danh mục từ file JSON cho header
-async function fetchCategories() {
-  try {
-    const response = await fetch("../data/cart.json");
-    const data = await response.json();
-    const categories = data.categories;
-    const categoryList = document.getElementById("category-list");
-
-    categoryList.innerHTML = categories
-      .map(
-        (category) => `
-          <div class="nav__dropdown-item">
-            <a href="../html/book-list.html?categoryId=${category.categoryID}">
-              ${category.categoryName}
-            </a>
+          <img src="${item.coverImage}" alt="${item.title}">
+          <div class="order-item__info">
+              <p class="order-item__title">${item.title}</p>
+              <p class="order-item__price" data-price="${
+                item.price || 0
+              }">${formatPrice(item.price)}</p>
+              <p class="order-item__quantity">Số lượng: ${item.quantity}</p>
           </div>
-        `
-      )
-      .join("");
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    document.getElementById("category-list").innerHTML =
-      '<div class="nav__dropdown-item">Lỗi tải danh mục</div>';
-  }
+      </div>`
+    )
+    .join("");
+
+  updateTotalPrice();
 }
 
-// Hàm fetch danh sách phương thức thanh toán từ file JSON
-async function fetchPaymentMethods() {
-  try {
-    const response = await fetch("../data/payment_methods.json");
-    const methods = await response.json();
-    renderPaymentMethods(methods);
-  } catch (error) {
-    console.error("Lỗi khi tải phương thức thanh toán:", error);
-    const paymentContainer = document.querySelector(".payment-options");
-    paymentContainer.innerHTML = "<p>Lỗi tải phương thức thanh toán</p>";
-  }
-}
-
-// Hàm render phương thức thanh toán lên giao diện
-function renderPaymentMethods(methods) {
-  const paymentContainer = document.querySelector(".payment-options");
-  paymentContainer.innerHTML = "";
-
-  methods.forEach((method, index) => {
-    const methodHTML = `
-      <label>
-        <input type="radio" name="payment-method" value="${method.id}" ${
-      index === 0 ? "checked" : ""
-    } />
-        ${method.name}
-      </label>
-    `;
-    paymentContainer.innerHTML += methodHTML;
-  });
-}
-
-// Hàm fetch danh sách tỉnh/thành phố từ JSON
-async function fetchProvinces() {
-  const provinceSelect = document.getElementById("province");
-  if (!provinceSelect) return;
-
-  try {
-    const response = await fetch("../data/shipping_fees.json");
-    const shippingData = await response.json();
-    renderProvinces(shippingData);
-  } catch (error) {
-    console.error("Lỗi tải danh sách tỉnh/thành phố:", error);
-  }
-}
-
-// Hàm render tỉnh/thành phố
-function renderProvinces(shippingData) {
-  const provinceSelect = document.getElementById("province");
-  provinceSelect.innerHTML = '<option value="">Chọn tỉnh/thành phố</option>';
-
-  shippingData.forEach((province) => {
-    const option = document.createElement("option");
-    option.value = province.fee;
-    option.textContent = province.province;
-    provinceSelect.appendChild(option);
-  });
-
-  provinceSelect.addEventListener("change", updateShippingFee);
-}
-
-// Hàm cập nhật phí vận chuyển
+// Cập nhật phí vận chuyển khi chọn tỉnh/thành phố
 function updateShippingFee() {
-  const selectedFee = parseInt(document.getElementById("province").value) || 0;
+  const provinceSelect = document.getElementById("province");
+  const selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
+  const shippingFee = parseInt(selectedOption.dataset.fee) || 0;
+
   document.getElementById("shipping-fee").textContent =
-    formatPrice(selectedFee);
-  updateTotalWithShipping();
+    formatPrice(shippingFee);
+  updateTotalPrice();
 }
 
-// Hàm cập nhật tổng tiền (gồm giảm giá & phí ship)
-function updateTotalWithShipping() {
-  const selectedDiscount =
-    parseInt(document.getElementById("voucher-select")?.value) || 0;
-  const selectedFee = parseInt(document.getElementById("province")?.value) || 0;
-  const cartItems = JSON.parse(localStorage.getItem("selectedCartItems")) || [];
+// Hàm lấy và render mã giảm giá của người dùng
+async function renderUserDiscounts() {
+  const voucherSelect = document.getElementById("voucher-select");
+  if (!voucherSelect) {
+    console.error("Không tìm thấy phần tử #voucher-select");
+    return;
+  }
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + (item.discountPrice || item.price) * item.quantity,
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.userId) {
+    voucherSelect.innerHTML =
+      '<option value="">Vui lòng đăng nhập để sử dụng mã giảm giá</option>';
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/Discounts/user/${user.userId}`
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    // Xử lý dữ liệu trả về có dạng { "$values": [...] }
+    const discounts = data.$values || data;
+
+    if (!Array.isArray(discounts)) {
+      console.error("Dữ liệu discounts không phải là mảng:", discounts);
+      voucherSelect.innerHTML =
+        '<option value="">Lỗi dữ liệu mã giảm giá</option>';
+      return;
+    }
+
+    if (discounts.length === 0) {
+      voucherSelect.innerHTML =
+        '<option value="">Không có mã giảm giá nào</option>';
+    } else {
+      voucherSelect.innerHTML =
+        '<option value="">Chọn mã giảm giá</option>' +
+        discounts
+          .map(
+            (discount) => `
+              <option value="${discount.discountId}" data-amount="${
+              discount.discountAmount
+            }">
+                ${discount.code} - Giảm ${formatPrice(discount.discountAmount)}
+              </option>
+            `
+          )
+          .join("");
+    }
+
+    voucherSelect.addEventListener("change", updateDiscount);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách mã giảm giá:", error);
+    voucherSelect.innerHTML =
+      '<option value="">Lỗi khi tải mã giảm giá</option>';
+  }
+}
+
+// Cập nhật giá trị giảm giá và tổng tiền
+function updateDiscount() {
+  const voucherSelect = document.getElementById("voucher-select");
+  const selectedOption = voucherSelect.options[voucherSelect.selectedIndex];
+  const discountAmount = parseInt(selectedOption.dataset.amount) || 0;
+
+  document.getElementById("discount-amount").textContent =
+    formatPrice(discountAmount);
+  updateTotalPrice();
+}
+
+// Tính tổng tiền đơn hàng
+function updateTotalPrice() {
+  const checkoutItems = JSON.parse(localStorage.getItem("checkoutItems")) || [];
+  const subtotal = checkoutItems.reduce(
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
     0
   );
-  const newTotal = subtotal - selectedDiscount + selectedFee;
+
+  const shippingFee =
+    parseInt(
+      document.getElementById("shipping-fee").textContent.replace(/[^\d]/g, "")
+    ) || 0;
+
+  const discountAmount =
+    parseInt(
+      document
+        .getElementById("discount-amount")
+        .textContent.replace(/[^\d]/g, "")
+    ) || 0;
+
+  const totalPrice = subtotal + shippingFee - discountAmount;
 
   document.getElementById("subtotal").textContent = formatPrice(subtotal);
   document.getElementById("shipping-fee").textContent =
-    formatPrice(selectedFee);
+    formatPrice(shippingFee);
   document.getElementById("discount-amount").textContent =
-    formatPrice(selectedDiscount);
-  document.getElementById("total-price").textContent = formatPrice(
-    newTotal > 0 ? newTotal : 0
-  );
+    formatPrice(discountAmount);
+  document.getElementById("total-price").textContent = formatPrice(totalPrice);
 }
 
-// Xử lý khi nhấn nút "Xác nhận đặt hàng" (không cần backend)
-document.getElementById("place-order-btn").addEventListener("click", () => {
-  const selectedItems = JSON.parse(localStorage.getItem("selectedCartItems"));
+// Hàm render phần login dựa trên trạng thái đăng nhập
+function renderLoginSection() {
+  const loginSection = document.getElementById("login-section");
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!loginSection) {
+    console.error("Không tìm thấy login-section trong HTML");
+    return;
+  }
+
+  if (!user) {
+    loginSection.innerHTML = `
+      <button class="login__dropdown-btn">
+        <img src="../img/Login.svg" alt="Đăng nhập" />
+      </button>
+      <div class="login__dropdown-content">
+        <a href="./Login.html">Đăng Nhập</a>
+      </div>
+    `;
+  } else {
+    const menuItems =
+      user.role === "Admin"
+        ? `
+          <a href="../html/admin.html">Quản lý</a>
+          <a href="#" id="logout-btn">Đăng xuất</a>
+        `
+        : `
+          <a href="../html/user.html">Thông tin cá nhân</a>
+          <a href="#" id="logout-btn">Đăng xuất</a>
+        `;
+
+    loginSection.innerHTML = `
+      <div class="login__user">
+        <img src="../img/login.svg" alt="Avatar" />
+        <span>${user.fullName}</span>
+      </div>
+      <div class="login__dropdown-content">
+        ${menuItems}
+      </div>
+    `;
+
+    document.getElementById("logout-btn")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("user");
+      window.location.reload();
+    });
+  }
+}
+
+// Hàm lấy danh mục và render
+async function fetchCategories() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/Categories`);
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const data = await response.json();
+    console.log("Categories from API:", data);
+
+    const categories = data.$values || data;
+    if (!Array.isArray(categories)) {
+      console.error("Dữ liệu categories không phải là mảng:", categories);
+      document.getElementById("category-list").innerHTML =
+        '<div class="nav__dropdown-item">Lỗi dữ liệu danh mục</div>';
+      return;
+    }
+
+    const categoryList = document.getElementById("category-list");
+    if (!categoryList) {
+      console.error("Không tìm thấy category-list trong HTML");
+      return;
+    }
+
+    if (categories.length === 0) {
+      console.warn("Không có danh mục nào để hiển thị");
+      categoryList.innerHTML =
+        '<div class="nav__dropdown-item">Không có danh mục</div>';
+      return;
+    }
+
+    categoryList.innerHTML = categories
+      .map((category) => {
+        const subCategories =
+          category.subCategories?.$values || category.subCategories || [];
+
+        if (!category.categoryId || !category.categoryName) {
+          console.warn("Dữ liệu category không hợp lệ:", category);
+          return "";
+        }
+
+        return `
+          <div class="nav__dropdown-item">
+            <a href="../html/book-list.html?categoryId=${category.categoryId}">
+              ${category.categoryName}
+            </a>
+            ${
+              subCategories.length > 0
+                ? `<div class="nav__dropdown-subcontent">
+                    ${subCategories
+                      .map((sub) => {
+                        if (!sub.categoryId || !sub.categoryName) {
+                          console.warn(
+                            "Dữ liệu subcategory không hợp lệ:",
+                            sub
+                          );
+                          return "";
+                        }
+                        return `
+                          <div class="nav__dropdown-subitem">
+                            <a href="../html/book-list.html?categoryId=${sub.categoryId}">
+                              ${sub.categoryName}
+                            </a>
+                          </div>
+                        `;
+                      })
+                      .filter(Boolean)
+                      .join("")}
+                  </div>`
+                : ""
+            }
+          </div>
+        `;
+      })
+      .filter(Boolean)
+      .join("");
+  } catch (error) {
+    console.error("❌ Lỗi tải danh mục:", error);
+    const categoryList = document.getElementById("category-list");
+    if (categoryList) {
+      categoryList.innerHTML =
+        '<div class="nav__dropdown-item">Lỗi tải danh mục</div>';
+    }
+  }
+}
+
+// Xử lý ô tìm kiếm
+function handleSearch() {
+  const searchInput = document.getElementById("search-input");
+  if (!searchInput) {
+    console.error("Không tìm thấy ô tìm kiếm");
+    return;
+  }
+
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const keyword = searchInput.value.trim();
+      if (keyword) {
+        window.location.href = `../html/book-list.html?search=${encodeURIComponent(
+          keyword
+        )}`;
+      }
+    }
+  });
+}
+
+// Hàm xử lý khi nhấn nút "Xác nhận đặt hàng"
+async function handlePlaceOrder() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.userId) {
+    alert("Vui lòng đăng nhập để đặt hàng!");
+    window.location.href = "../html/Login.html";
+    return;
+  }
+
+  // Thu thập thông tin từ giao diện
   const fullName = document.getElementById("full-name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const address = document.getElementById("address").value.trim();
+  const phoneNumber = document.getElementById("phone").value.trim();
+  const provinceSelect = document.getElementById("province");
+  const province = provinceSelect.options[provinceSelect.selectedIndex].value;
+  const shippingFee =
+    parseInt(
+      provinceSelect.options[provinceSelect.selectedIndex].dataset.fee
+    ) || 0;
   const paymentMethod = document.querySelector(
     'input[name="payment-method"]:checked'
-  )?.value;
+  ).value;
+  const voucherSelect = document.getElementById("voucher-select");
+  const discountId = parseInt(voucherSelect.value) || null;
+  const checkoutItems = JSON.parse(localStorage.getItem("checkoutItems")) || [];
+  const totalPrice =
+    parseInt(
+      document.getElementById("total-price").textContent.replace(/[^\d]/g, "")
+    ) || 0;
 
   // Kiểm tra dữ liệu đầu vào
-  if (!selectedItems || selectedItems.length === 0) {
-    alert("Không có sản phẩm nào để đặt hàng!");
-    return;
-  }
-  if (!fullName || !phone || !address) {
-    alert("Vui lòng điền đầy đủ thông tin giao hàng!");
-    return;
-  }
-  if (!paymentMethod) {
-    alert("Vui lòng chọn phương thức thanh toán!");
+  if (!fullName || !phoneNumber || !province) {
+    alert(
+      "Vui lòng điền đầy đủ thông tin: Họ và Tên, Số điện thoại, Tỉnh/Thành phố!"
+    );
     return;
   }
 
-  // Tạo dữ liệu đơn hàng (chỉ để log hoặc sử dụng sau này)
+  if (!/^\d{10}$/.test(phoneNumber)) {
+    alert("Số điện thoại phải có đúng 10 chữ số!");
+    return;
+  }
+
+  if (checkoutItems.length === 0) {
+    alert("Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi đặt hàng.");
+    return;
+  }
+
+  // Chuẩn bị dữ liệu gửi lên API
   const orderData = {
-    items: selectedItems,
-    shippingInfo: { fullName, phone, address },
-    paymentMethod,
+    userId: user.userId,
+    shippingAddress: `${fullName}, ${phoneNumber}, ${province}`, // Kết hợp thông tin thành địa chỉ giao hàng
+    paymentMethod: paymentMethod,
+    shippingFee: shippingFee,
+    totalPrice: totalPrice,
+    discountId: discountId,
+    orderItems: checkoutItems.map((item) => ({
+      bookId: item.bookId,
+      quantity: item.quantity,
+      unitPrice: item.price,
+    })),
   };
 
-  // Mô phỏng đặt hàng thành công
-  console.log("Order data:", orderData); // Log dữ liệu để kiểm tra
-  alert("Đặt hàng thành công!");
-  localStorage.removeItem("selectedCartItems"); // Xóa dữ liệu sau khi đặt hàng
-  window.location.href = "../html/index.html"; // Chuyển hướng về trang chủ
-});
+  try {
+    const response = await fetch(`${API_BASE_URL}/Orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
+    });
 
-// Khi trang load, fetch dữ liệu và gắn sự kiện
-document.addEventListener("DOMContentLoaded", () => {
-  fetchCartItems();
-  fetchCategories();
-  fetchPaymentMethods();
-  fetchVouchers();
-  fetchProvinces();
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.message || "Lỗi khi đặt hàng!");
+    }
+
+    // Đặt hàng thành công
+    alert(result.message);
+    localStorage.removeItem("checkoutItems"); // Xóa checkoutItems trong localStorage
+    window.location.href = "../html/index.html"; // Chuyển hướng về trang chủ
+  } catch (error) {
+    console.error("Lỗi khi đặt hàng:", error);
+    alert(error.message || "Đã có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!");
+  }
+}
+
+// Thêm sự kiện và load dữ liệu khi trang được tải
+document.addEventListener("DOMContentLoaded", async () => {
+  const provinceSelect = document.getElementById("province");
+  const placeOrderBtn = document.querySelector(".place-order-btn");
+
+  // Thêm sự kiện cho nút "Xác nhận đặt hàng"
+  if (placeOrderBtn) {
+    placeOrderBtn.addEventListener("click", handlePlaceOrder);
+  }
+
+  // Load danh sách tỉnh/thành phố và phí vận chuyển
+  try {
+    const response = await fetch(`${API_BASE_URL}/ShippingFees`);
+    const data = await response.json();
+    const provinces = data.$values || [];
+
+    provinceSelect.innerHTML += provinces
+      .map(
+        (item) =>
+          `<option value="${item.province}" data-fee="${item.fee}">${item.province}</option>`
+      )
+      .join("");
+
+    provinceSelect.addEventListener("change", () => {
+      updateShippingFee();
+    });
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách tỉnh/thành phố:", error);
+  }
+
+  // Gọi các hàm render
+  renderSelectedBooks();
+  await renderUserDiscounts();
+  renderLoginSection();
+  await fetchCategories();
+  handleSearch();
 });

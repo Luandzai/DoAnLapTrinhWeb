@@ -32,19 +32,14 @@
                 </div>
               </div>
               <div class="nav__item">
-                <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
+                <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
               </div>
             </div>
           </nav>
           <!-- Login -->
           <div class="login">
-            <div class="login__dropdown">
-              <button class="login__dropdown-btn">
-                <img src="../img/Login.svg" alt="Dang nhap" />
-              </button>
-              <div class="login__dropdown-content">
-                <a href="./Login.html" data-sort="oldest">Đăng Nhập</a>
-              </div>
+            <div class="login__dropdown" id="login-section">
+              <!-- Nội dung sẽ được render bằng JS -->
             </div>
           </div>
         </div>
@@ -89,9 +84,41 @@
 
         <!-- Phương thức thanh toán -->
         <div class="checkout__section">
-          <h3>3. Chọn phương thức thanh toán</h3>
+          <h3>3. Phương thức thanh toán</h3>
           <div class="payment-options">
-            <!-- JS sẽ render danh sách phương thức thanh toán -->
+            <label>
+              <input type="radio" name="payment-method" value="Credit Card" />
+              Credit Card
+            </label>
+            <label>
+              <input type="radio" name="payment-method" value="PayPal" />
+              PayPal
+            </label>
+            <label>
+              <input type="radio" name="payment-method" value="MoMo" />
+              MoMo
+            </label>
+            <label>
+              <input type="radio" name="payment-method" value="ZaloPay" />
+              ZaloPay
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment-method"
+                value="Internet Banking"
+              />
+              Chuyển khoản ngân hàng
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment-method"
+                value="Cash On Delivery"
+                checked
+              />
+              Thanh toán khi nhận hàng
+            </label>
           </div>
         </div>
 
@@ -129,9 +156,7 @@
         </div>
         <!-- Nút đặt hàng -->
         <div class="checkout__actions">
-          <button class="btn checkout__btn" id="place-order-btn">
-            Xác nhận đặt hàng
-          </button>
+          <button class="place-order-btn">Xác nhận đặt hàng</button>
         </div>
       </div>
     </main>

@@ -19,6 +19,12 @@ public partial class Order
 
     public DateTime? UpdatedAt { get; set; }
 
+    public string? ShippingAddress { get; set; }
+
+    public string? PaymentMethod { get; set; }
+
+    public decimal? ShippingFee { get; set; }
+
     public virtual Discount? Discount { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();

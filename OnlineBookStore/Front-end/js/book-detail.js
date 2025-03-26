@@ -232,7 +232,7 @@ async function submitReview(bookId) {
   const ratingInputs = document.getElementsByName("rating");
   const commentInput = document.getElementById("review-text");
 
-  if (!nameInput || !ratingInputs || !commentInput) {
+  if (!ratingInputs || !commentInput) {
     console.error("Không tìm thấy các phần tử form trong HTML");
     alert("Lỗi: Không tìm thấy form đánh giá!");
     return;
@@ -277,7 +277,6 @@ async function submitReview(bookId) {
 
     if (response.ok) {
       alert(result.message || "Gửi đánh giá thành công!");
-      nameInput.value = "";
       ratingInputs.forEach((input) => (input.checked = false));
       commentInput.value = "";
       window.location.reload();

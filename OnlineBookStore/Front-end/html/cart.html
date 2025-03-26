@@ -43,38 +43,43 @@
                 </div>
               </div>
             </nav>
+            <!-- Login -->
             <div class="login">
-              <div class="login__sort-dropdown">
-                <button class="login__dropdown-btn">
-                  <img src="../img/Login.svg" alt="Dang nhap" />
-                </button>
-                <div class="login__dropdown-content">
-                  <a href="./Login.html" data-sort="oldest">Đăng Nhập</a>
-                </div>
+              <div class="login__dropdown" id="login-section">
+                <!-- Nội dung sẽ được render bằng JS -->
               </div>
             </div>
           </div>
         </div>
       </header>
-      <!-- main -->
+      <!-- Main content -->
       <main class="main">
-        <div class="main__main-content">
-          <div class="cart">
-            <aside class="cart__sidebar">
-              <h2 class="cart__title" id="cart-title">GIỎ HÀNG (0 sản phẩm)</h2>
-              <div class="cart__content" id="cart-content">
-                <!-- Sách trong giỏ hàng sẽ được thêm động bằng JS -->
-              </div>
-            </aside>
+        <div class="main__content cart-page">
+          <div class="main-content">
+            <h1 class="cart__title">
+              Giỏ Hàng (<span id="cart-count">0</span> sản phẩm)
+            </h1>
+          </div>
+          <div class="cart-actions">
+            <input type="checkbox" id="select-all" />
+            <label for="select-all">Chọn tất cả</label>
+            <button id="delete-selected">Xóa mục đã chọn</button>
+          </div>
+
+          <div class="main-cart">
+            <div class="cart__list" id="cart-list">
+              <!-- Danh sách giỏ hàng sẽ được render động -->
+            </div>
             <div class="cart__summary">
-              <div class="cart__total">
-                <p>Thành tiền: <span id="subtotal">0 đ</span></p>
-                <p class="cart__total-price">
-                  Tổng Số Tiền (gồm VAT): <span id="total">0 đ</span>
-                </p>
-              </div>
-              <button class="cart__checkout-btn">THANH TOÁN</button>
-              <p class="cart__note">Giảm giá trên web chỉ áp dụng cho bán lẻ</p>
+              <h2 class="cart__summary-title">
+                Thành tiền: <span id="cart-total">0 đ</span> (gồm VAT)
+              </h2>
+              <button class="cart__checkout-btn" id="checkout-btn">
+                Thanh toán
+              </button>
+              <p class="cart__summary-note">
+                Giảm giá trên web chỉ áp dụng cho bạn lẻ
+              </p>
             </div>
           </div>
         </div>
