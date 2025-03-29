@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OnlineBookStore", "OnlineBookStore", "{C211EED5-4BF2-AA59-6652-03636ADC8332}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Back-end", "Back-end", "{86528D6E-8D68-9627-82E1-E5D0A2559D44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStoreApi", "OnlineBookStore\Back-end\BookStoreApi\BookStoreApi.csproj", "{D953F0A7-358A-E571-5E46-5EEF59389AB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D953F0A7-358A-E571-5E46-5EEF59389AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D953F0A7-358A-E571-5E46-5EEF59389AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D953F0A7-358A-E571-5E46-5EEF59389AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D953F0A7-358A-E571-5E46-5EEF59389AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{86528D6E-8D68-9627-82E1-E5D0A2559D44} = {C211EED5-4BF2-AA59-6652-03636ADC8332}
+		{D953F0A7-358A-E571-5E46-5EEF59389AB5} = {86528D6E-8D68-9627-82E1-E5D0A2559D44}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6E7DC90-1700-4BC4-BCCA-9B52144C5779}
+	EndGlobalSection
+EndGlobal
