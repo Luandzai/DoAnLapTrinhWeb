@@ -1,6 +1,8 @@
 using BookStoreApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+
 
 namespace BookStoreApi.Controllers
 {
@@ -15,71 +17,80 @@ namespace BookStoreApi.Controllers
             _context = context;
         }
 
-        // POST: api/Users/login
+       // POST: api/Users/login
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginRequest request)
         {
-            // Kiểm tra email và mật khẩu trong cơ sở dữ liệu
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == request.Email && u.PasswordHash == request.Password);
-
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             if (user == null)
             {
                 return BadRequest(new { message = "Email hoặc mật khẩu không đúng." });
             }
 
-            // Trả về userId
+            // Kiểm tra mật khẩu đã mã hóa
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
+            if (!isPasswordValid)
+            {
+                return BadRequest(new { message = "Email hoặc mật khẩu không đúng." });
+            }
+
+            // Trả về thông tin người dùng nếu đăng nhập thành công
             return Ok(new { 
                 UserId = user.UserId,
                 FullName = user.FullName,
                 Role = user.Role 
             });
+
         }
 
-        // POST: api/Users/register
-        [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] RegisterRequest request) {
-            try {
-                // Validate input
-                if (string.IsNullOrWhiteSpace(request.FullName) || string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password)) {
-                    return BadRequest(new { message = "Thông tin không đầy đủ. Vui lòng kiểm tra lại." });
-                }
+    [HttpPost("register")]
+    public async Task<ActionResult> Register([FromBody] RegisterRequest request)
+    {
+        try
+        {
+            Console.WriteLine($"Received Request: {JsonSerializer.Serialize(request)}");
 
-                // Check if email already exists
-                if (await _context.Users.AnyAsync(u => u.Email == request.Email)) {
-                    return BadRequest(new { message = "Email đã được sử dụng." });
-                }
-
-                // Hash the password before saving
-                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-                // Create a new User object
-                var user = new User {
-                    FullName = request.FullName,
-                    Email = request.Email,
-                    PasswordHash = hashedPassword,
-                    Role = "User",
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                    PhoneNumber = "", // Default value
-                    Address = "" // Default value
-                };
-
-                // Add the user to the database
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
-                return Ok(new { message = "Đăng ký thành công!" });
-            } catch (DbUpdateException dbEx) {
-                // Log database-related errors
-                Console.WriteLine($"Database error during registration: {dbEx.InnerException?.Message ?? dbEx.Message}");
-                return StatusCode(500, new { message = "Lỗi cơ sở dữ liệu khi đăng ký." });
-            } catch (Exception ex) {
-                // Log general errors
-                Console.WriteLine($"Error during registration: {ex.Message}");
-                return StatusCode(500, new { message = "Đã xảy ra lỗi khi đăng ký." });
+            if (string.IsNullOrWhiteSpace(request.FullName) || 
+                string.IsNullOrWhiteSpace(request.Email) || 
+                string.IsNullOrWhiteSpace(request.Password))
+            {
+                return BadRequest(new { message = "Thông tin không đầy đủ." });
             }
+
+            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+            {
+                return BadRequest(new { message = "Email đã được sử dụng." });
+            }
+
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            var user = new User
+            {
+                FullName = request.FullName,
+                Email = request.Email,
+                PasswordHash = hashedPassword,
+                Role = "Customer",
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Đăng ký thành công!" });
         }
+        catch (DbUpdateException dbEx)
+    {
+        Console.WriteLine($"Database error: {dbEx.InnerException?.Message ?? dbEx.Message}");
+        return StatusCode(500, new { message = $"Lỗi cơ sở dữ liệu: {dbEx.InnerException?.Message ?? dbEx.Message}" });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Unexpected error: {ex.Message}");
+        return StatusCode(500, new { message = $"Lỗi không xác định: {ex.Message}" });
+    }
+
+    }
 
         // POST: api/Users/change-password
         [HttpPost("change-password")]
