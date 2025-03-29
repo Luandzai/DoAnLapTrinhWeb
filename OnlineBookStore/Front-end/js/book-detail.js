@@ -462,7 +462,6 @@ async function addToCart(bookId) {
     bookId: parseInt(bookId),
     quantity: 1, // Mặc định thêm 1 cuốn
   };
-  console.log("Cart data to send:", cartData);
 
   try {
     const response = await fetch(`${API_BASE_URL}/Carts`, {
@@ -473,31 +472,27 @@ async function addToCart(bookId) {
       body: JSON.stringify(cartData),
     });
 
-    const contentType = response.headers.get("content-type");
-    let result;
-    if (contentType && contentType.includes("application/json")) {
-      result = await response.json();
-    } else {
-      result = {
-        message: (await response.text()) || "Lỗi không xác định từ server.",
-      };
-    }
-
-    console.log("Response from cart API:", result);
-
     if (response.ok) {
-      alert(result.message || "Đã thêm sách vào giỏ hàng thành công!");
-      // Có thể chuyển hướng đến trang giỏ hàng nếu muốn
-      // window.location.href = "../html/cart.html";
+      alert("Đã thêm sách vào giỏ hàng thành công!");
+      await updateCartCountBadge(); // Cập nhật số lượng sản phẩm trên nút giỏ hàng và tiêu đề
     } else {
-      alert(
-        result.message ||
-          `Thêm vào giỏ hàng thất bại! (Status: ${response.status})`
-      );
+      const result = await response.json();
+      alert(result.message || "Thêm vào giỏ hàng thất bại!");
     }
   } catch (error) {
     console.error("❌ Lỗi thêm vào giỏ hàng:", error);
     alert("Đã có lỗi xảy ra khi thêm vào giỏ hàng: " + error.message);
+  }
+}
+
+// Hàm cập nhật số lượng sản phẩm trong giỏ hàng
+function updateCartCountBadge() {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCountBadge = document.getElementById("cart-count-badge");
+  if (cartCountBadge) {
+    cartCountBadge.textContent = totalCount;
+    cartCountBadge.style.display = totalCount > 0 ? "inline-block" : "none";
   }
 }
 

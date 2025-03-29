@@ -39,7 +39,12 @@
                   </div>
                 </div>
                 <div class="nav__item">
-                  <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
+                  <a href="../html/cart.html" class="nav__link">
+                    Giỏ hàng
+                    <span id="cart-count-badge" class="cart-count-badge"
+                      >0</span
+                    >
+                  </a>
                 </div>
               </div>
             </nav>
@@ -68,7 +73,34 @@
 
           <div class="main-cart">
             <div class="cart__list" id="cart-list">
+              <!-- Example product row -->
+              <div class="product-row cart__item">
+                <input type="checkbox" class="cart__checkbox" />
+                <span class="product-name">Cha giàu cha nghèo</span>
+                <span class="product-price">95.000 đ</span>
+                <input
+                  type="number"
+                  class="product-quantity cart__item-quantity-input"
+                  value="1"
+                  min="1"
+                />
+              </div>
               <!-- Danh sách giỏ hàng sẽ được render động -->
+              <div class="product-row">
+                <input type="checkbox" class="product-checkbox" />
+                <span class="product-name">Cha giàu cha nghèo</span>
+                <span class="product-price">95.000 đ</span>
+                <input
+                  type="number"
+                  class="product-quantity"
+                  value="1"
+                  min="1"
+                />
+              </div>
+              <!-- Repeat similar structure for other products -->
+              <div class="total-container">
+                Thành tiền: <span id="total-amount">0 đ</span>
+              </div>
             </div>
             <div class="cart__summary">
               <h2 class="cart__summary-title">

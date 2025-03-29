@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj": {}
+    "C:\\Users\\TRUONG HUU\\Downloads\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj": {
+    "C:\\Users\\TRUONG HUU\\Downloads\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
+        "projectUniqueName": "C:\\Users\\TRUONG HUU\\Downloads\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
         "projectName": "BookStoreApi",
-        "projectPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
-        "packagesPath": "C:\\Users\\THIS PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\obj\\",
+        "projectPath": "C:\\Users\\TRUONG HUU\\Downloads\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
+        "packagesPath": "C:\\Users\\TRUONG HUU\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TRUONG HUU\\Downloads\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages",
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\THIS PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\TRUONG HUU\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -29,7 +29,6 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\DevExpress 24.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -54,6 +53,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.2, )"

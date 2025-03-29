@@ -634,3 +634,17 @@ footer {
   color: white;
   border-radius: 0.5rem;
 }
+
+.cart-count-badge {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 0.2rem 0.6rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  display: inline-block;
+}

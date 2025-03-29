@@ -13,9 +13,9 @@ public partial class User
 
     public string PasswordHash { get; set; } = null!;
 
-    public string? PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; } = null;
 
-    public string? Address { get; set; }
+    public string? Address { get; set; } = null;
 
     public string Role { get; set; } = null!;
 
