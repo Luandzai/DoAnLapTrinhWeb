@@ -1,68 +1,74 @@
 const API_BASE_URL = "http://localhost:5000/api"; // Cập nhật URL API đúng với backend của bạn
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
   if (!user || !user.userId) {
     alert("Bạn chưa đăng nhập! Chuyển hướng về trang đăng nhập.");
     window.location.href = "./Login.html";
     return;
   }
 
-  await fetchOrderHistory(user.userId);
-});
-
-async function fetchOrderHistory(userId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/orders/history/${userId}`);
+    // Lấy thông tin người dùng
+    const response = await fetch(
+      `http://localhost:5000/api/Users/${user.userId}`
+    );
+    const result = await response.json();
 
-    if (!response.ok) throw new Error(`Lỗi HTTP: ${response.status}`);
-
-    const data = await response.json();
-    renderOrderTable(data.$values || data);
+    if (result.success && result.data) {
+      const userData = result.data;
+      document.getElementById("name").value = userData.fullName || "";
+      document.getElementById("email").value = userData.email || "";
+      document.getElementById("phone").value = userData.phoneNumber || "";
+      document.getElementById("address").value = userData.address || "";
+    } else {
+      alert("Không lấy được thông tin người dùng.");
+    }
   } catch (error) {
-    console.error("Lỗi khi lấy lịch sử đơn hàng:", error);
-  }
-}
-
-function renderOrderTable(orders) {
-  const tableBody = document.getElementById("order-table-body");
-  tableBody.innerHTML = "";
-
-  if (!orders || orders.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="6">Không có đơn hàng nào</td></tr>`;
-    return;
+    console.error("Lỗi khi lấy thông tin người dùng:", error);
+    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
   }
 
-  const rows = orders
-    .map(
-      (order, index) => `
-      <tr>
-          <td>${index + 1}</td>
-          <td>#${order.orderId}</td>
-          <td>${new Date(order.orderDate).toLocaleDateString()}</td>
-          <td>${order.totalPrice.toLocaleString()}đ</td>
-          <td>${getOrderStatus(order.status)}</td>
-          <td><a href="OrderDetail.html?orderId=${
-            order.orderId
-          }">Xem chi tiết</a></td>
-      </tr>
-    `
-    )
-    .join("");
+  // Sự kiện click button "Lưu thay đổi"
+  document.getElementById("save-btn").addEventListener("click", async () => {
+    const fullName = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phoneNumber = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
 
-  tableBody.insertAdjacentHTML("beforeend", rows);
-}
+    const updatedUser = {
+      userId: user.userId,
+      fullName,
+      email,
+      phoneNumber,
+      address,
+    };
 
-function getOrderStatus(status) {
-  const statusMap = {
-    0: "Chờ xác nhận",
-    1: "Đang giao",
-    2: "Hoàn thành",
-    3: "Đã hủy",
-  };
-  return statusMap[status] || "Không xác định";
-}
+    try {
+      const updateResponse = await fetch(
+        `http://localhost:5000/api/Users/${user.userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedUser),
+        }
+      );
+
+      const updateResult = await updateResponse.json();
+
+      if (updateResult.success) {
+        alert("Cập nhật thông tin thành công!");
+      } else {
+        alert("Cập nhật thất bại, vui lòng thử lại.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi cập nhật thông tin người dùng:", error);
+      alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    }
+  });
+});
 
 // Xử lý ô tìm kiếm
 function handleSearch() {

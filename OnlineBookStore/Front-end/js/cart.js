@@ -44,7 +44,6 @@ const fetchCart = async () => {
       console.error("Dữ liệu giỏ hàng không phải là mảng:", cartItems);
       return [];
     }
-    // API đã gộp trùng lặp, không cần xử lý thêm ở client
     return cartItems.filter((item) => item.book); // Lọc bỏ các item không có thông tin sách
   } catch (error) {
     return [];
@@ -81,6 +80,15 @@ const fetchCategories = async () => {
   }
 };
 
+// Hàm cập nhật số lượng sản phẩm trên badge
+const updateCartBadge = (count) => {
+  const cartBadge = document.getElementById("cart-badge");
+  if (cartBadge) {
+    cartBadge.textContent = count;
+    cartBadge.style.display = count > 0 ? "inline-block" : "none"; // Ẩn badge nếu số lượng là 0
+  }
+};
+
 // Hàm render giỏ hàng
 const renderCart = (cartItems) => {
   const cartList = document.getElementById("cart-list");
@@ -99,15 +107,13 @@ const renderCart = (cartItems) => {
     cartCount.textContent = "0";
     checkoutBtn.disabled = true;
     checkoutBtn.style.backgroundColor = "#e74c3c";
+    updateCartBadge(0); // Cập nhật badge
     return;
   }
 
-  const total = cartItems.reduce((sum, item) => {
-    const price = item.book.discountPrice || item.book.price;
-    return sum + price * item.quantity;
-  }, 0);
-
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  // Hiển thị tổng số sản phẩm trong giỏ hàng
+  cartCount.textContent = cartItems.length;
+  updateCartBadge(cartItems.length); // Cập nhật badge
 
   cartList.innerHTML = cartItems
     .map(
@@ -147,21 +153,101 @@ const renderCart = (cartItems) => {
     )
     .join("");
 
-  cartTotal.textContent = formatPrice(total);
-  cartCount.textContent = totalItems;
-  checkoutBtn.disabled = false;
-  checkoutBtn.style.backgroundColor = "#2ecc71";
+  // Hàm tính tổng tiền dựa trên các sản phẩm được chọn
+  const updateTotal = (items) => {
+    console.log("updateTotal called with items:", items);
+    const selectedItems = [
+      ...document.querySelectorAll(".cart__checkbox:checked"),
+    ];
+    console.log("Selected items:", selectedItems);
 
-  // Gắn sự kiện cho các nút
-  document
-    .querySelectorAll(".decrease, .increase")
-    .forEach((btn) => btn.addEventListener("click", handleQuantityChange));
-  document
-    .querySelectorAll(".cart__item-quantity-input")
-    .forEach((input) => input.addEventListener("change", handleQuantityInput));
-  document
-    .querySelectorAll(".cart__item-remove")
-    .forEach((btn) => btn.addEventListener("click", handleRemoveItem));
+    const total = selectedItems.reduce((sum, checkbox) => {
+      const cartId = checkbox.dataset.cartId;
+      const item = items.find((i) => i.cartId == cartId);
+      if (!item || !item.book) {
+        console.warn(`Không tìm thấy item hoặc book cho cartId: ${cartId}`);
+        return sum;
+      }
+      const cartItem = checkbox.closest(".cart__item");
+      const price = item.book.discountPrice || item.book.price;
+      const quantity = parseInt(
+        cartItem.querySelector(".cart__item-quantity-input").value
+      );
+      console.log(
+        `Item: ${item.book.title}, Price: ${price}, Quantity: ${quantity}`
+      );
+      return sum + price * quantity;
+    }, 0);
+
+    console.log("Total:", total);
+
+    cartTotal.textContent = formatPrice(total);
+    checkoutBtn.disabled = selectedItems.length === 0;
+    checkoutBtn.style.backgroundColor =
+      selectedItems.length === 0 ? "#e74c3c" : "#2ecc71";
+  };
+
+  // Hàm cập nhật số lượng và tổng tiền mà không render lại
+  const updateQuantityAndTotal = async (handler) => {
+    await handler(); // Gọi API để cập nhật số lượng
+    const updatedCartItems = await fetchCart(); // Lấy dữ liệu mới từ API
+
+    // Cập nhật số lượng và tổng tiền trên giao diện
+    updatedCartItems.forEach((item) => {
+      const cartItem = document.querySelector(
+        `.cart__item[data-cart-id="${item.cartId}"]`
+      );
+      if (cartItem) {
+        const quantityInput = cartItem.querySelector(
+          ".cart__item-quantity-input"
+        );
+        const totalPrice = cartItem.querySelector(".cart__item-total");
+        quantityInput.value = item.quantity; // Cập nhật số lượng
+        const price = item.book.discountPrice || item.book.price;
+        totalPrice.textContent = formatPrice(price * item.quantity); // Cập nhật tổng tiền của sản phẩm
+      }
+    });
+
+    // Cập nhật tổng số sản phẩm
+    cartCount.textContent = updatedCartItems.length;
+    updateCartBadge(updatedCartItems.length); // Cập nhật badge
+
+    // Cập nhật tổng tiền
+    updateTotal(updatedCartItems);
+  };
+
+  // Gắn sự kiện cho các nút và checkbox
+  document.querySelectorAll(".decrease, .increase").forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      updateQuantityAndTotal(() => handleQuantityChange(e));
+    })
+  );
+  document.querySelectorAll(".cart__item-quantity-input").forEach((input) =>
+    input.addEventListener("change", (e) => {
+      updateQuantityAndTotal(() => handleQuantityInput(e));
+    })
+  );
+  document.querySelectorAll(".cart__item-remove").forEach((btn) =>
+    btn.addEventListener("click", async (e) => {
+      await handleRemoveItem(e);
+      const updatedCartItems = await fetchCart();
+      renderCart(updatedCartItems); // Xóa thì cần render lại toàn bộ
+    })
+  );
+
+  // Gắn sự kiện cho checkbox
+  document.querySelectorAll(".cart__checkbox").forEach((checkbox) => {
+    checkbox.removeEventListener("change", () => updateTotal(cartItems));
+    checkbox.addEventListener("change", () => {
+      console.log(
+        `Checkbox ${checkbox.dataset.cartId} changed to ${checkbox.checked}`
+      );
+      updateTotal(cartItems);
+    });
+  });
+
+  // Cập nhật tổng ban đầu
+  updateTotal(cartItems);
 };
 
 // Hàm xử lý thay đổi số lượng bằng nút
@@ -177,8 +263,6 @@ const handleQuantityChange = async (e) => {
 
   try {
     await updateCartItem(cartId, quantity);
-    const cartItems = await fetchCart();
-    renderCart(cartItems);
   } catch (error) {
     alert(error.message || "Cập nhật số lượng thất bại!");
   }
@@ -199,8 +283,6 @@ const handleQuantityInput = async (e) => {
 
   try {
     await updateCartItem(cartId, quantity);
-    const cartItems = await fetchCart();
-    renderCart(cartItems);
   } catch (error) {
     alert(error.message || "Cập nhật số lượng thất bại!");
   }
@@ -211,8 +293,6 @@ const handleRemoveItem = async (e) => {
   const cartId = e.target.closest(".cart__item").dataset.cartId;
   try {
     await removeCartItem(cartId);
-    const cartItems = await fetchCart();
-    renderCart(cartItems);
   } catch (error) {
     alert(error.message || "Xóa mục thất bại!");
   }
@@ -319,10 +399,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const categories = await fetchCategories();
   renderCategories(categories);
+
   // Xử lý chọn tất cả
   document.getElementById("select-all")?.addEventListener("change", (e) => {
     document.querySelectorAll(".cart__checkbox").forEach((checkbox) => {
       checkbox.checked = e.target.checked;
+      const event = new Event("change");
+      checkbox.dispatchEvent(event); // Kích hoạt sự kiện change để cập nhật tổng tiền
     });
   });
 
@@ -350,6 +433,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const updatedCart = await fetchCart();
       renderCart(updatedCart);
     });
+
   document.getElementById("checkout-btn")?.addEventListener("click", () => {
     const selectedItems = [
       ...document.querySelectorAll(".cart__checkbox:checked"),
@@ -364,12 +448,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       const cartItem = checkbox.closest(".cart__item");
       const priceText = cartItem
         .querySelector(".cart__item-price")
-        .textContent.replace(/[^\d]/g, ""); // Lấy giá từ text, loại bỏ ký tự không phải số
+        .textContent.replace(/[^\d]/g, "");
       return {
         cartId: checkbox.dataset.cartId,
-        bookId: cartItem.querySelector(".cart__item-image").dataset.bookId, // Lấy từ ảnh
+        bookId: cartItem.querySelector(".cart__item-image").dataset.bookId,
         title: cartItem.querySelector(".cart__item-title").textContent,
-        price: parseInt(priceText) || 0, // Chuyển đổi giá từ text sang số
+        price: parseInt(priceText) || 0,
         quantity:
           parseInt(
             cartItem.querySelector(".cart__item-quantity-input").value

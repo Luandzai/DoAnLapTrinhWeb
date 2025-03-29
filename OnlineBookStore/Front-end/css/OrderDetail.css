@@ -374,101 +374,58 @@ input[type="text"] {
     height: 2rem;
   }
 }
+/* ====================================Order detail========================= */
 
 .container {
-  display: flex;
-  max-width: 900px;
-  margin: 40px auto;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  background-color: #fff;
+  font-size: 1.5rem;
+  padding: 5rem;
+  margin: 3rem 0;
 }
 
-.sidebar {
-  width: 250px;
-  background: #007bff;
-  padding: 20px;
-  color: #fff;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar ul li {
-  padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.sidebar ul li a {
-  color: #fff;
-  text-decoration: none;
-  display: block;
-}
-
-.sidebar ul li.active {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-.content {
-  flex: 1;
-  padding: 20px;
-}
-
-.content h2 {
-  margin-bottom: 20px;
+h2,
+h3 {
   color: #333;
 }
 
-.form-row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.form-group {
-  flex: 1;
-  margin: 10px;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 8px;
+.order-info,
+.shipping-info,
+.summary {
   border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: #f9f9f9;
 }
 
-.form-actions {
-  margin-top: 20px;
-  text-align: right;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-button {
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.btn-back {
+  display: inline-block;
   padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button[type="submit"] {
   background: #007bff;
-  color: #fff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
-button.btn-reset {
-  background: #ccc;
-  color: #333;
+.btn-back:hover {
+  background: #0056b3;
 }
 
 /* ========================= Footer ========================= */

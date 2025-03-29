@@ -566,9 +566,6 @@ input[type="text"] {
   .book-item {
     width: 48%;
   }
-}
-
-@media (max-width: 480px) {
   .book-item {
     width: 100%;
   }

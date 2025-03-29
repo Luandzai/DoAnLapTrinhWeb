@@ -258,6 +258,39 @@ nav a:hover {
     transform: translateY(0);
   }
 }
+/* ============================= Cart ==============================*/
+.nav__item {
+  position: relative; /* Để badge định vị tương đối với nav__item */
+}
+
+.nav__link {
+  display: inline-flex;
+  align-items: center;
+  color: #fff; /* Màu chữ trắng để nổi bật trên nền xanh lam */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cart-icon {
+  font-size: 1.5rem; /* Tăng kích thước biểu tượng giỏ hàng */
+  margin-right: 8px; /* Khoảng cách giữa biểu tượng và chữ */
+  color: #fff; /* Màu trắng để nổi bật */
+}
+
+.cart-badge {
+  position: absolute;
+  top: -0.3rem; /* Điều chỉnh vị trí badge */
+  right: 1rem; /* Điều chỉnh vị trí badge */
+  color: #fc0707; /* Màu chữ trắng */
+  padding: 0.3rem 0.5rem; /* Khoảng đệm bên trong */
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  font-size: 1.5rem; /* Kích thước chữ nhỏ hơn */
+  font-weight: 600; /* Chữ đậm */
+  min-width: 16px; /* Đảm bảo badge không bị méo khi số nhỏ */
+  text-align: center;
+  line-height: 1; /* Căn giữa số theo chiều dọc */
+}
 
 /* ========================= Login Dropdown ========================= */
 .login {

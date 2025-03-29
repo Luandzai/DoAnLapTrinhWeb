@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết đơn hàng</title>
+    <link rel="stylesheet" href="../css/OrderDetail.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header__main-content">
+        <div class="header__body">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nhà sách Online" />
+            </a>
+            <span>Nhà sách Online</span>
+          </div>
+          <!-- Search bar -->
+          <input type="text" id="search-input" placeholder="Tìm kiếm sách..." />
+          <!-- Nav bar -->
+          <nav class="nav">
+            <div class="nav__container">
+              <div class="nav__item nav__item--dropdown">
+                <div class="nav__dropdown-btn">Danh mục ▼</div>
+                <div class="nav__dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
+                </div>
+              </div>
+              <div class="nav__item">
+                <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
+              </div>
+            </div>
+          </nav>
+          <!-- Login -->
+          <div class="login">
+            <div class="login__dropdown" id="login-section">
+              <!-- Nội dung sẽ được render bằng JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="main main__content">
+      <div class="container">
+        <h2>CHI TIẾT ĐƠN HÀNG</h2>
+
+        <div class="order-info">
+          <p><strong>Mã đơn hàng:</strong> <span id="order-id"></span></p>
+          <p><strong>Ngày đặt hàng:</strong> <span id="order-date"></span></p>
+          <p><strong>Trạng thái:</strong> <span id="order-status"></span></p>
+          <p>
+            <strong>Phương thức thanh toán:</strong>
+            <span id="payment-method"></span>
+          </p>
+        </div>
+
+        <h3>Thông tin giao hàng</h3>
+        <div class="shipping-info">
+          <p><strong>Người nhận:</strong> <span id="customer-name"></span></p>
+          <p><strong>Địa chỉ:</strong> <span id="shipping-address"></span></p>
+          <p>
+            <strong>Phí vận chuyển:</strong> <span id="shipping-fee"></span>
+          </p>
+        </div>
+
+        <h3>Sản phẩm đã mua</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Tên sách</th>
+              <th>SL</th>
+              <th>Đơn giá</th>
+              <th>Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody id="order-items">
+            <!-- Render bằng JS -->
+          </tbody>
+        </table>
+
+        <h3>Tổng kết đơn hàng</h3>
+        <div class="summary">
+          <p><strong>Tổng tiền hàng:</strong> <span id="subtotal"></span></p>
+          <p><strong>Giảm giá:</strong> <span id="discount"></span></p>
+          <p>
+            <strong>Phí vận chuyển:</strong>
+            <span id="shipping-fee-summary"></span>
+          </p>
+          <p>
+            <strong><u>Tổng thanh toán:</u></strong>
+            <span id="total-price"></span>
+          </p>
+        </div>
+
+        <a href="../html/PurchaseHistory.html" class="btn-back">Quay lại</a>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__main-content">
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
+      </div>
+    </footer>
+    <script src="../js//OrderDetail.js"></script>
+  </body>
+</html>

@@ -1,105 +1,92 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lịch sử mua hàng</title>
-    <link rel="stylesheet" href="../css/PurchaseHistory.css">
-    <link rel="stylesheet" href="../css/style.css"> <!-- CSS chung -->
-</head>
-<body>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/PurchaseHistory.css" />
+    <!-- CSS chung -->
+  </head>
+  <body>
     <!-- Header -->
     <header class="header">
-        <div class="header__main-content">
-            <div class="header__body">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="../html/index.html">
-                        <img src="../img/logo.svg" alt="Nhà sách Online" />
-                    </a>
-                    <span>Nhà sách Online</span>
+      <div class="header__main-content">
+        <div class="header__body">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nhà sách Online" />
+            </a>
+            <span>Nhà sách Online</span>
+          </div>
+          <!-- Search bar -->
+          <input type="text" id="search-input" placeholder="Tìm kiếm sách..." />
+          <!-- Nav bar -->
+          <nav class="nav">
+            <div class="nav__container">
+              <div class="nav__item nav__item--dropdown">
+                <div class="nav__dropdown-btn">Danh mục ▼</div>
+                <div class="nav__dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
                 </div>
-
-                <!-- Thanh tìm kiếm sách đã mua -->
-                <div class="search-bar">
-                    <input type="text" id="search-purchased-books" placeholder="Tìm kiếm sách đã mua...">
-                    <button onclick="searchPurchasedBooks()">Tìm kiếm</button>
-                </div>
-
-                <!-- Navigation -->
-                <nav class="nav">
-                    <ul>
-                        <li><a href="../html/index.html">Trang chủ</a></li>
-                        <li><a href="../html/book-list.html">Sách</a></li>
-                        <li><a href="../html/contact.html">Liên hệ</a></li>
-                    </ul>
-                </nav>
+              </div>
+              <div class="nav__item">
+                <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
+              </div>
             </div>
+          </nav>
+          <!-- Login -->
+          <div class="login">
+            <div class="login__dropdown" id="login-section">
+              <!-- Nội dung sẽ được render bằng JS -->
+            </div>
+          </div>
         </div>
+      </div>
     </header>
 
     <!-- Container -->
     <div class="container">
-        <div class="sidebar">
-            <ul>
-                <li><a href="./user.html">Thông tin tài khoản</a></li>
-                <li class="active"><a href="PurchaseHistory.html">Lịch sử mua hàng</a></li>
-                <li><a href="ChangePassword.html">Đổi mật khẩu</a></li>
-            </ul>
-        </div>
+      <div class="sidebar">
+        <ul>
+          <li><a href="user.html">Thông tin tài khoản</a></li>
+          <li class="active">
+            <a href="PurchaseHistory.html">Lịch sử mua hàng</a>
+          </li>
+          <li><a href="ChangePassword.html">Đổi mật khẩu</a></li>
+        </ul>
+      </div>
 
-        <div class="content">
-            <h2>LỊCH SỬ MUA HÀNG</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Sách</th>
-                        <th>Ngày mua</th>
-                        <th>Tổng tiền</th>
-                        <th>Chi tiết</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Đắc Nhân Tâm</td>
-                        <td>20/10/2021</td>
-                        <td>200.000đ</td>
-                        <td><a href="#">Xem chi tiết</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Nhà Giả Kim</td>
-                        <td>21/10/2021</td>
-                        <td>300.000đ</td>
-                        <td><a href="#">Xem chi tiết</a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Tư Duy Nhanh Và Chậm</td>
-                        <td>22/10/2021</td>
-                        <td>400.000đ</td>
-                        <td><a href="#">Xem chi tiết</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <div class="content">
+        <h2>LỊCH SỬ MUA HÀNG</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Mã đơn hàng</th>
+              <th>Ngày mua</th>
+              <th>Tổng tiền</th>
+              <th>Trạng thái</th>
+              <th>Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody id="order-table-body">
+            <!-- Dữ liệu sẽ được thêm động bằng JS -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <footer>
-        <div class="main-content">
-          <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
-        </div>
-            <div class="newsletter">
-                <div class="newsletter-container">
-                    <i class="fas fa-envelope"></i> 
-                    <span>ĐĂNG KÝ NHẬN BẢN TIN</span>
-                    <input type="email" placeholder="Nhập địa chỉ email của bạn">
-                    <button>Đăng ký</button>
-                </div>
-        </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__main-content">
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
+      </div>
     </footer>
+
     <script src="../js/SearchPurchaseHistory.js"></script>
-</body>
+  </body>
 </html>

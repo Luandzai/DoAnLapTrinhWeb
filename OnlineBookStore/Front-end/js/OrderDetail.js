@@ -1,57 +1,72 @@
-const API_BASE_URL = "http://localhost:5000/api"; // Cập nhật URL API đúng với backend của bạn
+const API_BASE_URL = "http://localhost:5000/api";
 
 document.addEventListener("DOMContentLoaded", async function () {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const urlParams = new URLSearchParams(window.location.search);
+  const orderId = urlParams.get("orderId");
 
-  if (!user || !user.userId) {
-    alert("Bạn chưa đăng nhập! Chuyển hướng về trang đăng nhập.");
-    window.location.href = "./Login.html";
+  if (!orderId) {
+    alert("Không tìm thấy đơn hàng.");
+    window.location.href = "./history.html";
     return;
   }
 
-  await fetchOrderHistory(user.userId);
+  await fetchOrderDetail(orderId);
 });
 
-async function fetchOrderHistory(userId) {
+async function fetchOrderDetail(orderId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/orders/history/${userId}`);
-
+    const response = await fetch(`${API_BASE_URL}/orders/detail/${orderId}`);
     if (!response.ok) throw new Error(`Lỗi HTTP: ${response.status}`);
 
-    const data = await response.json();
-    renderOrderTable(data.$values || data);
+    const orderDetail = await response.json();
+    renderOrderDetail(orderDetail);
   } catch (error) {
-    console.error("Lỗi khi lấy lịch sử đơn hàng:", error);
+    console.error("Lỗi khi lấy chi tiết đơn hàng:", error);
   }
 }
 
-function renderOrderTable(orders) {
-  const tableBody = document.getElementById("order-table-body");
-  tableBody.innerHTML = "";
+function renderOrderDetail(order) {
+  document.getElementById("order-id").textContent = `#${order.orderId}`;
+  document.getElementById("order-date").textContent = new Date(
+    order.orderDate
+  ).toLocaleDateString();
+  document.getElementById("order-status").textContent = getOrderStatus(
+    order.status
+  );
+  document.getElementById("payment-method").textContent = order.paymentMethod;
+  document.getElementById("customer-name").textContent = order.customerName;
+  document.getElementById("shipping-address").textContent =
+    order.shippingAddress;
+  document.getElementById(
+    "shipping-fee"
+  ).textContent = `${order.shippingFee.toLocaleString()}đ`;
+  document.getElementById(
+    "shipping-fee-summary"
+  ).textContent = `${order.shippingFee.toLocaleString()}đ`;
+  document.getElementById(
+    "subtotal"
+  ).textContent = `${order.subTotal.toLocaleString()}đ`;
+  document.getElementById(
+    "discount"
+  ).textContent = `-${order.discount.toLocaleString()}đ`;
+  document.getElementById(
+    "total-price"
+  ).textContent = `${order.totalPrice.toLocaleString()}đ`;
 
-  if (!orders || orders.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="6">Không có đơn hàng nào</td></tr>`;
-    return;
-  }
-
-  const rows = orders
+  const orderItems = order.items.$values
     .map(
-      (order, index) => `
-      <tr>
-          <td>${index + 1}</td>
-          <td>#${order.orderId}</td>
-          <td>${new Date(order.orderDate).toLocaleDateString()}</td>
-          <td>${order.totalPrice.toLocaleString()}đ</td>
-          <td>${getOrderStatus(order.status)}</td>
-          <td><a href="OrderDetail.html?orderId=${
-            order.orderId
-          }">Xem chi tiết</a></td>
-      </tr>
+      (item, index) => `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${item.title}</td>
+            <td>${item.quantity}</td>
+            <td>${item.unitPrice.toLocaleString()}đ</td>
+            <td>${(item.quantity * item.unitPrice).toLocaleString()}đ</td>
+        </tr>
     `
     )
     .join("");
-
-  tableBody.insertAdjacentHTML("beforeend", rows);
+  document.getElementById("order-items").innerHTML = orderItems;
 }
 
 function getOrderStatus(status) {
@@ -64,25 +79,6 @@ function getOrderStatus(status) {
   return statusMap[status] || "Không xác định";
 }
 
-// Xử lý ô tìm kiếm
-function handleSearch() {
-  const searchInput = document.getElementById("search-input");
-  if (!searchInput) {
-    console.error("Không tìm thấy ô tìm kiếm");
-    return;
-  }
-
-  searchInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      const keyword = searchInput.value.trim();
-      if (keyword) {
-        window.location.href = `../html/book-list.html?search=${encodeURIComponent(
-          keyword
-        )}`;
-      }
-    }
-  });
-}
 // Hàm lấy danh mục và render
 async function fetchCategories() {
   try {
@@ -168,6 +164,26 @@ async function fetchCategories() {
         '<div class="nav__dropdown-item">Lỗi tải danh mục</div>';
     }
   }
+}
+
+// Xử lý ô tìm kiếm
+function handleSearch() {
+  const searchInput = document.getElementById("search-input");
+  if (!searchInput) {
+    console.error("Không tìm thấy ô tìm kiếm");
+    return;
+  }
+
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const keyword = searchInput.value.trim();
+      if (keyword) {
+        window.location.href = `../html/book-list.html?search=${encodeURIComponent(
+          keyword
+        )}`;
+      }
+    }
+  });
 }
 
 // Hàm render phần login dựa trên trạng thái đăng nhập

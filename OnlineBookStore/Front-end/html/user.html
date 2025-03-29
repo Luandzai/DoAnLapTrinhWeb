@@ -1,108 +1,124 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thông tin tài khoản</title>
-    <link rel="stylesheet" href="../css/PurchaseHistory.css">
-    <link rel="stylesheet" href="../css/style.css"> <!-- CSS chung -->
-</head>
-<body>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/UserInfo.css" />
+    <!-- CSS chung -->
+  </head>
+  <body>
     <!-- Header -->
     <header class="header">
-        <div class="header__main-content">
-            <div class="header__body">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="../html/index.html">
-                        <img src="../img/logo.svg" alt="Nhà sách Online" />
-                    </a>
-                    <span>Nhà sách Online</span>
+      <div class="header__main-content">
+        <div class="header__body">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="../html/index.html">
+              <img src="../img/logo.svg" alt="Nhà sách Online" />
+            </a>
+            <span>Nhà sách Online</span>
+          </div>
+          <!-- Search bar -->
+          <input type="text" id="search-input" placeholder="Tìm kiếm sách..." />
+          <!-- Nav bar -->
+          <nav class="nav">
+            <div class="nav__container">
+              <div class="nav__item nav__item--dropdown">
+                <div class="nav__dropdown-btn">Danh mục ▼</div>
+                <div class="nav__dropdown-content" id="category-list">
+                  <!-- Danh mục sẽ được render tự động bằng JS -->
                 </div>
-
-                <!-- Thanh tìm kiếm -->
-                <div class="search-bar">
-                    <input type="text" placeholder="Tìm kiếm...">
-                    <button>Tìm kiếm</button>
-                </div>
-
-                <!-- Navigation -->
-                <nav class="nav">
-                    <ul>
-                        <li><a href="../html/index.html">Trang chủ</a></li>
-                        <li><a href="../html/book-list.html">Sách</a></li>
-                        <li><a href="../html/contact.html">Liên hệ</a></li>
-                    </ul>
-                </nav>
+              </div>
+              <div class="nav__item">
+                <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
+              </div>
             </div>
+          </nav>
+          <!-- Login -->
+          <div class="login">
+            <div class="login__dropdown" id="login-section">
+              <!-- Nội dung sẽ được render bằng JS -->
+            </div>
+          </div>
         </div>
+      </div>
     </header>
 
     <!-- Container -->
     <div class="container">
-        <div class="sidebar">
-            <ul>
-                <li class="active"><a href="user.html">Thông tin tài khoản</a></li>
-                <li><a href="PurchaseHistory.html">Lịch sử mua hàng</a></li>
-                <li><a href="ChangePassword.html">Đổi mật khẩu</a></li>
-            </ul>
-        </div>
+      <div class="sidebar">
+        <ul>
+          <li class="active"><a href="user.html">Thông tin tài khoản</a></li>
+          <li><a href="PurchaseHistory.html">Lịch sử mua hàng</a></li>
+          <li><a href="ChangePassword.html">Đổi mật khẩu</a></li>
+        </ul>
+      </div>
 
-        <div class="content">
-            <div class="content-wrapper">
-                <h2>THÔNG TIN TÀI KHOẢN</h2>
-                <form>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Họ & tên:</label>
-                            <input type="text" id="name" name="name" placeholder="Nhập họ và tên" value="Duy Trương">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Số điện thoại:</label>
-                            <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại" value="0889225315">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" placeholder="Nhập email" value="duytruongk22@gmail.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="gender">Giới tính:</label>
-                            <select id="gender" name="gender">
-                                <option value="Nam" selected>Nam</option>
-                                <option value="Nữ">Nữ</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Địa chỉ:</label>
-                        <input type="text" id="address" name="address" placeholder="Nhập địa chỉ" value="HCM">
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit">Lưu thay đổi</button>
-                        <button type="reset" class="btn-reset">Hủy</button>
-                    </div>
-                </form>
+      <div class="content">
+        <div class="content-wrapper">
+          <h2>THÔNG TIN TÀI KHOẢN</h2>
+          <form>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Họ & tên:</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Nhập họ và tên"
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Số điện thoại:</label>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  placeholder="Nhập số điện thoại"
+                />
+              </div>
             </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Nhập email"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Địa chỉ:</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Nhập địa chỉ"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button id="save-btn">Lưu thay đổi</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
 
-    <footer>
-        <div class="main-content">
-            <p class="copyright">© 2025 Nhà sách Online. All rights reserved.</p>
-        </div>
-        <div class="newsletter">
-            <div class="newsletter-container">
-                <i class="fas fa-envelope"></i> 
-                <span>ĐĂNG KÝ NHẬN BẢN TIN</span>
-                <input type="email" placeholder="Nhập địa chỉ email của bạn">
-                <button>Đăng ký</button>
-            </div>
-        </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__main-content">
+        <p class="footer__copyright">
+          © 2025 Nhà sách Online. All rights reserved.
+        </p>
+      </div>
     </footer>
-</body>
+    <script src="../js/userinfo.js"></script>
+  </body>
 </html>

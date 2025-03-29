@@ -336,3 +336,4 @@ C:\Users\THIS PC\OneDrive\Máy tính\Đồ án lập trình web\DoAnLapTrinhWeb\
 C:\Users\THIS PC\OneDrive\Máy tính\Đồ án lập trình web\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\OnlineBookStore\Back-end\BookStoreApi\obj\Debug\net9.0\BookStor.25E83A0D.Up2Date
 C:\Users\THIS PC\OneDrive\Máy tính\Đồ án lập trình web\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\OnlineBookStore\Back-end\BookStoreApi\obj\Debug\net9.0\BookStoreApi.genruntimeconfig.cache
 C:\Users\THIS PC\OneDrive\Máy tính\Đồ án lập trình web\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\OnlineBookStore\Back-end\BookStoreApi\obj\Debug\net9.0\ref\BookStoreApi.dll
+C:\Users\THIS PC\OneDrive\Máy tính\Đồ án lập trình web\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\OnlineBookStore\Back-end\BookStoreApi\bin\Debug\net9.0\BCrypt.Net-Next.dll
