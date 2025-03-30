@@ -174,58 +174,156 @@ namespace BookStoreApi.Controllers
 
         [HttpGet("detail/{orderId}")]
         public async Task<IActionResult> GetOrderDetail(int orderId)
-{
-    var order = await _context.Orders
-        .Where(o => o.OrderId == orderId)
-        .Include(o => o.OrderDetails)
-        .ThenInclude(od => od.Book)
-        .Select(o => new
         {
-            o.OrderId,
-            o.OrderDate,
-            o.TotalPrice,
-            o.ShippingAddress,
-            o.PaymentMethod,
-            o.Status,
-            CustomerName = o.User.FullName,
+            var order = await _context.Orders
+                .Where(o => o.OrderId == orderId)
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Book)
+                .Select(o => new
+                {
+                    o.OrderId,
+                    o.OrderDate,
+                    o.TotalPrice,
+                    o.ShippingAddress,
+                    o.PaymentMethod,
+                    o.Status,
+                    CustomerName = o.User.FullName,
 
-            // Lấy tỉnh/thành từ địa chỉ
-            Province = _context.ShippingFees
-                .Where(s => o.ShippingAddress.Contains(s.Province))
-                .Select(s => s.Province)
-                .FirstOrDefault(),
+                    // Lấy tỉnh/thành từ địa chỉ
+                    Province = _context.ShippingFees
+                        .Where(s => o.ShippingAddress.Contains(s.Province))
+                        .Select(s => s.Province)
+                        .FirstOrDefault(),
 
-            // Lấy phí ship dựa trên tỉnh
-            ShippingFee = _context.ShippingFees
-                .Where(s => o.ShippingAddress.Contains(s.Province))
-                .Select(s => s.Fee)
-                .FirstOrDefault(),
+                    // Lấy phí ship dựa trên tỉnh
+                    ShippingFee = _context.ShippingFees
+                        .Where(s => o.ShippingAddress.Contains(s.Province))
+                        .Select(s => s.Fee)
+                        .FirstOrDefault(),
 
-            Discount = o.DiscountId.HasValue 
-                ? _context.Discounts
-                    .Where(d => d.DiscountId == o.DiscountId)
-                    .Select(d => d.DiscountAmount)
-                    .FirstOrDefault() 
-                : 0,
+                    Discount = o.DiscountId.HasValue 
+                        ? _context.Discounts
+                            .Where(d => d.DiscountId == o.DiscountId)
+                            .Select(d => d.DiscountAmount)
+                            .FirstOrDefault() 
+                        : 0,
 
-            SubTotal = o.OrderDetails.Sum(od => od.Quantity * od.UnitPrice),
+                    SubTotal = o.OrderDetails.Sum(od => od.Quantity * od.UnitPrice),
 
-            Items = o.OrderDetails.Select(od => new
+                    Items = o.OrderDetails.Select(od => new
+                    {
+                        Title = od.Book.Title,
+                        Quantity = od.Quantity,
+                        UnitPrice = od.UnitPrice
+                    })
+                })
+                .FirstOrDefaultAsync();
+
+            if (order == null) 
+                return NotFound(new { message = "Không tìm thấy đơn hàng" });
+
+            return Ok(order);
+        }
+
+        // GET: api/admin/orders - Lấy danh sách tất cả đơn hàng (dành cho Admin)
+        [HttpGet("/api/admin/orders")]
+        public async Task<ActionResult> GetAllOrders()
+        {
+            var orders = await _context.Orders
+                .Include(o => o.User)
+                .Select(o => new
+                {
+                    orderId = o.OrderId,
+                    customerName = o.User.FullName,
+                    orderDate = o.OrderDate,
+                    totalPrice = o.TotalPrice,
+                    status = o.Status
+                })
+                .OrderByDescending(o => o.orderDate)
+                .ToListAsync();
+
+            return Ok(new { success = true, data = orders });
+        }
+
+        // PUT: api/admin/orders/{orderId}/confirm - Xác nhận đơn hàng
+        [HttpPut("/api/admin/orders/{orderId}/confirm")]
+        public async Task<ActionResult> ConfirmOrder(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null)
             {
-                Title = od.Book.Title,
-                Quantity = od.Quantity,
-                UnitPrice = od.UnitPrice
-            })
-        })
-        .FirstOrDefaultAsync();
+                return NotFound(new { success = false, message = "Không tìm thấy đơn hàng." });
+            }
 
-    if (order == null) 
-        return NotFound(new { message = "Không tìm thấy đơn hàng" });
+            if (order.Status != "Pending")
+            {
+                return BadRequest(new { success = false, message = "Đơn hàng không thể xác nhận." });
+            }
 
-    return Ok(order);
-}
+            order.Status = "Shipped";
+            order.UpdatedAt = DateTime.Now;
+            await _context.SaveChangesAsync();
 
+            return Ok(new { success = true, message = "Xác nhận đơn hàng thành công." });
+        }
 
+        // PUT: api/admin/orders/{orderId}/status - Cập nhật trạng thái đơn hàng
+        [HttpPut("/api/admin/orders/{orderId}/status")]
+        public async Task<ActionResult> UpdateOrderStatus(int orderId, [FromBody] UpdateStatusRequest request)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null)
+            {
+                return NotFound(new { success = false, message = "Không tìm thấy đơn hàng." });
+            }
+
+            var validStatuses = new List<string> { "Pending", "Confirmed", "Shipped", "Delivered", "Cancelled" };
+            if (!validStatuses.Contains(request.Status))
+            {
+                return BadRequest(new { success = false, message = "Trạng thái không hợp lệ." });
+            }
+
+            order.Status = request.Status;
+            order.UpdatedAt = DateTime.Now;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { success = true, message = "Cập nhật trạng thái thành công." });
+        }
+
+        // PUT: api/admin/orders/{orderId}/cancel - Hủy đơn hàng
+        [HttpPut("/api/admin/orders/{orderId}/cancel")]
+        public async Task<ActionResult> CancelOrder(int orderId)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Book)
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            if (order == null)
+            {
+                return NotFound(new { success = false, message = "Không tìm thấy đơn hàng." });
+            }
+
+            if (order.Status == "Canceled" || order.Status == "Delivered")
+            {
+                return BadRequest(new { success = false, message = "Đơn hàng không thể hủy." });
+            }
+
+            // Hoàn lại số lượng tồn kho
+            foreach (var detail in order.OrderDetails)
+            {
+                var book = detail.Book;
+                book.StockQuantity += detail.Quantity;
+                book.SoldQuantity -= detail.Quantity;
+                _context.Books.Update(book);
+            }
+
+            order.Status = "Canceled";
+            order.UpdatedAt = DateTime.Now;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { success = true, message = "Hủy đơn hàng thành công." });
+        }
 
 
     }
@@ -247,5 +345,10 @@ namespace BookStoreApi.Controllers
         public int BookId { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
+    }
+
+    public class UpdateStatusRequest
+    {
+        public string Status { get; set; }
     }
 }

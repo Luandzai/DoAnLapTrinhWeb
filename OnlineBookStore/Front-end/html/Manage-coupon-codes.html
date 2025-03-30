@@ -6,6 +6,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/Admin.css" />
+    <link rel="stylesheet" href="../css/Manage-coupon-codes.css" />
   </head>
   <body>
     <div class="container__body">
@@ -49,12 +50,13 @@
           </div>
         </div>
       </header>
+
       <main>
         <!-- Container -->
         <div class="container">
           <div class="sidebar">
             <ul>
-              <li class="active"><a href="../html/Admin.html">Dashboard</a></li>
+              <li><a href="../html/Admin.html">Dashboard</a></li>
               <li>
                 <a href="../html/order-management.html">Quản lý Đơn hàng</a>
               </li>
@@ -65,7 +67,7 @@
               <li>
                 <a href="../html/Manage-reviews.html">Quản lý Đánh giá</a>
               </li>
-              <li>
+              <li class="active">
                 <a href="../html/Manage-coupon-codes.html"
                   >Quản lý Mã Giảm giá</a
                 >
@@ -74,7 +76,60 @@
           </div>
 
           <div class="content" id="admin-content">
-            <!-- Nội dung sẽ được render tự động bằng JS -->
+            <h2>Quản lý Mã Giảm Giá</h2>
+            <button id="add-discount-btn">Thêm Mã Giảm Giá</button>
+            <table id="discount-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Mã</th>
+                  <th>Số tiền giảm</th>
+                  <th>Ngày bắt đầu</th>
+                  <th>Ngày kết thúc</th>
+                  <th>Giới hạn sử dụng</th>
+                  <th>Đã dùng</th>
+                  <th>Đã gán</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="discount-modal" class="modal">
+          <div class="modal-content">
+            <h3 id="form-title">Thêm Mã Giảm Giá</h3>
+            <form id="discount-form">
+              <label for="code">Mã giảm giá:</label>
+              <input type="text" id="code" required />
+
+              <label for="discountAmount">Số tiền giảm (VNĐ):</label>
+              <input
+                type="number"
+                id="discountAmount"
+                step="1000"
+                min="0"
+                required
+              />
+
+              <label for="startDate">Ngày bắt đầu:</label>
+              <input type="datetime-local" id="startDate" required />
+
+              <label for="endDate">Ngày kết thúc:</label>
+              <input type="datetime-local" id="endDate" required />
+
+              <label for="usageLimit"
+                >Giới hạn sử dụng (để trống nếu không giới hạn):</label
+              >
+              <input type="number" id="usageLimit" min="1" />
+
+              <div class="form-buttons">
+                <button type="submit">Lưu</button>
+                <button type="button" id="cancel-discount-btn">Hủy</button>
+              </div>
+            </form>
           </div>
         </div>
       </main>
@@ -89,6 +144,6 @@
       </footer>
     </div>
 
-    <script src="../js/Admin.js"></script>
+    <script src="../js/Manage-coupon-codes.js"></script>
   </body>
 </html>

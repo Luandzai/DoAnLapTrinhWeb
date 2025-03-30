@@ -6,6 +6,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/Admin.css" />
+    <link rel="stylesheet" href="../css/order-management.css" />
   </head>
   <body>
     <div class="container__body">
@@ -49,13 +50,14 @@
           </div>
         </div>
       </header>
+
       <main>
         <!-- Container -->
         <div class="container">
           <div class="sidebar">
             <ul>
-              <li class="active"><a href="../html/Admin.html">Dashboard</a></li>
-              <li>
+              <li><a href="../html/Admin.html">Dashboard</a></li>
+              <li class="active">
                 <a href="../html/order-management.html">Quản lý Đơn hàng</a>
               </li>
               <li><a href="../html/book-management.html">Quản lý Sách</a></li>
@@ -72,9 +74,26 @@
               </li>
             </ul>
           </div>
-
+          <!-- Nội dung sẽ được render tự động bằng JS -->
           <div class="content" id="admin-content">
-            <!-- Nội dung sẽ được render tự động bằng JS -->
+            <h2>QUẢN LÝ ĐƠN HÀNG</h2>
+            <div class="order-management">
+              <table class="order-table">
+                <thead>
+                  <tr>
+                    <th>Mã đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="order-list">
+                  <!-- Danh sách đơn hàng sẽ được render bằng JS -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </main>
@@ -89,6 +108,6 @@
       </footer>
     </div>
 
-    <script src="../js/Admin.js"></script>
+    <script src="../js/order-management.js"></script>
   </body>
 </html>

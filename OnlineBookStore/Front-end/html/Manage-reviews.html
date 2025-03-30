@@ -6,6 +6,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/Admin.css" />
+    <link rel="stylesheet" href="../css/manage-reviews.css" />
   </head>
   <body>
     <div class="container__body">
@@ -49,12 +50,13 @@
           </div>
         </div>
       </header>
+
       <main>
         <!-- Container -->
         <div class="container">
           <div class="sidebar">
             <ul>
-              <li class="active"><a href="../html/Admin.html">Dashboard</a></li>
+              <li><a href="../html/Admin.html">Dashboard</a></li>
               <li>
                 <a href="../html/order-management.html">Quản lý Đơn hàng</a>
               </li>
@@ -62,7 +64,7 @@
               <li>
                 <a href="../html/User-Management.html">Quản lý Người dùng</a>
               </li>
-              <li>
+              <li class="active">
                 <a href="../html/Manage-reviews.html">Quản lý Đánh giá</a>
               </li>
               <li>
@@ -74,7 +76,30 @@
           </div>
 
           <div class="content" id="admin-content">
-            <!-- Nội dung sẽ được render tự động bằng JS -->
+            <h2>Quản lý Đánh giá</h2>
+            <div class="search-container">
+              <input
+                type="text"
+                id="search-review"
+                placeholder="Tìm kiếm đánh giá..."
+              />
+            </div>
+            <table id="review-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tên sách</th>
+                  <th>Người dùng</th>
+                  <th>Điểm</th>
+                  <th>Bình luận</th>
+                  <th>Thời gian</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dữ liệu sẽ được render bằng JS -->
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
@@ -89,6 +114,6 @@
       </footer>
     </div>
 
-    <script src="../js/Admin.js"></script>
+    <script src="../js/manage-reviews.js"></script>
   </body>
 </html>

@@ -6,6 +6,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/Admin.css" />
+    <link rel="stylesheet" href="../css/user-management.css" />
   </head>
   <body>
     <div class="container__body">
@@ -49,17 +50,18 @@
           </div>
         </div>
       </header>
+
       <main>
         <!-- Container -->
         <div class="container">
           <div class="sidebar">
             <ul>
-              <li class="active"><a href="../html/Admin.html">Dashboard</a></li>
+              <li><a href="../html/Admin.html">Dashboard</a></li>
               <li>
                 <a href="../html/order-management.html">Quản lý Đơn hàng</a>
               </li>
               <li><a href="../html/book-management.html">Quản lý Sách</a></li>
-              <li>
+              <li class="active">
                 <a href="../html/User-Management.html">Quản lý Người dùng</a>
               </li>
               <li>
@@ -72,9 +74,59 @@
               </li>
             </ul>
           </div>
-
           <div class="content" id="admin-content">
-            <!-- Nội dung sẽ được render tự động bằng JS -->
+            <h2>QUẢN LÝ NGƯỜI DÙNG</h2>
+            <div class="user-management">
+              <div class="user-actions">
+                <input
+                  type="text"
+                  id="search-user"
+                  placeholder="Tìm kiếm người dùng..."
+                />
+              </div>
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Vai trò</th>
+                    <th>Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="user-list"></tbody>
+              </table>
+            </div>
+
+            <!-- Modal chỉnh sửa người dùng -->
+            <div id="user-modal" style="display: none">
+              <form id="user-form">
+                <label
+                  >Họ tên: <input type="text" id="fullName" name="fullName"
+                /></label>
+                <label
+                  >Email: <input type="email" id="email" name="email"
+                /></label>
+                <label
+                  >Số điện thoại:
+                  <input type="text" id="phoneNumber" name="phoneNumber"
+                /></label>
+                <label
+                  >Địa chỉ: <input type="text" id="address" name="address"
+                /></label>
+                <label
+                  >Vai trò:
+                  <select id="role" name="role">
+                    <option value="Customer">Customer</option>
+                    <option value="Admin">Admin</option>
+                  </select>
+                </label>
+                <button type="submit">Lưu</button>
+                <button type="button" id="cancel-user-btn">Hủy</button>
+              </form>
+            </div>
           </div>
         </div>
       </main>
@@ -89,6 +141,6 @@
       </footer>
     </div>
 
-    <script src="../js/Admin.js"></script>
+    <script src="../js/user-management.js"></script>
   </body>
 </html>

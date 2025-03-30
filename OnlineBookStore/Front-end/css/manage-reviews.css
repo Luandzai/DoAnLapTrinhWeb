@@ -1,0 +1,50 @@
+/* manage-reviews.css */
+.content {
+  padding: 20px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+#search-review {
+  padding: 8px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#review-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#review-table th,
+#review-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+#review-table th {
+  background-color: #3498db;
+  font-weight: bold;
+}
+
+#review-table td {
+  vertical-align: middle;
+}
+
+.delete-btn {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #cc0000;
+}

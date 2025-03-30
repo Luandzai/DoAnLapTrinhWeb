@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Sách</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/Admin.css" />
+    <link rel="stylesheet" href="../css/book-management.css" />
+  </head>
+  <body>
+    <div class="container__body">
+      <!-- Header -->
+      <header class="header">
+        <div class="header__main-content">
+          <div class="header__body">
+            <div class="logo">
+              <a href="../html/index.html">
+                <img src="../img/logo.svg" alt="Nhà sách Online" />
+              </a>
+              <span>Nhà sách Online</span>
+            </div>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Tìm kiếm sách..."
+            />
+            <nav class="nav">
+              <div class="nav__container">
+                <div class="nav__item nav__item--dropdown">
+                  <div class="nav__dropdown-btn">Danh mục ▼</div>
+                  <div class="nav__dropdown-content" id="category-list"></div>
+                </div>
+                <div class="nav__item">
+                  <a href="../html/cart.html" class="nav__link">Giỏ hàng</a>
+                </div>
+              </div>
+            </nav>
+            <div class="login">
+              <div class="login__dropdown" id="login-section"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Container -->
+        <div class="container">
+          <div class="sidebar">
+            <ul>
+              <li><a href="../html/Admin.html">Dashboard</a></li>
+              <li>
+                <a href="../html/order-management.html">Quản lý Đơn hàng</a>
+              </li>
+              <li class="active">
+                <a href="../html/book-management.html">Quản lý Sách</a>
+              </li>
+              <li>
+                <a href="../html/User-Management.html">Quản lý Người dùng</a>
+              </li>
+              <li>
+                <a href="../html/Manage-reviews.html">Quản lý Đánh giá</a>
+              </li>
+              <li>
+                <a href="../html/Manage-coupon-codes.html"
+                  >Quản lý Mã Giảm giá</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="content" id="admin-content">
+            <h2>QUẢN LÝ SÁCH</h2>
+            <div class="book-management">
+              <!-- Nút thêm sách -->
+              <div class="book-actions">
+                <button id="add-book-btn">Thêm sách mới</button>
+                <button id="add-author-btn">Thêm tác giả</button>
+              </div>
+
+              <!-- Bảng danh sách sách -->
+              <table class="book-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tên sách</th>
+                    <th>Tác giả</th>
+                    <th>Nhà xuất bản</th>
+                    <th>Danh mục</th>
+                    <th>Giá</th>
+                    <th>Tồn kho</th>
+                    <th>Giảm giá</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="book-list">
+                  <!-- Danh sách sách sẽ được render bằng JS sau -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Form thêm/chỉnh sửa sách (ẩn mặc định) -->
+            <div class="modal" id="book-modal" style="display: none">
+              <div class="modal-content">
+                <h3 id="modal-title">Thêm sách mới</h3>
+                <form id="book-form">
+                  <div class="form-group">
+                    <label for="title">Tên sách:</label>
+                    <input type="text" id="title" name="title" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="authorId">Tác giả:</label>
+                    <select id="authorId" name="authorId" required>
+                      <!-- Options sẽ được thêm bằng JS -->
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="publisherId">Nhà xuất bản:</label>
+                    <select id="publisherId" name="publisherId" required>
+                      <!-- Options sẽ được thêm bằng JS -->
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="categoryId">Danh mục:</label>
+                    <select id="categoryId" name="categoryId" required>
+                      <!-- Options sẽ được thêm bằng JS -->
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="price">Giá:</label>
+                    <input
+                      type="number"
+                      id="price"
+                      name="price"
+                      step="1000"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="oldPrice">Giá gốc:</label>
+                    <input
+                      type="number"
+                      id="oldPrice"
+                      name="oldPrice"
+                      step="1000"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="discountPrice">Giá giảm (nếu có):</label>
+                    <input
+                      type="number"
+                      id="discountPrice"
+                      name="discountPrice"
+                      step="1000"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="stockQuantity">Số lượng tồn kho:</label>
+                    <input
+                      type="number"
+                      id="stockQuantity"
+                      name="stockQuantity"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="isbn">ISBN:</label>
+                    <input type="text" id="isbn" name="isbn" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="publishedDate">Ngày xuất bản:</label>
+                    <input
+                      type="date"
+                      id="publishedDate"
+                      name="publishedDate"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="description">Mô tả:</label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="coverImage">Ảnh bìa:</label>
+                    <input
+                      type="file"
+                      id="coverImage"
+                      name="coverImage"
+                      accept="image/*"
+                    />
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" id="save-book-btn">Lưu</button>
+                    <button type="button" id="cancel-book-btn">Hủy</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- Modal thêm tác giả -->
+            <div class="modal" id="author-modal" style="display: none">
+              <div class="modal-content">
+                <h3>Thêm Tác Giả Mới</h3>
+                <form id="author-form">
+                  <div class="form-group">
+                    <label for="authorName">Tên tác giả:</label>
+                    <input
+                      type="text"
+                      id="authorName"
+                      name="authorName"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="authorBio">Tiểu sử:</label>
+                    <textarea id="authorBio" name="bio" rows="4"></textarea>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit">Lưu</button>
+                    <button type="button" id="cancel-author-btn">Hủy</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer__main-content">
+          <p class="footer__copyright">
+            © 2025 Nhà sách Online. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- JS sẽ thêm sau -->
+    <script src="../js/book-managenment.js"></script>
+  </body>
+</html>
