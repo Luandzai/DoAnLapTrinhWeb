@@ -13,7 +13,7 @@ public partial class OrderDetail
 
     public int Quantity { get; set; }
 
-    public decimal UnitPrice { get; set; }
+    public decimal? UnitPrice { get; set; }
 
     public virtual Book Book { get; set; } = null!;
 

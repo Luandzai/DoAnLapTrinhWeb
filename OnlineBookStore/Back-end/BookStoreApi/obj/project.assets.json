@@ -5171,26 +5171,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\THIS PC\\.nuget\\packages\\": {},
-    "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages": {},
+    "C:\\Users\\admin\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
+      "projectUniqueName": "D:\\Do an sach\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
       "projectName": "BookStoreApi",
-      "projectPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
-      "packagesPath": "C:\\Users\\THIS PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\THIS PC\\OneDrive\\Máy tính\\Đồ án lập trình web\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\obj\\",
+      "projectPath": "D:\\Do an sach\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\BookStoreApi.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "D:\\Do an sach\\DoAnLapTrinhWeb\\OnlineBookStore\\Back-end\\BookStoreApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages",
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\THIS PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.1.config",
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5199,8 +5196,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\DevExpress 24.1\\Components\\System\\Components\\Packages": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
