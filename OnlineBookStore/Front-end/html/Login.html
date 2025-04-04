@@ -34,6 +34,8 @@
           </button>
         </form>
       </div>
+
+
       <div class="form-container sign-in-container">
         <form id="sign-in-form">
           <h1>Sign in</h1>
@@ -45,7 +47,12 @@
           <span>or use your account</span>
           <input type="email" id="sign-in-email" placeholder="Email" />
           <input type="password" id="sign-in-password" placeholder="Password" />
-          <a href="#">Forgot your password?</a>
+          
+
+          <div>
+            <a href="ForgotPassword.html" class="forgot-password">Forgot your password?</a>
+          </div>
+          
           <button type="submit">Sign In</button>
           <button
             onclick="location.href='../html/index.html'"
@@ -56,6 +63,8 @@
           </button>
         </form>
       </div>
+
+
       <div class="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left">
@@ -73,6 +82,8 @@
         </div>
       </div>
     </div>
+
+
     <script>
       const signUpButton = document.getElementById("signUp");
       const signInButton = document.getElementById("signIn");
@@ -86,6 +97,8 @@
         container.classList.remove("right-panel-active");
       });
     </script>
+
+
     <script src="../js/login.js"></script>
   </body>
 </html>
