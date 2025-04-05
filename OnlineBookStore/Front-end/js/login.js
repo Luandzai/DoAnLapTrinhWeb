@@ -97,3 +97,5 @@ document
     ).value;
     await register(fullName, email, password);
   });
+
+
