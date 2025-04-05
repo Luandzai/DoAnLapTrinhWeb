@@ -2,7 +2,7 @@ using BookStoreApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-
+using BookStoreApi.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // ✅ Thêm CORS
@@ -31,6 +31,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
     options.JsonSerializerOptions.WriteIndented = true;
 });
+
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 
