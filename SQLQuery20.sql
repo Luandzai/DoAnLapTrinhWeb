@@ -13,7 +13,9 @@ CREATE TABLE Users (
     Address NVARCHAR(255),
     Role NVARCHAR(20) CHECK (Role IN (N'Customer', N'Admin')) NOT NULL,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    UpdatedAt DATETIME DEFAULT GETDATE()
+    UpdatedAt DATETIME DEFAULT GETDATE(),
+    ResetToken NVARCHAR(255) NULL,
+    ResetTokenExpiry DATETIME NULL
 );
 go
 -- Bảng Danh mục
