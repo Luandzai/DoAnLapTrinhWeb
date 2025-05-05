@@ -10,6 +10,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
     <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/commont.css" />
     <link rel="stylesheet" href="../css/cart.css" />
   </head>
   <body>
@@ -18,34 +19,30 @@
       <header class="header">
         <div class="header__main-content">
           <div class="header__body">
-            <div class="header__logo">
+            <!-- Logo -->
+            <div class="logo">
               <a href="../html/index.html">
-                <img src="../img/logo.svg" alt="Nha sach online" />
+                <img src="../img/logo.svg" alt="Nhà sách Online" />
               </a>
               <span>Nhà sách Online</span>
             </div>
-            <!-- Trong phần header -->
+            <!-- Search bar -->
             <input
               type="text"
               id="search-input"
               placeholder="Tìm kiếm sách..."
             />
+            <!-- Nav bar -->
             <nav class="nav">
               <div class="nav__container">
                 <div class="nav__item nav__item--dropdown">
                   <div class="nav__dropdown-btn">Danh mục ▼</div>
                   <div class="nav__dropdown-content" id="category-list">
-                    <!-- Danh mục sẽ được thêm động bằng JS -->
+                    <!-- Danh mục sẽ được render tự động bằng JS -->
                   </div>
                 </div>
                 <div class="nav__item">
-                  <a href="../html/cart.html" class="nav__link">
-                    <span class="cart-icon">🛒</span>
-                    <!-- Biểu tượng giỏ hàng -->
-                    <span class="cart-badge" id="cart-badge">0</span>
-                    <!-- Số lượng sản phẩm -->
-                    Giỏ hàng
-                  </a>
+                  <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
                 </div>
               </div>
             </nav>

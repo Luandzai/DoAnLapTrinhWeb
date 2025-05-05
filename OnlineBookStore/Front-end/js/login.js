@@ -35,7 +35,7 @@ async function register(fullName, email, password) {
   }
 }
 
-// Hàm xử lý đăng nhập (cập nhật lại)
+// Hàm xử lý đăng nhập
 async function login(email, password) {
   try {
     const response = await fetch("http://localhost:5000/api/users/login", {
@@ -83,19 +83,17 @@ document
 
 // Gắn sự kiện cho form đăng ký
 document
-  .querySelector(".sign-up-container form")
+  .getElementById("sign-up-form")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
     const fullName = document.querySelector(
-      ".sign-up-container input[placeholder='Name']"
+      "#sign-up-form input[placeholder='Name']"
     ).value;
     const email = document.querySelector(
-      ".sign-up-container input[placeholder='Email']"
+      "#sign-up-form input[placeholder='Email']"
     ).value;
     const password = document.querySelector(
-      ".sign-up-container input[placeholder='Password']"
+      "#sign-up-form input[placeholder='Password']"
     ).value;
     await register(fullName, email, password);
   });
-
-

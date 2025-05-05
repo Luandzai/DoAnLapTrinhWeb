@@ -1,16 +1,3 @@
-/* Reset cơ bản */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-}
-
 /* Định dạng container chính */
 .content#admin-content {
   max-width: 1200px;

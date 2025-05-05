@@ -98,7 +98,7 @@ public class BooksController : ControllerBase
             .Include(b => b.Publisher)
             .Include(b => b.Category)
             .OrderByDescending(b => b.SoldQuantity) // Sắp xếp theo số lượng bán giảm dần
-            .Take(8) // Chỉ lấy 8 quyển
+            .Take(10) // Chỉ lấy 8 quyển
             .Select(b => new
             {
                 b.BookId,
@@ -129,7 +129,7 @@ public class BooksController : ControllerBase
             .Include(b => b.Publisher)
             .Include(b => b.Category)
             .OrderByDescending(b => b.CreatedAt) // Sắp xếp theo thời gian tạo, mới nhất trước
-            .Take(16) // Lấy 16 sách mới nhất
+            .Take(15) // Lấy 16 sách mới nhất
             .Select(b => new
             {
                 b.BookId,

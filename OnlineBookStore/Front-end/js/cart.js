@@ -71,11 +71,22 @@ const removeCartItem = async (cartId) => {
 const fetchCategories = async () => {
   try {
     const categories = await fetchAPI(`${API_BASE_URL}/Categories`);
+    console.log("Raw categories from API:", categories);
     if (!Array.isArray(categories)) {
-      throw new Error("Dữ liệu danh mục không phải là mảng");
+      console.error("Dữ liệu danh mục không phải là mảng:", categories);
+      return [];
     }
-    return categories;
+    // Xử lý subCategories để đảm bảo là mảng
+    return categories.map((category) => ({
+      ...category,
+      subCategories: Array.isArray(category.subCategories?.$values)
+        ? category.subCategories.$values
+        : Array.isArray(category.subCategories)
+        ? category.subCategories
+        : [],
+    }));
   } catch (error) {
+    console.error("Lỗi khi lấy danh mục:", error);
     return [];
   }
 };
@@ -133,9 +144,11 @@ const renderCart = (cartItems) => {
                   <h3 class="cart__item-title" data-book-id="${
                     item.book.bookId
                   }">${item.book.title}</h3>
-                  <p class="cart__item-price">${formatPrice(
+                  <p class="cart__item-price" data-price="${
                     item.book.discountPrice || item.book.price
-                  )}</p>
+                  }">${formatPrice(
+        item.book.discountPrice || item.book.price
+      )}</p>
                   <div class="cart__item-quantity">
                       <button class="cart__item-quantity-btn decrease">-</button>
                       <input type="number" class="cart__item-quantity-input" value="${
@@ -169,7 +182,9 @@ const renderCart = (cartItems) => {
         return sum;
       }
       const cartItem = checkbox.closest(".cart__item");
-      const price = item.book.discountPrice || item.book.price;
+      const price = parseFloat(
+        cartItem.querySelector(".cart__item-price").dataset.price
+      );
       const quantity = parseInt(
         cartItem.querySelector(".cart__item-quantity-input").value
       );
@@ -352,41 +367,60 @@ const handleSearch = () => {
 // Hàm render danh mục
 const renderCategories = (categories) => {
   const categoryList = document.getElementById("category-list");
-  if (!categoryList) return;
+  if (!categoryList) {
+    console.error("Không tìm thấy category-list trong HTML");
+    return;
+  }
 
-  categoryList.innerHTML =
-    categories.length === 0
-      ? '<div class="nav__dropdown-item">Không có danh mục</div>'
-      : categories
-          .map(
-            (category) => `
-              <div class="nav__dropdown-item">
-                <a href="../html/book-list.html?categoryId=${
-                  category.categoryId
-                }">
-                  ${category.categoryName}
-                </a>
-                ${
-                  category.subCategories?.length
-                    ? `<div class="nav__dropdown-subcontent">
-                        ${category.subCategories
-                          .map(
-                            (sub) => `
-                              <div class="nav__dropdown-subitem">
-                                <a href="../html/book-list.html?categoryId=${sub.categoryId}">
-                                  ${sub.categoryName}
-                                </a>
-                              </div>
-                            `
-                          )
-                          .join("")}
-                      </div>`
-                    : ""
-                }
-              </div>
-            `
-          )
-          .join("");
+  console.log("Rendering categories:", categories);
+
+  if (categories.length === 0) {
+    categoryList.innerHTML =
+      '<div class="nav__dropdown-item">Không có danh mục</div>';
+    return;
+  }
+
+  categoryList.innerHTML = categories
+    .map((category) => {
+      if (!category.categoryId || !category.categoryName) {
+        console.warn("Dữ liệu danh mục không hợp lệ:", category);
+        return "";
+      }
+      const subCategories = category.subCategories || [];
+      return `
+        <div class="nav__dropdown-item">
+          <a href="../html/book-list.html?categoryId=${category.categoryId}">
+            ${category.categoryName}
+          </a>
+          ${
+            subCategories.length > 0
+              ? `<div class="nav__dropdown-subcontent">
+                  ${subCategories
+                    .map((sub) => {
+                      if (!sub.categoryId || !sub.categoryName) {
+                        console.warn("Dữ liệu danh mục con không hợp lệ:", sub);
+                        return "";
+                      }
+                      return `
+                        <div class="nav__dropdown-subitem">
+                          <a href="../html/book-list.html?categoryId=${sub.categoryId}">
+                            ${sub.categoryName}
+                          </a>
+                        </div>
+                      `;
+                    })
+                    .filter(Boolean)
+                    .join("")}
+                </div>`
+              : ""
+          }
+        </div>
+      `;
+    })
+    .filter(Boolean)
+    .join("");
+
+  console.log("Rendered category HTML:", categoryList.innerHTML);
 };
 
 // Khởi chạy khi trang load
@@ -446,14 +480,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const selectedBooks = selectedItems.map((checkbox) => {
       const cartItem = checkbox.closest(".cart__item");
-      const priceText = cartItem
-        .querySelector(".cart__item-price")
-        .textContent.replace(/[^\d]/g, "");
+      const price = parseFloat(
+        cartItem.querySelector(".cart__item-price").dataset.price
+      );
       return {
         cartId: checkbox.dataset.cartId,
         bookId: cartItem.querySelector(".cart__item-image").dataset.bookId,
         title: cartItem.querySelector(".cart__item-title").textContent,
-        price: parseInt(priceText) || 0,
+        price: isNaN(price) ? 0 : price,
         quantity:
           parseInt(
             cartItem.querySelector(".cart__item-quantity-input").value
@@ -464,6 +498,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       };
     });
 
+    console.log("Checkout items:", selectedBooks);
     localStorage.setItem("checkoutItems", JSON.stringify(selectedBooks));
     window.location.href = "../html/checkout.html";
   });

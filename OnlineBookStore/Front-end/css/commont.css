@@ -1,0 +1,309 @@
+/* ========================= Reset cơ bản ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  background-color: #ffffff;
+  font-size: 1.6rem; /* 16px */
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ========================= Main Layout ========================= */
+.header__main-content,
+.main__content,
+.footer__main-content {
+  max-width: 120rem; /* Tăng chiều rộng cho thoáng */
+  margin: 0 auto;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+/* ========================= Header ========================= */
+.header {
+  background-color: #60c3d7;
+  color: white;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* ========================= Logo ========================= */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
+.logo img {
+  width: 4rem;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.1);
+}
+
+.logo span {
+  color: #fff;
+  text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+}
+
+/* ========================= Search Bar ========================= */
+input[type="text"] {
+  width: 100%;
+  max-width: 35rem;
+  padding: 1.2rem 1.8rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 3rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.3);
+  background-color: #fff;
+}
+
+input[type="text"]::placeholder {
+  color: #888;
+  opacity: 0.8;
+}
+
+/* ========================= Navigation ========================= */
+.nav__container {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav__item {
+  position: relative;
+}
+
+.nav__link,
+.nav__dropdown-btn {
+  color: #fff;
+  font-size: 1.8rem;
+  text-decoration: none;
+  padding: 1.2rem 1.8rem;
+  transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  height: 4.5rem;
+  border-radius: 0.5rem;
+}
+
+/* Hiệu ứng hover cho nút */
+.nav__link:hover,
+.nav__dropdown-btn:hover {
+  opacity: 0.9;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown */
+.nav__item--dropdown {
+  position: relative;
+}
+
+.nav__dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  min-width: 25rem;
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.8rem;
+  border: 1px solid #e0e0e0;
+  z-index: 1000;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out,
+    transform 0.4s ease-in-out;
+}
+
+/* Hiển thị dropdown khi hover */
+.nav__item--dropdown:hover .nav__dropdown-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown Items */
+.nav__dropdown-item {
+  position: relative; /* Đặt position: relative để làm tham chiếu cho submenu */
+  margin-bottom: 0.8rem;
+}
+
+.nav__dropdown-item a {
+  color: #333;
+  font-size: 1.6rem;
+  padding: 1.2rem 1.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    padding-left 0.3s ease-in-out;
+}
+
+.nav__dropdown-item a:hover {
+  background: #34495e;
+  color: white;
+  padding-left: 2rem;
+  font-weight: bold;
+}
+
+/* Submenu (danh mục con) */
+.nav__dropdown-subcontent {
+  position: absolute;
+  left: 100%;
+  top: 0; /* Căn chỉnh với đỉnh của nav__dropdown-item */
+  background-color: #f9f9f9;
+  min-width: 25rem;
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.8rem;
+  border: 1px solid #e0e0e0;
+  z-index: 1000;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out,
+    transform 0.4s ease-in-out;
+}
+
+/* Hiển thị submenu khi hover */
+.nav__dropdown-item:hover .nav__dropdown-subcontent {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.nav__dropdown-subitem {
+  margin-bottom: 0.8rem;
+}
+
+.nav__dropdown-subitem a {
+  color: #555;
+  font-size: 1.5rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    padding-left 0.3s ease-in-out;
+}
+
+.nav__dropdown-subitem a:hover {
+  background: #34495e;
+  color: white;
+  padding-left: 2rem;
+  font-weight: bold;
+}
+
+/* ========================= Login Dropdown ========================= */
+.login {
+  position: relative;
+}
+
+.login__dropdown-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.login__dropdown-btn img {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.login__dropdown-btn:hover img {
+  transform: scale(1.15);
+}
+
+.login__user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+}
+
+.login__user:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.login__dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  min-width: 18rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 100;
+}
+
+.login__dropdown:hover .login__dropdown-content {
+  display: block;
+}
+
+.login__dropdown-content a {
+  color: #2a2a2a;
+  font-size: 1.5rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.login__dropdown-content a:hover {
+  background-color: #2a7b8f;
+  color: #fff;
+}
