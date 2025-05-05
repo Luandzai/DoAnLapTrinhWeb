@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
 }
 
 html {
@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  background-color: #eff1e3;
+  background-color: #ffffff;
   font-size: 1.6rem; /* 16px */
   line-height: 1.5;
   min-height: 100vh;
@@ -21,82 +21,83 @@ body {
 .header__main-content,
 .main__content,
 .footer__main-content {
-  max-width: 110rem; /* 1100px */
+  max-width: 120rem; /* Tăng chiều rộng cho thoáng */
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.5rem;
+  width: 100%;
 }
 
 /* ========================= Header ========================= */
 .header {
-  padding: 1.5rem 2rem;
-  background-color: #3290a6;
+  background-color: #60c3d7;
   color: white;
-  border-radius: 0.5rem;
+  padding: 1.5rem 0;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .header__body {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
-}
-
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.logo img {
-  width: 3rem;
-  height: auto;
-  object-fit: contain;
-}
-
-.logo img:hover {
-  cursor: pointer;
-}
-
-/* Thanh tìm kiếm */
-input[type="text"] {
-  width: 100%;
-  max-width: 400px; /* Giới hạn chiều rộng */
-  padding: 10px 15px;
-  font-size: 16px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  transition: 0.3s ease-in-out;
-}
-
-/* Menu điều hướng */
-.nav ul {
-  list-style: none;
-  display: flex;
   gap: 2rem;
 }
 
-.nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin: 10px;
-  transition: color 0.3s ease-in-out;
+/* ========================= Logo ========================= */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
 }
 
-.nav a:hover {
-  color: black;
+.logo img {
+  width: 4rem;
+  height: auto;
+  transition: transform 0.3s ease;
 }
 
-/* ========================= Dropdown Menu ========================= */
+.logo img:hover {
+  transform: scale(1.1);
+}
+
+.logo span {
+  color: #fff;
+  text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+}
+
+/* ========================= Search Bar ========================= */
+input[type="text"] {
+  width: 100%;
+  max-width: 35rem;
+  padding: 1.2rem 1.8rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 3rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.3);
+  background-color: #fff;
+}
+
+input[type="text"]::placeholder {
+  color: #888;
+  opacity: 0.8;
+}
+
+/* ========================= Navigation ========================= */
 .nav__container {
   display: flex;
   align-items: center;
@@ -236,143 +237,75 @@ input[type="text"] {
   font-weight: bold;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .nav__container {
-    gap: 1.5rem;
-  }
-
-  .nav__link,
-  .nav__dropdown-btn {
-    font-size: 1.6rem;
-    padding: 1rem 1.2rem;
-    height: 4rem;
-  }
-
-  .nav__dropdown-content {
-    min-width: 20rem;
-    left: 0;
-  }
-
-  .nav__dropdown-subcontent {
-    left: 0; /* Hiển thị submenu bên dưới thay vì bên phải */
-    top: 100%; /* Căn chỉnh bên dưới nav__dropdown-item */
-    min-width: 20rem;
-    transform: translateY(10px); /* Hiệu ứng trượt từ trên xuống */
-  }
-
-  .nav__dropdown-item:hover .nav__dropdown-subcontent {
-    transform: translateY(0);
-  }
-}
-
 /* ========================= Login Dropdown ========================= */
 .login {
   position: relative;
-}
-
-.login__dropdown {
-  position: relative;
-  display: inline-block;
 }
 
 .login__dropdown-btn {
   background: none;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
   padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
 .login__dropdown-btn img {
-  width: 4rem;
-  height: auto;
-  transition: transform 0.3s ease-in-out;
-}
-
-.login__dropdown-btn:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
 }
 
 .login__dropdown-btn:hover img {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
-/* CSS cho phần đã đăng nhập */
 .login__user {
   display: flex;
   align-items: center;
   gap: 1rem;
   color: #fff;
-  font-size: 1.6rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease;
-}
-
-.login__user img {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%; /* Làm avatar tròn */
+  font-size: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
 }
 
 .login__user:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Hiệu ứng hover nhẹ */
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* CSS cho dropdown */
 .login__dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
-  right: 0; /* Căn phải thay vì lệch trái */
+  right: 0;
   background-color: #fff;
-  min-width: 15rem; /* Tăng chiều rộng để dễ đọc */
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  border-radius: 0.5rem;
+  min-width: 18rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.15);
   overflow: hidden;
   z-index: 100;
 }
 
-.login__dropdown-content a {
-  display: block;
-  padding: 1rem 1.5rem;
-  font-size: 1.6rem;
-  color: #333;
-  text-align: left; /* Căn trái cho tự nhiên hơn */
-  text-decoration: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.login__dropdown-content a:hover {
-  background-color: #3290a6;
-  color: white;
-}
-
-/* Hiển thị dropdown khi hover */
 .login__dropdown:hover .login__dropdown-content {
   display: block;
 }
 
-/* Responsive cho dropdown */
-@media (max-width: 768px) {
-  .login__dropdown-content {
-    right: 0; /* Đảm bảo căn phải trên mobile */
-    min-width: 12rem; /* Giảm chiều rộng trên mobile */
-  }
+.login__dropdown-content a {
+  color: #2a2a2a;
+  font-size: 1.5rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+}
 
-  .login__user {
-    font-size: 1.4rem; /* Giảm kích thước chữ trên mobile */
-  }
-
-  .login__user img {
-    width: 2rem;
-    height: 2rem;
-  }
+.login__dropdown-content a:hover {
+  background-color: #2a7b8f;
+  color: #fff;
 }
 
 /* Dùng lại CSS từ reset.css, UserInfo.css, PurchaseHistory.css và bổ sung */
