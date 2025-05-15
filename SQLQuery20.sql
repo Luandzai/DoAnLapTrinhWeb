@@ -276,7 +276,7 @@ SELECT * FROM Books;
 INSERT INTO Cart (UserID, BookID, Quantity) VALUES
 (1, 16, 2),
 (2, 7, 1),
-(1, 20, 1);
+(1, 17, 1);
 
 INSERT INTO Discounts (Code, DiscountAmount, StartDate, EndDate, UsageLimit) VALUES
 ('SUMMER2025', 50000, '2025-06-01', '2025-07-01', 100),
@@ -291,9 +291,9 @@ INSERT INTO Orders (UserID, DiscountID, TotalPrice, Status) VALUES
 SELECT * FROM Orders;
 
 INSERT INTO OrderDetails (OrderID, BookID, Quantity, UnitPrice) VALUES
-(1, 20, 2, 100000),
+(1, 16, 2, 100000),
 (2, 17, 1, 200000);
-
+SELECT * FROM OrderDetails;
 INSERT INTO Payments (OrderID, PaymentMethod, PaymentStatus, TransactionID) VALUES
 (1, 'MoMo', 'Paid', 'MOMO123456'),
 (2, 'Credit Card', 'Paid', 'CC987654');
@@ -302,12 +302,14 @@ SELECT * FROM Payments;
 
 INSERT INTO Reviews (UserID, BookID, Rating, Comment) VALUES
 (1, 8, 5, N'Tuyệt vời! Một cuốn sách rất hay.'),
-(2, 21, 4, N'Hay nhưng hơi dài.'),
-(1, 19, 5, N'Một cuốn sách kinh điển.');
+(2, 16, 4, N'Hay nhưng hơi dài.'),
+(1, 17, 5, N'Một cuốn sách kinh điển.');
+SELECT * FROM Reviews;
 
 INSERT INTO Transactions (UserID, OrderID, PaymentID, Amount) VALUES
 (1, 2, 1, 240000),
 (2, 1, 2, 200000);
+SELECT * FROM Transactions;
 
 
 INSERT INTO Books (Title, AuthorID, PublisherID, CategoryID, Price, OldPrice, DiscountPrice, SoldQuantity, StockQuantity, ISBN, PublishedDate, Description, CoverImage, CreatedAt, UpdatedAt) VALUES
@@ -348,6 +350,7 @@ INSERT INTO ShippingFees (Province, Fee) VALUES
 (N'Đà Nẵng', 15000),
 (N'Cần Thơ', 18000),
 (N'Hải Phòng', 20000);
+SELECT * FROM ShippingFees;
 
 
 

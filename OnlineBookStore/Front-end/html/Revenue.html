@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tổng Doanh Thu</title>
+    <!-- Kết nối file CSS -->
+    <link rel="stylesheet" href="../css/Revenue.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Tổng Doanh Thu</h1>
+        <form id="filterForm">
+            <select id="monthSelect" required>
+                <option value="" disabled selected>Chọn tháng</option>
+                <option value="1">Tháng 1</option>
+                <option value="2">Tháng 2</option>
+                <option value="3">Tháng 3</option>
+                <option value="4">Tháng 4</option>
+                <option value="5">Tháng 5</option>
+                <option value="6">Tháng 6</option>
+                <option value="7">Tháng 7</option>
+                <option value="8">Tháng 8</option>
+                <option value="9">Tháng 9</option>
+                <option value="10">Tháng 10</option>
+                <option value="11">Tháng 11</option>
+                <option value="12">Tháng 12</option>
+            </select>
+            <select id="yearSelect" required>
+                <option value="" disabled selected>Chọn năm</option>
+            </select>
+            <button type="submit">Xem doanh thu</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script src="../js/Revenue.js"></script>
+</body>
+</html>
