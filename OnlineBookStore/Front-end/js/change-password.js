@@ -4,7 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user || !user.userId) {
-    alert("Bạn chưa đăng nhập! Chuyển hướng về trang đăng nhập.");
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Bạn chưa đăng nhập! Chuyển hướng về trang đăng nhập.",
+    });
     window.location.href = "./Login.html";
     return;
   }
@@ -21,12 +25,20 @@ document.addEventListener("DOMContentLoaded", function () {
         .value.trim();
 
       if (!oldPassword || !newPassword || !confirmPassword) {
-        alert("Vui lòng điền đầy đủ thông tin.");
+        Swal.fire({
+          icon: "warning",
+          title: "Cảnh báo",
+          text: "Vui lòng nhập đầy đủ thông tin!",
+        });
         return;
       }
 
       if (newPassword !== confirmPassword) {
-        alert("Mật khẩu mới và xác nhận mật khẩu không khớp!");
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "Mật khẩu mới và xác nhận mật khẩu không khớp!",
+        });
         return;
       }
 
@@ -49,16 +61,29 @@ async function changePassword(userId, oldPassword, newPassword) {
       }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Đổi mật khẩu thất bại");
-    }
+    const result = await response.json();
 
-    alert("Đổi mật khẩu thành công!");
-    window.location.href = "../html/user.html"; // Chuyển hướng sau khi đổi mật khẩu
+    if (response.ok) {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Đổi mật khẩu thành công!",
+      });
+      window.location.href = "./Login.html";
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Đổi mật khẩu thất bại.",
+      });
+    }
   } catch (error) {
     console.error("Lỗi khi đổi mật khẩu:", error);
-    alert(error.message);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 

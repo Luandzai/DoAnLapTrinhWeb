@@ -31,8 +31,13 @@ const fetchAPI = async (url, options = {}) => {
 const fetchCart = async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user) {
-    alert("Vui lòng đăng nhập để xem giỏ hàng!");
-    window.location.href = "../html/Login.html";
+    Swal.fire({
+      icon: "warning",
+      title: "Thông báo",
+      text: "Vui lòng đăng nhập để xem giỏ hàng!",
+    }).then(() => {
+      window.location.href = "../html/Login.html";
+    });
     return [];
   }
 
@@ -279,7 +284,11 @@ const handleQuantityChange = async (e) => {
   try {
     await updateCartItem(cartId, quantity);
   } catch (error) {
-    alert(error.message || "Cập nhật số lượng thất bại!");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: error.message || "Cập nhật số lượng thất bại!",
+    });
   }
 };
 
@@ -291,7 +300,11 @@ const handleQuantityInput = async (e) => {
   const quantity = parseInt(input.value);
 
   if (quantity < 1 || quantity > parseInt(input.max)) {
-    alert("Số lượng không hợp lệ!");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Số lượng không hợp lệ!",
+    });
     input.value = input.defaultValue;
     return;
   }
@@ -299,7 +312,11 @@ const handleQuantityInput = async (e) => {
   try {
     await updateCartItem(cartId, quantity);
   } catch (error) {
-    alert(error.message || "Cập nhật số lượng thất bại!");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: error.message || "Cập nhật số lượng thất bại!",
+    });
   }
 };
 
@@ -309,7 +326,11 @@ const handleRemoveItem = async (e) => {
   try {
     await removeCartItem(cartId);
   } catch (error) {
-    alert(error.message || "Xóa mục thất bại!");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: error.message || "Xóa mục thất bại!",
+    });
   }
 };
 
@@ -451,21 +472,44 @@ document.addEventListener("DOMContentLoaded", async () => {
         ...document.querySelectorAll(".cart__checkbox:checked"),
       ];
       if (selectedItems.length === 0) {
-        alert("Vui lòng chọn ít nhất một sản phẩm để xóa!");
+        Swal.fire({
+          icon: "warning",
+          title: "Cảnh báo",
+          text: "Vui lòng chọn ít nhất một sản phẩm để xóa!",
+        });
         return;
       }
 
-      const confirmDelete = confirm(
-        `Bạn có chắc muốn xóa ${selectedItems.length} sản phẩm khỏi giỏ hàng?`
-      );
-      if (!confirmDelete) return;
+      Swal.fire({
+        icon: "warning",
+        title: "Xóa sản phẩm",
+        text: `Bạn có chắc muốn xóa ${selectedItems.length} sản phẩm khỏi giỏ hàng?`,
+        showCancelButton: true,
+        confirmButtonText: "Xóa",
+        cancelButtonText: "Hủy",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            for (const checkbox of selectedItems) {
+              await removeCartItem(checkbox.dataset.cartId);
+              Swal.fire({
+                icon: "success",
+                title: "Thành công",
+                text: "Xóa sản phẩm thành công!",
+              });
+            }
 
-      for (const checkbox of selectedItems) {
-        await removeCartItem(checkbox.dataset.cartId);
-      }
-
-      const updatedCart = await fetchCart();
-      renderCart(updatedCart);
+            const updatedCart = await fetchCart();
+            renderCart(updatedCart);
+          } catch (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Lỗi",
+              text: error.message || "Xóa mục thất bại!",
+            });
+          }
+        }
+      });
     });
 
   document.getElementById("checkout-btn")?.addEventListener("click", () => {
@@ -474,7 +518,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     ];
 
     if (selectedItems.length === 0) {
-      alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+      Swal.fire({
+        icon: "warning",
+        title: "Cảnh báo",
+        text: "Vui lòng chọn ít nhất một sản phẩm để thanh toán!",
+      });
       return;
     }
 

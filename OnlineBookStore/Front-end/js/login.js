@@ -24,14 +24,27 @@ async function register(fullName, email, password) {
           role: result.role,
         })
       );
-      alert("Đăng ký thành công! Bạn đã được đăng nhập tự động.");
-      window.location.href = "../html/index.html";
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Đăng ký thành công! Bạn đã được đăng nhập tự động.",
+      }).then(() => {
+        window.location.href = "../html/index.html";
+      });
     } else {
-      alert(result.message || "Đăng ký thất bại!");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Đăng ký thất bại!",
+      });
     }
   } catch (error) {
     console.error("Error registering:", error);
-    alert("Đã có lỗi xảy ra khi đăng ký. Vui lòng thử lại.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -60,14 +73,27 @@ async function login(email, password) {
           role: result.role,
         })
       );
-      alert("Đăng nhập thành công!");
-      window.location.href = "../html/index.html";
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Đăng nhập thành công!",
+      }).then(() => {
+        window.location.href = "../html/index.html";
+      });
     } else {
-      alert(result.message || "Email hoặc mật khẩu không đúng!");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Đăng nhập thất bại.",
+      });
     }
   } catch (error) {
     console.error("Error logging in:", error);
-    alert("Đã có lỗi xảy ra khi đăng nhập. Vui lòng thử lại.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 

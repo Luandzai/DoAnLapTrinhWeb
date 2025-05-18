@@ -229,7 +229,11 @@ async function fetchNewBooks() {
 function handleSearch() {
   const searchInput = document.getElementById("search-input");
   if (!searchInput) {
-    console.error("Không tìm thấy ô tìm kiếm");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không tìm thấy ô tìm kiếm",
+    });
     return;
   }
 
@@ -240,6 +244,12 @@ function handleSearch() {
         window.location.href = `../html/book-list.html?search=${encodeURIComponent(
           keyword
         )}`;
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Cảnh báo",
+          text: "Vui lòng nhập từ khóa tìm kiếm",
+        });
       }
     }
   });
@@ -291,8 +301,18 @@ function renderLoginSection() {
     // Xử lý đăng xuất
     document.getElementById("logout-btn")?.addEventListener("click", (e) => {
       e.preventDefault();
-      localStorage.removeItem("user"); // Xóa thông tin user
-      window.location.reload(); // Tải lại trang
+      Swal.fire({
+        title: "Bạn có chắc chắn muốn đăng xuất?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Đăng xuất",
+        cancelButtonText: "Hủy",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("user"); // Xóa thông tin user
+          window.location.reload(); // Tải lại trang
+        }
+      });
     });
   }
 }

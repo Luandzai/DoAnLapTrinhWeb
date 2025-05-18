@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   const orderId = urlParams.get("orderId");
 
   if (!orderId) {
-    alert("Không tìm thấy đơn hàng.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không tìm thấy đơn hàng.",
+    });
     window.location.href = "./history.html";
     return;
   }
@@ -22,6 +26,11 @@ async function fetchOrderDetail(orderId) {
     renderOrderDetail(orderDetail);
   } catch (error) {
     console.error("Lỗi khi lấy chi tiết đơn hàng:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không thể tải chi tiết đơn hàng. Vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -71,10 +80,10 @@ function renderOrderDetail(order) {
 
 function getOrderStatus(status) {
   const statusMap = {
-    0: "Chờ xác nhận",
-    1: "Đang giao",
-    2: "Hoàn thành",
-    3: "Đã hủy",
+    Pending: "Chờ xác nhận",
+    Shipped: "Đang giao",
+    Delivered: "Hoàn thành",
+    Canceled: "Đã hủy",
   };
   return statusMap[status] || "Không xác định";
 }
@@ -181,6 +190,12 @@ function handleSearch() {
         window.location.href = `../html/book-list.html?search=${encodeURIComponent(
           keyword
         )}`;
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Cảnh báo",
+          text: "Vui lòng nhập từ khóa tìm kiếm.",
+        });
       }
     }
   });

@@ -3,7 +3,11 @@ const API_BASE_URL = "http://localhost:5000/api"; // Cập nhật URL API đúng
 document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || !user.userId) {
-    alert("Bạn chưa đăng nhập! Chuyển hướng về trang đăng nhập.");
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Bạn chưa đăng nhập! Chuyển hướng về trang đăng nhập.",
+    });
     window.location.href = "./Login.html";
     return;
   }
@@ -22,11 +26,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("phone").value = userData.phoneNumber || "";
       document.getElementById("address").value = userData.address || "";
     } else {
-      alert("Không lấy được thông tin người dùng.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Không lấy được thông tin người dùng.",
+      });
     }
   } catch (error) {
     console.error("Lỗi khi lấy thông tin người dùng:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 
   // Sự kiện click button "Lưu thay đổi"
@@ -59,13 +71,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       const updateResult = await updateResponse.json();
 
       if (updateResult.success) {
-        alert("Cập nhật thông tin thành công!");
+        Swal.fire({
+          icon: "success",
+          title: "Thành công",
+          text: "Cập nhật thông tin thành công!",
+        });
       } else {
-        alert("Cập nhật thất bại, vui lòng thử lại.");
+        Swal.fire({
+          icon: "error",
+          title: "Thất bại",
+          text: "Cập nhật thất bại, vui lòng thử lại.",
+        });
       }
     } catch (error) {
       console.error("Lỗi khi cập nhật thông tin người dùng:", error);
-      alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+      });
     }
   });
 });
@@ -74,7 +98,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 function handleSearch() {
   const searchInput = document.getElementById("search-input");
   if (!searchInput) {
-    console.error("Không tìm thấy ô tìm kiếm");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không tìm thấy ô tìm kiếm",
+    });
     return;
   }
 

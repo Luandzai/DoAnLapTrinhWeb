@@ -1,40 +1,120 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tổng Doanh Thu</title>
-    <!-- Kết nối file CSS -->
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/Admin.css" />
     <link rel="stylesheet" href="../css/Revenue.css" />
-</head>
-<body>
-    <div class="container">
-        <h1>Tổng Doanh Thu</h1>
-        <form id="filterForm">
-            <select id="monthSelect" required>
-                <option value="" disabled selected>Chọn tháng</option>
-                <option value="1">Tháng 1</option>
-                <option value="2">Tháng 2</option>
-                <option value="3">Tháng 3</option>
-                <option value="4">Tháng 4</option>
-                <option value="5">Tháng 5</option>
-                <option value="6">Tháng 6</option>
-                <option value="7">Tháng 7</option>
-                <option value="8">Tháng 8</option>
-                <option value="9">Tháng 9</option>
-                <option value="10">Tháng 10</option>
-                <option value="11">Tháng 11</option>
-                <option value="12">Tháng 12</option>
-            </select>
-            <select id="yearSelect" required>
-                <option value="" disabled selected>Chọn năm</option>
-            </select>
-            <button type="submit">Xem doanh thu</button>
-        </form>
-        
-        <div id="result"></div>
+  </head>
+  <body>
+    <div class="container__body">
+      <!-- Header -->
+      <header class="header">
+        <div class="header__main-content">
+          <div class="header__body">
+            <!-- Logo -->
+            <div class="logo">
+              <a href="../html/index.html">
+                <img src="../img/logo.svg" alt="Nhà sách Online" />
+              </a>
+              <span>Nhà sách Online</span>
+            </div>
+            <!-- Search bar -->
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Tìm kiếm sách..."
+            />
+            <!-- Nav bar -->
+            <nav class="nav">
+              <div class="nav__container">
+                <div class="nav__item nav__item--dropdown">
+                  <div class="nav__dropdown-btn">Danh mục ▼</div>
+                  <div class="nav__dropdown-content" id="category-list">
+                    <!-- Danh mục sẽ được render tự động bằng JS -->
+                  </div>
+                </div>
+                <div class="nav__item">
+                  <a href="../html/cart.html" class="nav__link"> Giỏ hàng </a>
+                </div>
+              </div>
+            </nav>
+            <!-- Login -->
+            <div class="login">
+              <div class="login__dropdown" id="login-section">
+                <!-- Nội dung sẽ được render bằng JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Container -->
+        <div class="container">
+          <div class="sidebar">
+            <ul>
+              <li><a href="../html/Admin.html">Dashboard</a></li>
+              <li>
+                <a href="../html/order-management.html">Quản lý Đơn hàng</a>
+              </li>
+              <li><a href="../html/book-management.html">Quản lý Sách</a></li>
+              <li>
+                <a href="../html/User-Management.html">Quản lý Người dùng</a>
+              </li>
+              <li>
+                <a href="../html/Manage-reviews.html">Quản lý Đánh giá</a>
+              </li>
+              <li>
+                <a href="../html/Manage-coupon-codes.html"
+                  >Quản lý Mã Giảm giá</a
+                >
+              </li>
+              <li class="active">
+                <a href="../html/Revenue.html">Tổng Doanh Thu</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="content" id="admin-content">
+            <h2>Tổng Doanh Thu</h2>
+            <form id="filter-form">
+              <label for="startDate">Từ ngày:</label>
+              <input type="date" id="startDate" />
+              <!-- Định dạng mặc định là YYYY-MM-DD -->
+              <label for="endDate">Đến ngày:</label>
+              <input type="date" id="endDate" />
+              <!-- Định dạng mặc định là YYYY-MM-DD -->
+              <button type="submit">Lọc</button>
+            </form>
+            <table id="revenue-table">
+              <thead>
+                <tr>
+                  <th>ID Đơn hàng</th>
+                  <th>Tên khách hàng</th>
+                  <th>Tổng tiền</th>
+                  <th>Ngày đặt hàng</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div class="total-revenue">Tổng doanh thu: 0 VNĐ</div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer__main-content">
+          <p class="footer__copyright">
+            © 2025 Nhà sách Online. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
 
     <script src="../js/Revenue.js"></script>
-</body>
+  </body>
 </html>

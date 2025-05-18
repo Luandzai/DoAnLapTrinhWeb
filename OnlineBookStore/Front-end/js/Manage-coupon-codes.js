@@ -8,8 +8,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Kiểm tra quyền truy cập
   if (!user || user.role !== "Admin") {
-    alert("Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.");
-    window.location.href = "../html/index.html";
+    Swal.fire({
+      icon: "error",
+      title: "Truy cập bị từ chối",
+      text: "Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.",
+    }).then(() => {
+      window.location.href = "../html/index.html";
+    });
     return;
   }
 
@@ -41,12 +46,20 @@ document.addEventListener("DOMContentLoaded", function () {
         renderDiscounts(discountsData);
       } else {
         console.error("Dữ liệu không hợp lệ:", result);
-        alert(result.message || "Không lấy được danh sách mã giảm giá.");
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: result.message || "Không lấy được danh sách mã giảm giá.",
+        });
         renderDiscounts([]);
       }
     } catch (error) {
       console.error("Error fetching discounts:", error);
-      alert("Có lỗi xảy ra khi tải danh sách mã giảm giá.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Có lỗi xảy ra khi tải danh sách mã giảm giá.",
+      });
       renderDiscounts([]);
     }
   }
@@ -165,15 +178,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const result = await response.json();
       if (result.success) {
-        alert(result.message);
+        Swal.fire({
+          icon: "success",
+          title: "Thành công",
+          text: result.message,
+        });
         hideModal();
         fetchDiscounts();
       } else {
-        alert(result.message || "Lỗi khi lưu mã giảm giá.");
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: result.message || "Lỗi khi lưu mã giảm giá.",
+        });
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Có lỗi xảy ra khi lưu mã giảm giá.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Có lỗi xảy ra khi lưu mã giảm giá.",
+      });
     }
   }
 
@@ -187,7 +212,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // Hàm xóa mã giảm giá
   async function handleDeleteDiscount(event) {
     const discountId = event.target.dataset.id;
-    if (!confirm("Bạn có chắc muốn xóa mã giảm giá này?")) return;
+    const confirmation = await Swal.fire({
+      icon: "warning",
+      title: "Xác nhận xóa",
+      text: "Bạn có chắc muốn xóa mã giảm giá này?",
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    if (!confirmation.isConfirmed) return;
 
     try {
       const response = await fetch(
@@ -200,14 +234,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const result = await response.json();
       if (result.success) {
-        alert(result.message);
+        Swal.fire({
+          icon: "success",
+          title: "Thành công",
+          text: result.message,
+        });
         fetchDiscounts();
       } else {
-        alert(result.message || "Lỗi khi xóa mã giảm giá.");
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: result.message || "Lỗi khi xóa mã giảm giá.",
+        });
       }
     } catch (error) {
-      console.error("Error deleting discount:", error);
-      alert("Có lỗi xảy ra khi xóa mã giảm giá.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Có lỗi xảy ra khi xóa mã giảm giá.",
+      });
     }
   }
 

@@ -3,8 +3,13 @@ const API_BASE_URL = "http://localhost:5000/api";
 document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || user.role !== "Admin") {
-    alert("Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.");
-    window.location.href = "../html/index.html";
+    Swal.fire({
+      icon: "error",
+      title: "Truy cập bị từ chối",
+      text: "Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.",
+    }).then(() => {
+      window.location.href = "../html/index.html";
+    });
     return;
   }
 
@@ -30,12 +35,20 @@ async function loadOrders() {
       renderOrders(result.data.$values); // Truyền mảng từ result.data.$values
     } else {
       console.error("Dữ liệu không hợp lệ hoặc không có đơn hàng:", result);
-      alert(result.message || "Không lấy được danh sách đơn hàng.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Không lấy được danh sách đơn hàng.",
+      });
       renderOrders([]); // Render bảng rỗng nếu không có dữ liệu
     }
   } catch (error) {
     console.error("Lỗi khi lấy danh sách đơn hàng:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
     renderOrders([]); // Render bảng rỗng trong trường hợp lỗi
   }
 }
@@ -87,80 +100,218 @@ function renderOrders(orders) {
 
 // Hàm xác nhận đơn hàng
 async function confirmOrder(orderId) {
-  if (!confirm("Xác nhận đơn hàng này?")) return;
+  Swal.fire({
+    icon: "question",
+    title: "Xác nhận đơn hàng",
+    text: "Bạn có chắc chắn muốn xác nhận đơn hàng này?",
+    showCancelButton: true,
+    confirmButtonText: "Xác nhận",
+    cancelButtonText: "Hủy",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/admin/orders/${orderId}/confirm`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/admin/orders/${orderId}/confirm`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        const result = await response.json();
+        if (result.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Thành công",
+            text: "Xác nhận đơn hàng thành công!",
+          });
+          await loadOrders(); // Tải lại danh sách
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: result.message || "Lỗi khi xác nhận đơn hàng.",
+          });
+        }
+      } catch (error) {
+        console.error("Lỗi khi xác nhận đơn hàng:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+        });
       }
-    );
-
-    const result = await response.json();
-    if (result.success) {
-      alert("Xác nhận đơn hàng thành công!");
-      await loadOrders(); // Tải lại danh sách
-    } else {
-      alert(result.message || "Lỗi khi xác nhận đơn hàng.");
     }
-  } catch (error) {
-    console.error("Lỗi khi xác nhận đơn hàng:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
-  }
+  });
 }
 
 // Hàm cập nhật trạng thái đơn hàng
 async function updateOrderStatus(orderId, newStatus) {
-  if (!confirm(`Cập nhật trạng thái đơn hàng thành "${newStatus}"?`)) return;
+  Swal.fire({
+    icon: "question",
+    title: "Cập nhật trạng thái",
+    text: `Cập nhật trạng thái đơn hàng thành "${newStatus}"?`,
+    showCancelButton: true,
+    confirmButtonText: "Xác nhận",
+    cancelButtonText: "Hủy",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/admin/orders/${orderId}/status`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+          }
+        );
 
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/admin/orders/${orderId}/status`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
+        const result = await response.json();
+        if (result.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Thành công",
+            text: "Cập nhật trạng thái thành công!",
+          });
+          await loadOrders(); // Tải lại danh sách
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: result.message || "Lỗi khi cập nhật trạng thái.",
+          });
+        }
+      } catch (error) {
+        console.error("Lỗi khi cập nhật trạng thái:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+        });
       }
-    );
-
-    const result = await response.json();
-    if (result.success) {
-      alert("Cập nhật trạng thái thành công!");
-      await loadOrders(); // Tải lại danh sách
-    } else {
-      alert(result.message || "Lỗi khi cập nhật trạng thái.");
     }
-  } catch (error) {
-    console.error("Lỗi khi cập nhật trạng thái:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
-  }
+  });
 }
 
 // Hàm hủy đơn hàng
 async function cancelOrder(orderId) {
-  if (!confirm("Hủy đơn hàng này?")) return;
+  Swal.fire({
+    icon: "warning",
+    title: "Hủy đơn hàng",
+    text: "Bạn có chắc chắn muốn hủy đơn hàng này?",
+    showCancelButton: true,
+    confirmButtonText: "Hủy",
+    cancelButtonText: "Quay lại",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/admin/orders/${orderId}/cancel`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        const result = await response.json();
+        if (result.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Thành công",
+            text: "Hủy đơn hàng thành công!",
+          });
+          await loadOrders(); // Tải lại danh sách
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: result.message || "Lỗi khi hủy đơn hàng.",
+          });
+        }
+      } catch (error) {
+        console.error("Lỗi khi hủy đơn hàng:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+        });
+      }
+    }
+  });
+}
+
+// New function to check if a book is part of a pending order
+async function isBookInPendingOrder(bookId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/orders`);
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const result = await response.json();
+    if (result.success && result.data && Array.isArray(result.data.$values)) {
+      const pendingOrders = result.data.$values.filter(
+        (order) => order.status === "Pending"
+      );
+
+      return pendingOrders.some((order) =>
+        order.orderDetails.some((detail) => detail.bookId === bookId)
+      );
+    }
+    return false;
+  } catch (error) {
+    console.error("Error checking pending orders:", error);
+    return false;
+  }
+}
+
+// Modify the deleteBook function to include the check
+async function deleteBook(bookId) {
+  const isPending = await isBookInPendingOrder(bookId);
+  if (isPending) {
+    Swal.fire({
+      icon: "warning",
+      title: "Không thể xóa",
+      text: "Sách này đang thuộc một đơn hàng ở trạng thái 'Chờ xác nhận'.",
+    });
+    return;
+  }
+
+  const confirmation = await Swal.fire({
+    title: "Bạn có chắc muốn xóa sách này?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Xóa",
+    cancelButtonText: "Hủy",
+  });
+
+  if (!confirmation.isConfirmed) return;
 
   try {
-    const response = await fetch(
-      `${API_BASE_URL}/admin/orders/${orderId}/cancel`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await fetch(`${API_BASE_URL}/admin/books/${bookId}`, {
+      method: "DELETE",
+    });
 
     const result = await response.json();
     if (result.success) {
-      alert("Hủy đơn hàng thành công!");
-      await loadOrders(); // Tải lại danh sách
+      await Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Xóa sách thành công!",
+      });
+      await loadBooks();
     } else {
-      alert(result.message || "Lỗi khi hủy đơn hàng.");
+      await Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Lỗi khi xóa sách.",
+      });
     }
   } catch (error) {
-    console.error("Lỗi khi hủy đơn hàng:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    console.error("Lỗi khi xóa sách:", error);
+    await Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -173,9 +324,15 @@ function handleSearch() {
     if (e.key === "Enter") {
       const keyword = searchInput.value.trim();
       if (keyword) {
-        window.location.href = `../html/book-list.html?search=${encodeURIComponent(
-          keyword
-        )}`;
+        Swal.fire({
+          icon: "info",
+          title: "Tìm kiếm",
+          text: `Đang tìm kiếm sách với từ khóa: "${keyword}"`,
+        }).then(() => {
+          window.location.href = `../html/book-list.html?search=${encodeURIComponent(
+            keyword
+          )}`;
+        });
       }
     }
   });

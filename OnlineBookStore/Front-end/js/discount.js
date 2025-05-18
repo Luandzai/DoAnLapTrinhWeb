@@ -189,7 +189,11 @@ async function saveDiscount(discountId) {
   try {
     // Kiểm tra trạng thái đăng nhập
     if (!isLoggedIn()) {
-      alert("Vui lòng đăng nhập để lưu mã giảm giá!");
+      Swal.fire({
+        icon: "warning",
+        title: "Cảnh báo",
+        text: "Vui lòng đăng nhập để lưu mã giảm giá!",
+      });
       window.location.href = "login.html"; // Chuyển hướng đến trang đăng nhập
       return;
     }
@@ -197,7 +201,11 @@ async function saveDiscount(discountId) {
     // Lấy userId từ localStorage
     const userId = getUserId();
     if (!userId) {
-      alert("Không thể lấy thông tin người dùng. Vui lòng đăng nhập lại.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Không thể lấy thông tin người dùng. Vui lòng đăng nhập lại.",
+      });
       localStorage.removeItem("user");
       window.location.href = "login.html";
       return;
@@ -217,13 +225,25 @@ async function saveDiscount(discountId) {
     const result = await response.json();
 
     if (response.ok) {
-      alert(result.message); // Hiển thị thông báo thành công
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: result.message,
+      });
     } else {
-      alert(result.message); // Hiển thị thông báo lỗi
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message,
+      });
     }
   } catch (error) {
     console.error("Error saving discount:", error);
-    alert("Đã có lỗi xảy ra khi lưu mã giảm giá. Vui lòng thử lại.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -232,6 +252,11 @@ function handleSearch() {
   const searchInput = document.getElementById("search-input");
   if (!searchInput) {
     console.error("Không tìm thấy ô tìm kiếm với id 'search-input'");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không tìm thấy ô tìm kiếm. Vui lòng kiểm tra lại.",
+    });
     return;
   }
 
@@ -272,6 +297,11 @@ async function fetchData() {
     await fetchCategories();
   } catch (error) {
     console.error("Error fetching data:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không thể tải dữ liệu. Vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -288,6 +318,11 @@ async function fetchCategories() {
     renderCategories(categories, "category-list"); // Render vào header
   } catch (error) {
     console.error("❌ Lỗi tải danh mục:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không thể tải danh mục. Vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -296,6 +331,11 @@ function renderCategories(categories, elementId) {
   const categoryContainer = document.getElementById(elementId);
   if (!categoryContainer) {
     console.error(`Không tìm thấy phần tử ${elementId} trong HTML`);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: `Không tìm thấy phần tử ${elementId}. Vui lòng kiểm tra lại.`,
+    });
     return;
   }
 
@@ -346,6 +386,11 @@ function renderLoginSection() {
 
   if (!loginSection) {
     console.error("Không tìm thấy login-section trong HTML");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không tìm thấy phần tử đăng nhập. Vui lòng kiểm tra lại.",
+    });
     return;
   }
 

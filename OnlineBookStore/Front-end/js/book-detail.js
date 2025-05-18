@@ -223,8 +223,13 @@ function renderReviews(reviews) {
 async function submitReview(bookId) {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user) {
-    alert("Vui lòng đăng nhập để gửi đánh giá!");
-    window.location.href = "../html/Login.html";
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Vui lòng đăng nhập để gửi đánh giá!",
+    }).then(() => {
+      window.location.href = "../html/Login.html";
+    });
     return;
   }
 
@@ -242,7 +247,11 @@ async function submitReview(bookId) {
   const comment = commentInput.value.trim();
 
   if (!rating || !comment) {
-    alert("Vui lòng chọn số sao và nhập nội dung đánh giá!");
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Vui lòng chọn số sao và nhập nội dung đánh giá!",
+    });
     return;
   }
 
@@ -276,18 +285,30 @@ async function submitReview(bookId) {
     console.log("Response from review API:", result);
 
     if (response.ok) {
-      alert(result.message || "Gửi đánh giá thành công!");
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: result.message || "Gửi đánh giá thành công!",
+      });
       ratingInputs.forEach((input) => (input.checked = false));
       commentInput.value = "";
       window.location.reload();
     } else {
-      alert(
-        result.message || `Gửi đánh giá thất bại! (Status: ${response.status})`
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text:
+          result.message ||
+          `Gửi đánh giá thất bại! (Status: ${response.status})`,
+      });
     }
   } catch (error) {
     console.error("❌ Lỗi gửi đánh giá:", error);
-    alert("Đã có lỗi xảy ra khi gửi đánh giá: " + error.message);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã có lỗi xảy ra khi gửi đánh giá: " + error.message,
+    });
   }
 }
 
@@ -452,8 +473,13 @@ async function fetchCategories() {
 async function addToCart(bookId) {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user) {
-    alert("Vui lòng đăng nhập để thêm sách vào giỏ hàng!");
-    window.location.href = "../html/Login.html";
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Vui lòng đăng nhập để thêm sách vào giỏ hàng!",
+    }).then(() => {
+      window.location.href = "../html/Login.html";
+    });
     return;
   }
 
@@ -486,18 +512,27 @@ async function addToCart(bookId) {
     console.log("Response from cart API:", result);
 
     if (response.ok) {
-      alert(result.message || "Đã thêm sách vào giỏ hàng thành công!");
-      // Có thể chuyển hướng đến trang giỏ hàng nếu muốn
-      // window.location.href = "../html/cart.html";
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: result.message || "Đã thêm sách vào giỏ hàng thành công!",
+      });
     } else {
-      alert(
-        result.message ||
-          `Thêm vào giỏ hàng thất bại! (Status: ${response.status})`
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text:
+          result.message ||
+          `Thêm vào giỏ hàng thất bại! (Status: ${response.status})`,
+      });
     }
   } catch (error) {
     console.error("❌ Lỗi thêm vào giỏ hàng:", error);
-    alert("Đã có lỗi xảy ra khi thêm vào giỏ hàng: " + error.message);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã có lỗi xảy ra khi thêm vào giỏ hàng: " + error.message,
+    });
   }
 }
 

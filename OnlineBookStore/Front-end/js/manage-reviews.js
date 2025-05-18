@@ -8,8 +8,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Kiểm tra quyền truy cập
   if (!user || user.role !== "Admin") {
-    alert("Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.");
-    window.location.href = "../html/index.html";
+    Swal.fire({
+      icon: "error",
+      title: "Truy cập bị từ chối",
+      text: "Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.",
+    }).then(() => {
+      window.location.href = "../html/index.html";
+    });
     return;
   }
 
@@ -42,12 +47,20 @@ document.addEventListener("DOMContentLoaded", function () {
         renderReviews(reviewsData);
       } else {
         console.error("Dữ liệu không hợp lệ hoặc không có đánh giá:", result);
-        alert(result.message || "Không lấy được danh sách đánh giá.");
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: result.message || "Không lấy được danh sách đánh giá.",
+        });
         renderReviews([]);
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
-      alert("Có lỗi xảy ra khi tải danh sách đánh giá.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Có lỗi xảy ra khi tải danh sách đánh giá.",
+      });
       renderReviews([]);
     }
   }
@@ -94,7 +107,15 @@ document.addEventListener("DOMContentLoaded", function () {
   // Hàm xóa đánh giá
   async function handleDeleteReview(event) {
     const reviewId = event.target.dataset.id;
-    if (!confirm("Bạn có chắc muốn xóa đánh giá này?")) return;
+    const confirmation = await Swal.fire({
+      icon: "warning",
+      title: "Xác nhận",
+      text: "Bạn có chắc muốn xóa đánh giá này?",
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+    if (!confirmation.isConfirmed) return;
 
     try {
       const response = await fetch(
@@ -109,14 +130,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const result = await response.json();
       if (result.success) {
-        alert(result.message);
+        Swal.fire({
+          icon: "success",
+          title: "Thành công",
+          text: result.message,
+        });
         fetchReviews(searchInput?.value || ""); // Tải lại danh sách sau khi xóa
       } else {
-        alert(result.message || "Lỗi khi xóa đánh giá.");
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: result.message || "Lỗi khi xóa đánh giá.",
+        });
       }
     } catch (error) {
       console.error("Error deleting review:", error);
-      alert("Có lỗi xảy ra khi xóa đánh giá.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+      });
     }
   }
 

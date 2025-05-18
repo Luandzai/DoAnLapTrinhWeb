@@ -1,5 +1,8 @@
 const API_BASE_URL = "http://localhost:5000/api"; // Cập nhật URL API đúng với backend của bạn
 
+// Thêm biến lưu danh sách sách gốc để lọc tìm kiếm
+let allBooks = [];
+
 async function loadBooks() {
   try {
     const response = await fetch(`${API_BASE_URL}/admin/books`);
@@ -7,14 +10,21 @@ async function loadBooks() {
 
     const result = await response.json();
     if (result.success && result.value && Array.isArray(result.value.$values)) {
-      renderBooks(result.value.$values);
+      allBooks = result.value.$values; // Lưu danh sách gốc
+      renderBooks(allBooks);
     } else {
       console.error("Dữ liệu không hợp lệ:", result);
+      allBooks = [];
       renderBooks([]);
     }
   } catch (error) {
     console.error("Lỗi khi lấy danh sách sách:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
+    allBooks = [];
     renderBooks([]);
   }
 }
@@ -59,6 +69,25 @@ function renderBooks(books) {
         `;
     })
     .join("");
+}
+
+// --- Thêm hàm xử lý tìm kiếm sách ---
+function handleBookSearch() {
+  const searchInput = document.getElementById("search-book");
+  if (!searchInput) return;
+
+  searchInput.addEventListener("input", (e) => {
+    const keyword = e.target.value.trim().toLowerCase();
+    const filteredBooks = allBooks.filter(
+      (book) =>
+        (book.title && book.title.toLowerCase().includes(keyword)) ||
+        (book.authorName && book.authorName.toLowerCase().includes(keyword)) ||
+        (book.publisherName &&
+          book.publisherName.toLowerCase().includes(keyword)) ||
+        (book.categoryName && book.categoryName.toLowerCase().includes(keyword))
+    );
+    renderBooks(filteredBooks);
+  });
 }
 
 async function loadDropdowns() {
@@ -116,7 +145,11 @@ async function loadDropdowns() {
     }
   } catch (error) {
     console.error("Lỗi khi tải dữ liệu dropdown:", error);
-    alert("Không thể tải dữ liệu dropdown, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Không thể tải dữ liệu dropdown, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -131,16 +164,47 @@ function showAddBookModal() {
   modal.style.display = "flex";
 }
 
+// Hàm kiểm tra sách đã từng được mua bởi Customer chưa
+async function isBookPurchasedByCustomer(bookId) {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/admin/books/${bookId}/is-purchased`
+    );
+    if (!response.ok) return false;
+    const result = await response.json();
+    return result.success && result.purchased === true;
+  } catch (error) {
+    console.error("Lỗi kiểm tra sách đã mua:", error);
+    return false;
+  }
+}
+
+// Sửa hàm showEditBookModal để chặn mở form nếu không được phép sửa
 async function showEditBookModal(bookId) {
+  // Kiểm tra sách đã từng được mua bởi Customer chưa
+  const purchased = await isBookPurchasedByCustomer(bookId);
+  if (purchased) {
+    Swal.fire({
+      icon: "warning",
+      title: "Không thể chỉnh sửa",
+      text: "Sách này đang thuộc một đơn hàng ở trạng thái 'Chờ xác nhận'.",
+    });
+    return;
+  }
+  // Nếu không bị chặn thì mới mở form sửa
   try {
     const response = await fetch(`${API_BASE_URL}/admin/books/${bookId}`);
     const result = await response.json();
     if (!result.success) {
-      alert(result.message || "Không tìm thấy sách.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Không tìm thấy sách.",
+      });
       return;
     }
 
-    const book = result.value; // Giả định API chi tiết sách trả về value trực tiếp
+    const book = result.value;
     const modal = document.getElementById("book-modal");
     const form = document.getElementById("book-form");
     const title = document.getElementById("modal-title");
@@ -166,7 +230,11 @@ async function showEditBookModal(bookId) {
     modal.style.display = "flex";
   } catch (error) {
     console.error("Lỗi khi lấy thông tin sách:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -193,20 +261,44 @@ async function handleBookFormSubmit(event) {
 
     const result = await response.json();
     if (result.success) {
-      alert(bookId ? "Cập nhật sách thành công!" : "Thêm sách thành công!");
+      await Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: bookId ? "Cập nhật sách thành công!" : "Thêm sách thành công!",
+      });
       hideModal();
       await loadBooks();
     } else {
-      alert(result.message || "Lỗi khi xử lý sách.");
+      await Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Lỗi khi xử lý sách.",
+        showConfirmButton: true,
+        allowOutsideClick: false,
+      });
     }
   } catch (error) {
     console.error("Lỗi khi gửi form:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    await Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+      showConfirmButton: true,
+      allowOutsideClick: false,
+    });
   }
 }
 
 async function deleteBook(bookId) {
-  if (!confirm("Bạn có chắc muốn xóa sách này?")) return;
+  const confirmation = await Swal.fire({
+    title: "Bạn có chắc muốn xóa sách này?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Xóa",
+    cancelButtonText: "Hủy",
+  });
+
+  if (!confirmation.isConfirmed) return;
 
   try {
     const response = await fetch(`${API_BASE_URL}/admin/books/${bookId}`, {
@@ -215,14 +307,30 @@ async function deleteBook(bookId) {
 
     const result = await response.json();
     if (result.success) {
-      alert("Xóa sách thành công!");
+      await Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Xóa sách thành công!",
+      });
       await loadBooks();
     } else {
-      alert(result.message || "Lỗi khi xóa sách.");
+      await Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Lỗi khi xóa sách.",
+        showConfirmButton: true,
+        allowOutsideClick: false,
+      });
     }
   } catch (error) {
     console.error("Lỗi khi xóa sách:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    await Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+      showConfirmButton: true,
+      allowOutsideClick: false,
+    });
   }
 }
 
@@ -261,15 +369,27 @@ async function handleAuthorFormSubmit(event) {
 
     const result = await response.json();
     if (result.success) {
-      alert(result.message);
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: result.message,
+      });
       hideAuthorModal();
       await loadDropdowns(); // Cập nhật lại dropdown tác giả
     } else {
-      alert(result.message || "Lỗi khi thêm tác giả.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Lỗi khi thêm tác giả.",
+      });
     }
   } catch (error) {
     console.error("Lỗi khi thêm tác giả:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -435,7 +555,11 @@ function renderLoginSection() {
 document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || user.role !== "Admin") {
-    alert("Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.");
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.",
+    });
     window.location.href = "../html/index.html";
     return;
   }
@@ -464,4 +588,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document
     .getElementById("cancel-author-btn")
     .addEventListener("click", hideAuthorModal);
+
+  // Thêm gọi hàm tìm kiếm sách
+  handleBookSearch();
 });

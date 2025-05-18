@@ -19,12 +19,20 @@ async function loadUsers(adminId) {
       renderUsers(allUsers); // Hiển thị toàn bộ danh sách ban đầu
     } else {
       console.error("Dữ liệu không hợp lệ hoặc không có người dùng:", result);
-      alert(result.message || "Không lấy được danh sách người dùng.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Không lấy được danh sách người dùng.",
+      });
       renderUsers([]);
     }
   } catch (error) {
     console.error("Lỗi khi lấy danh sách người dùng:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
     renderUsers([]);
   }
 }
@@ -73,7 +81,11 @@ async function showEditUserModal(userId) {
     const response = await fetch(`${API_BASE_URL}/users/${userId}`);
     const result = await response.json();
     if (!result.success) {
-      alert(result.message || "Không tìm thấy người dùng.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Không tìm thấy người dùng.",
+      });
       return;
     }
 
@@ -91,7 +103,11 @@ async function showEditUserModal(userId) {
     modal.style.display = "flex";
   } catch (error) {
     console.error("Lỗi khi lấy thông tin người dùng:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -123,24 +139,43 @@ async function handleUserFormSubmit(event) {
         body: JSON.stringify(formData),
       }
     );
-
     const result = await response.json();
     if (result.success) {
-      alert("Cập nhật người dùng thành công!");
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Cập nhật người dùng thành công!",
+      });
       hideModal();
       await loadUsers(admin.userId); // Tải lại danh sách sau khi cập nhật
     } else {
-      alert(result.message || "Lỗi khi cập nhật người dùng.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Lỗi khi cập nhật người dùng.",
+      });
     }
   } catch (error) {
-    console.error("Lỗi khi gửi form:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
 // Hàm xóa người dùng
 async function deleteUser(userId) {
-  if (!confirm("Bạn có chắc muốn xóa người dùng này?")) return;
+  const confirmation = await Swal.fire({
+    icon: "warning",
+    title: "Xác nhận xóa",
+    text: "Bạn có chắc muốn xóa người dùng này?",
+    showCancelButton: true,
+    confirmButtonText: "Xóa",
+    cancelButtonText: "Hủy",
+  });
+
+  if (!confirmation.isConfirmed) return;
 
   try {
     const admin = JSON.parse(localStorage.getItem("user"));
@@ -153,14 +188,26 @@ async function deleteUser(userId) {
 
     const result = await response.json();
     if (result.success) {
-      alert("Xóa người dùng thành công!");
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Xóa người dùng thành công!",
+      });
       await loadUsers(admin.userId); // Tải lại danh sách sau khi xóa
     } else {
-      alert(result.message || "Lỗi khi xóa người dùng.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Lỗi khi xóa người dùng.",
+      });
     }
   } catch (error) {
     console.error("Lỗi khi xóa người dùng:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 
@@ -324,8 +371,13 @@ function renderLoginSection() {
 document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || user.role !== "Admin") {
-    alert("Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.");
-    window.location.href = "../html/index.html";
+    Swal.fire({
+      icon: "error",
+      title: "Truy cập bị từ chối",
+      text: "Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.",
+    }).then(() => {
+      window.location.href = "../html/index.html";
+    });
     return;
   }
 

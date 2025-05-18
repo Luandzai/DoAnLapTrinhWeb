@@ -3,8 +3,13 @@ const API_BASE_URL = "http://localhost:5000/api"; // Cập nhật nếu port kh�
 document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || user.role !== "Admin") {
-    alert("Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.");
-    window.location.href = "../html/index.html";
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.",
+    }).then(() => {
+      window.location.href = "../html/index.html";
+    });
     return;
   }
 
@@ -25,18 +30,33 @@ async function loadDashboard() {
       `${API_BASE_URL}/admin/dashboard?userId=${user.userId}`
     );
 
-    if (!response.ok) throw new Error(`Lỗi HTTP: ${response.status}`);
+    if (!response.ok) {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: `Lỗi HTTP: ${response.status}`,
+      });
+      return;
+    }
 
     const result = await response.json();
     if (result.success && result.data) {
       const stats = result.data;
       renderDashboard(stats);
     } else {
-      alert(result.message || "Không lấy được dữ liệu thống kê.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: result.message || "Không lấy được dữ liệu thống kê.",
+      });
     }
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu Dashboard:", error);
-    alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
+    });
   }
 }
 

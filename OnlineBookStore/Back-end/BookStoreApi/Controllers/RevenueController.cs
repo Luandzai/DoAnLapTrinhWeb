@@ -17,36 +17,42 @@ namespace BookStoreApi.Controllers
         {
             _context = context;
         }
-
-
-        // API để tính tổng doanh thu theo tháng và năm chỉ tính các đơn hàng có status là "Delivered"
-        [HttpGet("GetMonthlyRevenue")]
-        public IActionResult GetMonthlyRevenue(int month, int year)
+        // API để lọc doanh thu theo thời gian
+        [HttpGet("filter")]
+        public IActionResult GetRevenueByDateRange(DateTime? startDate, DateTime? endDate)
         {
             try
             {
-                // Lọc các đơn hàng theo tháng, năm và status là "Delivered"
-                var ordersInMonth = _context.Orders
-                    .Where(o => o.OrderDate.Month == month && o.OrderDate.Year == year && o.Status == "Delivered")
-                    .Include(o => o.OrderDetails)
+                if (startDate == null || endDate == null)
+                {
+                    return BadRequest(new { success = false, message = "Ngày bắt đầu hoặc ngày kết thúc không hợp lệ." });
+                }
+
+                DateTime start = startDate.Value.Date;
+                DateTime end = endDate.Value.Date.AddDays(1).AddTicks(-1);
+
+                var ordersQuery = _context.Orders
+                    .Where(o => o.Status == "Delivered" && o.OrderDate >= start && o.OrderDate <= end)
+                    .Include(o => o.User);
+
+                var orders = ordersQuery
+                    .Select(o => new
+                    {
+                        orderId = o.OrderId,
+                        customerName = o.User.FullName,
+                        totalPrice = o.TotalPrice,
+                        orderDate = o.OrderDate
+                    })
                     .ToList();
 
-                // Tính tổng doanh thu từ các đơn hàng đã giao
-                decimal totalRevenue = ordersInMonth
-                    .SelectMany(o => o.OrderDetails)
-                    .Sum(od => od.Quantity * od.UnitPrice);
+                var totalRevenue = orders.Sum(o => o.totalPrice);
 
-                // Trả về kết quả doanh thu theo tháng
-                return Ok(new Revenue
-                {
-                    Month = month,
-                    Year = year,
-                    TotalRevenue = totalRevenue
-                });
+                return Ok(new { success = true, totalRevenue, orders });
             }
             catch (Exception ex)
             {
-                return BadRequest($"Có lỗi xảy ra: {ex.Message}");
+                Console.Error.WriteLine($"Lỗi máy chủ: {ex.Message}");
+                return StatusCode(500, new { success = false, message = "Lỗi máy chủ.", error = ex.Message });
             }
         }
     }

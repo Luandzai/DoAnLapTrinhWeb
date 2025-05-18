@@ -306,7 +306,11 @@ function handleSearch() {
 async function handlePlaceOrder() {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || !user.userId) {
-    alert("Vui lòng đăng nhập để đặt hàng!");
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Vui lòng đăng nhập để đặt hàng!",
+    });
     window.location.href = "../html/Login.html";
     return;
   }
@@ -333,19 +337,29 @@ async function handlePlaceOrder() {
 
   // Kiểm tra dữ liệu đầu vào
   if (!fullName || !phoneNumber || !province) {
-    alert(
-      "Vui lòng điền đầy đủ thông tin: Họ và Tên, Số điện thoại, Tỉnh/Thành phố!"
-    );
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Vui lòng điền đầy đủ thông tin: Họ và Tên, Số điện thoại, Tỉnh/Thành phố!",
+    });
     return;
   }
 
   if (!/^\d{10}$/.test(phoneNumber)) {
-    alert("Số điện thoại phải có đúng 10 chữ số!");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: "Số điện thoại phải có đúng 10 chữ số!",
+    });
     return;
   }
 
   if (checkoutItems.length === 0) {
-    alert("Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi đặt hàng.");
+    Swal.fire({
+      icon: "warning",
+      title: "Cảnh báo",
+      text: "Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi đặt hàng.",
+    });
     return;
   }
 
@@ -378,13 +392,21 @@ async function handlePlaceOrder() {
       throw new Error(result.message || "Lỗi khi đặt hàng!");
     }
 
-    // Đặt hàng thành công
-    alert(result.message);
-    localStorage.removeItem("checkoutItems"); // Xóa checkoutItems trong localStorage
-    window.location.href = "../html/index.html"; // Chuyển hướng về trang chủ
+    Swal.fire({
+      icon: "success",
+      title: "Thành công",
+      text: result.message,
+    }).then(() => {
+      localStorage.removeItem("checkoutItems");
+      window.location.href = "../html/index.html";
+    });
   } catch (error) {
     console.error("Lỗi khi đặt hàng:", error);
-    alert(error.message || "Đã có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!");
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: error.message || "Đã có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!",
+    });
   }
 }
 

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/Admin.css" />
     <link rel="stylesheet" href="../css/book-management.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div class="container__body">
@@ -66,16 +67,34 @@
                   >Quản lý Mã Giảm giá</a
                 >
               </li>
+              <li><a href="../html/Revenue.html">Tổng Doanh Thu</a></li>
             </ul>
           </div>
 
           <div class="content" id="admin-content">
             <h2>QUẢN LÝ SÁCH</h2>
             <div class="book-management">
-              <!-- Nút thêm sách -->
+              <!-- Thanh tìm kiếm sách đặt riêng một dòng phía trên -->
               <div class="book-actions">
                 <button id="add-book-btn">Thêm sách mới</button>
                 <button id="add-author-btn">Thêm tác giả</button>
+              </div>
+              <div style="margin: 16px 0">
+                <input
+                  type="text"
+                  id="search-book"
+                  class="search-rect"
+                  placeholder="Tìm kiếm sách..."
+                  style="
+                    min-width: 320px;
+                    height: 40px;
+                    border-radius: 8px;
+                    border: 1px solid #ddd;
+                    padding: 0 16px;
+                    font-size: 16px;
+                    background: #fafbfc;
+                  "
+                />
               </div>
 
               <!-- Bảng danh sách sách -->

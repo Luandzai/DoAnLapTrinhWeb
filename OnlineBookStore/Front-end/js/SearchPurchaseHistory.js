@@ -4,8 +4,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user || !user.userId) {
-    alert("Bạn chưa đăng nhập! Chuyển hướng về trang đăng nhập.");
-    window.location.href = "./Login.html";
+    Swal.fire({
+      icon: "warning",
+      title: "Bạn chưa đăng nhập!",
+      text: "Chuyển hướng về trang đăng nhập.",
+    }).then(() => {
+      window.location.href = "./Login.html";
+    });
     return;
   }
 
@@ -56,10 +61,10 @@ function renderOrderTable(orders) {
 
 function getOrderStatus(status) {
   const statusMap = {
-    0: "Chờ xác nhận",
-    1: "Đang giao",
-    2: "Hoàn thành",
-    3: "Đã hủy",
+    Pending: "Chờ xác nhận",
+    Shipped: "Đang giao",
+    Delivered: "Hoàn thành",
+    Canceled: "Đã hủy",
   };
   return statusMap[status] || "Không xác định";
 }

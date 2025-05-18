@@ -230,6 +230,19 @@ namespace BookStoreApi.Controllers
         [HttpPut("books/{id}")]
         public async Task<IActionResult> UpdateBook(int id, [FromForm] BookUpdateDto bookDto)
         {
+            // Kiểm tra nếu sách đang thuộc đơn hàng của Customer ở trạng thái "Pending"
+            var isInPendingOrder = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .AnyAsync(o =>
+                    o.Status == "Pending"
+                    && o.OrderDetails.Any(od => od.BookId == id)
+                    && o.User.Role == "Customer"
+                );
+            if (isInPendingOrder)
+            {
+                return BadRequest(new { success = false, message = "Sách này đang thuộc một đơn hàng của khách hàng ở trạng thái 'Chờ xác nhận', không thể chỉnh sửa." });
+            }
+
             try
             {
                 var book = await _context.Books.FindAsync(id);
@@ -316,6 +329,16 @@ namespace BookStoreApi.Controllers
             if (book == null)
             {
                 return NotFound(new { success = false, message = "Không tìm thấy sách." });
+            }
+
+            // Check if the book is part of any pending orders
+            var isInPendingOrder = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .AnyAsync(o => o.Status == "Pending" && o.OrderDetails.Any(od => od.BookId == id));
+
+            if (isInPendingOrder)
+            {
+                return BadRequest(new { success = false, message = "Sách này đang thuộc một đơn hàng ở trạng thái 'Chờ xác nhận'." });
             }
 
             if (!string.IsNullOrEmpty(book.CoverImage))
@@ -834,6 +857,16 @@ namespace BookStoreApi.Controllers
             }
         }
 
+        // GET: api/admin/books/{id}/is-purchased
+        [HttpGet("books/{id}/is-purchased")]
+        public async Task<IActionResult> IsBookPurchasedByCustomer(int id)
+        {
+            // Chỉ kiểm tra đơn hàng ở trạng thái "Pending"
+            var purchased = await _context.OrderDetails
+                .Include(od => od.Order)
+                .AnyAsync(od => od.BookId == id && od.Order.Status == "Pending" && od.Order.User.Role == "Customer");
+            return Ok(new { success = true, purchased });
+        }
 
     }
     public class BookCreateDto

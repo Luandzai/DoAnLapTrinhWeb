@@ -329,8 +329,14 @@ function renderLoginSection() {
     // Xử lý đăng xuất
     document.getElementById("logout-btn")?.addEventListener("click", (e) => {
       e.preventDefault();
-      localStorage.removeItem("user"); // Xóa thông tin user
-      window.location.reload(); // Tải lại trang
+      Swal.fire({
+        icon: "info",
+        title: "Đăng xuất",
+        text: "Bạn đã đăng xuất thành công!",
+      }).then(() => {
+        localStorage.removeItem("user"); // Xóa thông tin user
+        window.location.reload(); // Tải lại trang
+      });
     });
   }
 }
