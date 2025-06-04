@@ -77,6 +77,9 @@ function renderOrders(orders) {
           <td>${new Date(order.orderDate).toLocaleDateString("vi-VN")}</td>
           <td>${order.totalPrice.toLocaleString()}đ</td>
           <td class="status-${order.status.toLowerCase()}">${order.status}</td>
+          <td><a href="OrderDetail.html?orderId=${
+            order.orderId
+          }">Xem chi tiết</a></td>
           <td>
             ${
               order.status === "Pending"

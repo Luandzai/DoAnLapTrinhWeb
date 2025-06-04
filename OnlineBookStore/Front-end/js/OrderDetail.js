@@ -76,6 +76,21 @@ function renderOrderDetail(order) {
     )
     .join("");
   document.getElementById("order-items").innerHTML = orderItems;
+
+  // Thêm nút quay lại dựa trên role
+  const user = JSON.parse(localStorage.getItem("user"));
+  const backButton = document.createElement("div");
+  backButton.classList.add("back-button-container");
+
+  if (user && user.role === "Admin") {
+    backButton.innerHTML = `<a href="../html/order-management.html" class="btn-back">Quay lại</a>`;
+  } else {
+    backButton.innerHTML = `<a href="../html/PurchaseHistory.html" class="btn-back">Quay lại</a>`;
+  }
+
+  // Chèn nút vào vị trí phù hợp trong trang
+  const contentContainer = document.querySelector(".content-container"); // Hoặc selector phù hợp với HTML của bạn
+  contentContainer.appendChild(backButton);
 }
 
 function getOrderStatus(status) {

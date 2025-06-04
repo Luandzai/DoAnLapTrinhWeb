@@ -1,15 +1,11 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const revenueTableBody = document.querySelector("#revenue-table tbody");
-  const totalRevenueElement = document.querySelector(".total-revenue");
-  const filterForm = document.getElementById("filter-form");
-
-  // Kiểm tra quyền truy cập admin
+  // Thêm kiểm tra quyền admin
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || user.role !== "Admin") {
     Swal.fire({
-      icon: "error",
+      icon: "warning",
       title: "Truy cập bị từ chối",
       text: "Bạn không có quyền truy cập trang này! Chuyển hướng về trang chủ.",
     }).then(() => {
@@ -17,6 +13,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     return;
   }
+
+  const revenueTableBody = document.querySelector("#revenue-table tbody");
+  const totalRevenueElement = document.querySelector(".total-revenue");
+  const filterForm = document.getElementById("filter-form");
 
   // Hàm render bảng doanh thu
   function renderRevenueTable(orders) {

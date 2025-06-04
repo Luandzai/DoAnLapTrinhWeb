@@ -4,11 +4,13 @@ using BookStoreApi.Models.Requests;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization; // Thêm này
 
 namespace BookStoreApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "RequireAdminRole")] // Thêm attribute này để yêu cầu role Admin
     public class RevenueController : ControllerBase
     {
         private readonly OnlineBookstoreContext _context;

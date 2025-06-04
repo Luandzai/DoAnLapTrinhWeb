@@ -11,11 +11,13 @@ public class AccountController : ControllerBase
 {
     private readonly OnlineBookstoreContext _context;
     private readonly EmailService _emailService;
+    private readonly JwtService _jwtService;
 
-    public AccountController(OnlineBookstoreContext context, EmailService emailService)
+    public AccountController(OnlineBookstoreContext context, EmailService emailService, JwtService jwtService)
     {
         _context = context;
         _emailService = emailService;
+        _jwtService = jwtService;
     }
 
     [HttpPost("forgot-password")]
@@ -59,5 +61,24 @@ public class AccountController : ControllerBase
         return Ok(new { message = "Mật khẩu đã được đặt lại thành công!" });
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+        if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
+            return Unauthorized("Email hoặc mật khẩu không đúng.");
 
+        var token = _jwtService.GenerateToken(user);
+
+        return Ok(new {
+            success = true,
+            token = token,
+            user = new {
+                id = user.UserId,
+                fullName = user.FullName,
+                email = user.Email,
+                role = user.Role
+            }
+        });
+    }
 }

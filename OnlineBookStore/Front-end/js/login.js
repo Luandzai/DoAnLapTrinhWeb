@@ -51,7 +51,7 @@ async function register(fullName, email, password) {
 // Hàm xử lý đăng nhập
 async function login(email, password) {
   try {
-    const response = await fetch("http://localhost:5000/api/users/login", {
+    const response = await fetch("http://localhost:5000/api/account/login", { // Sửa endpoint
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,22 +63,30 @@ async function login(email, password) {
     });
 
     const result = await response.json();
+    console.log(result);
 
     if (response.ok) {
+      // Lưu cả token và thông tin user
+      localStorage.setItem('token', result.token);
       localStorage.setItem(
         "user",
         JSON.stringify({
-          userId: result.userId,
-          fullName: result.fullName,
-          role: result.role,
+          userId: result.user.id,
+          fullName: result.user.fullName,
+          role: result.user.role,
         })
       );
+
       Swal.fire({
         icon: "success",
         title: "Thành công",
         text: "Đăng nhập thành công!",
       }).then(() => {
-        window.location.href = "../html/index.html";
+        if (result.user.role === "Admin") {
+          window.location.href = "../html/Admin.html";
+        } else {
+          window.location.href = "../html/index.html";
+        }
       });
     } else {
       Swal.fire({
@@ -90,11 +98,18 @@ async function login(email, password) {
   } catch (error) {
     console.error("Error logging in:", error);
     Swal.fire({
-      icon: "error",
+      icon: "error", 
       title: "Lỗi",
       text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
     });
   }
+}
+
+// Hàm xử lý đăng xuất
+function handleLogout() {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token"); // Xóa token
+  window.location.href = "../html/Login.html";
 }
 
 // Gắn sự kiện cho form đăng nhập
