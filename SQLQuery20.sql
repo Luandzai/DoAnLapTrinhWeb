@@ -47,11 +47,11 @@ CREATE TABLE Books (
     AuthorID INT NOT NULL,
     PublisherID INT NOT NULL,
     CategoryID INT NOT NULL,
-    Price DECIMAL(10,2) NOT NULL,
+    Price DECIMAL(10,2) CHECK (Price > 0) NOT NULL,
     OldPrice DECIMAL(10,2) NOT NULL, 
     DiscountPrice DECIMAL(10,2),
     SoldQuantity INT DEFAULT 0,
-    StockQuantity INT DEFAULT 0,
+    StockQuantity INT DEFAULT 0 CHECK (StockQuantity >= 0),
     ISBN NVARCHAR(20) UNIQUE NOT NULL,
     PublishedDate DATE,
     Description NVARCHAR(MAX),
@@ -78,9 +78,9 @@ go
 CREATE TABLE Discounts (
     DiscountID INT IDENTITY(1,1) PRIMARY KEY,
     Code NVARCHAR(50) UNIQUE NOT NULL,
-    DiscountAmount DECIMAL(10,2) NOT NULL,
+    DiscountAmount DECIMAL(10,2) CHECK (DiscountAmount BETWEEN 0 AND 100) NOT NULL,
     StartDate DATETIME NOT NULL,
-    EndDate DATETIME NOT NULL,
+    EndDate DATETIME CHECK (EndDate >= GETDATE()) NOT NULL,
     UsageLimit INT DEFAULT 1
 );
 go
@@ -105,7 +105,7 @@ CREATE TABLE OrderDetails (
     OrderDetailID INT IDENTITY(1,1) PRIMARY KEY,
     OrderID INT NOT NULL,
     BookID INT NOT NULL,
-    Quantity INT NOT NULL,
+    Quantity INT CHECK (Quantity > 0) NOT NULL,
     UnitPrice DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
     FOREIGN KEY (BookID) REFERENCES Books(BookID) ON DELETE CASCADE
@@ -195,6 +195,71 @@ BEGIN
     END
 END;
 GO
+
+CREATE TRIGGER TR_Books_PreventDelete
+ON Books
+INSTEAD OF DELETE
+AS
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM OrderDetails OD
+    JOIN deleted d ON OD.BookID = d.BookID
+  )
+  BEGIN
+    RAISERROR('Không thể xóa sách đang tồn tại trong đơn hàng', 16, 1);
+    ROLLBACK TRANSACTION;
+    RETURN;
+  END
+  ELSE
+  BEGIN
+    DELETE FROM Books WHERE BookID IN (SELECT BookID FROM deleted);
+  END
+END;
+
+CREATE TRIGGER TR_Orders_CheckDiscount
+ON Orders
+AFTER INSERT
+AS
+BEGIN
+  DECLARE @discountID INT;
+  SELECT @discountID = DiscountID FROM inserted;
+
+  IF @discountID IS NOT NULL
+    AND NOT EXISTS (
+      SELECT 1 
+      FROM Discounts 
+      WHERE DiscountID = @discountID
+        AND EndDate >= GETDATE()
+    )
+  BEGIN
+    RAISERROR('Mã giảm giá không hợp lệ hoặc đã hết hạn', 16, 1);
+    ROLLBACK TRANSACTION;  
+    RETURN;
+  END
+END;
+
+CREATE TRIGGER TR_Orders_PreventCancel
+ON Orders
+AFTER UPDATE
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  IF EXISTS (
+    SELECT 1
+    FROM inserted i
+    JOIN deleted d ON i.OrderID = d.OrderID
+    WHERE d.Status = 'Delivered'
+      AND i.Status = 'Cancelled'
+  )
+  BEGIN
+    RAISERROR('Không thể hủy đơn hàng đã giao', 16, 1);
+    ROLLBACK TRANSACTION;
+    RETURN;
+  END;
+END;
+
 
 
 INSERT INTO Categories (CategoryName, ParentCategoryID) VALUES

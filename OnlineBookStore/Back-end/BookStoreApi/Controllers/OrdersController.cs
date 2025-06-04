@@ -108,8 +108,10 @@ namespace BookStoreApi.Controllers
                     .FirstOrDefaultAsync(ud => ud.UserId == request.UserId && ud.DiscountId == request.DiscountId);
                 if (userDiscount != null)
                 {
-                    // Xóa bản ghi UserDiscount thay vì chỉ đánh dấu IsUsed
-                    _context.UserDiscounts.Remove(userDiscount);
+                    userDiscount.IsUsed = true;
+                    _context.UserDiscounts.Update(userDiscount);
+                    // // Xóa bản ghi UserDiscount thay vì chỉ đánh dấu IsUsed
+                    // _context.UserDiscounts.Remove(userDiscount);
                 }
             }
 
