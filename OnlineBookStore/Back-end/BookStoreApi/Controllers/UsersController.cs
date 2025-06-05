@@ -121,26 +121,6 @@ namespace BookStoreApi.Controllers
             });
         }
 
-        // POST: api/Users/login
-        [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] LoginRequest request)
-        {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == request.Email);
-
-            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
-            {
-                return BadRequest(new { message = "Email hoặc mật khẩu không đúng." });
-            }
-
-            return Ok(new
-            {
-                UserId = user.UserId,
-                FullName = user.FullName,
-                Role = user.Role
-            });
-        }
-
         // 📌 POST: api/Users/change-password
         [HttpPost("change-password")]
         public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
@@ -176,12 +156,6 @@ namespace BookStoreApi.Controllers
 
     }
 
-    public class LoginRequest
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
-
     public class RegisterRequest
     {
         public string FullName { get; set; }
@@ -198,9 +172,9 @@ namespace BookStoreApi.Controllers
     }
 
     public class ChangePasswordRequest
-{
-    public int UserId { get; set; }
-    public string OldPassword { get; set; }
-    public string NewPassword { get; set; }
-}
+    {
+        public int UserId { get; set; }
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
+    }
 }

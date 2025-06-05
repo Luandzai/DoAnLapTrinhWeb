@@ -51,7 +51,8 @@ async function register(fullName, email, password) {
 // Hàm xử lý đăng nhập
 async function login(email, password) {
   try {
-    const response = await fetch("http://localhost:5000/api/account/login", { // Sửa endpoint
+    const response = await fetch("http://localhost:5000/api/account/login", {
+      // Sửa endpoint
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +68,7 @@ async function login(email, password) {
 
     if (response.ok) {
       // Lưu cả token và thông tin user
-      localStorage.setItem('token', result.token);
+      localStorage.setItem("token", result.token);
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -98,7 +99,7 @@ async function login(email, password) {
   } catch (error) {
     console.error("Error logging in:", error);
     Swal.fire({
-      icon: "error", 
+      icon: "error",
       title: "Lỗi",
       text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
     });
@@ -127,14 +128,8 @@ document
   .getElementById("sign-up-form")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
-    const fullName = document.querySelector(
-      "#sign-up-form input[placeholder='Name']"
-    ).value;
-    const email = document.querySelector(
-      "#sign-up-form input[placeholder='Email']"
-    ).value;
-    const password = document.querySelector(
-      "#sign-up-form input[placeholder='Password']"
-    ).value;
+    const fullName = document.getElementById("sign-up-name").value;
+    const email = document.getElementById("sign-up-email").value;
+    const password = document.getElementById("sign-up-password").value;
     await register(fullName, email, password);
   });

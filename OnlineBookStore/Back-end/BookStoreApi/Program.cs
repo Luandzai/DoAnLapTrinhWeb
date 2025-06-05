@@ -37,7 +37,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddScoped<EmailService>();
-builder.Services.AddScoped<JwtService>(); // Thêm dòng này
+builder.Services.AddScoped<JwtService>(); 
 
 // Thêm cấu hình JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
